@@ -1,0 +1,219 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cУ вас нет прав для выполнения этой команды!"
+player_only: "&cЭту команду может использовать только игрок!"
+module_disabled: "&cЭтот раздел временно отключен администрацией сервера!"
+reload_success: "&aКонфигурация и языковые файлы успешно перезагружены!"
+
+auction:
+  gui_title: "Аукцион [%page%/%max_page%]"
+  confirm_title: "Подтверждение покупки"
+  claims_title: "Хранилище предметов"
+  my_listings_title: "Мои лоты на аукционе"
+  item_lore:
+    price: "&7Цена: &a%price%"
+    seller: "&7Продавец: &f%seller%"
+    expires: "&7Истекает через: &e%time%"
+    click_to_buy: "&eНажмите, чтобы купить"
+    published_in: "&6Появится в продаже через: &e%seconds% сек."
+    countdown_status: "&6Подготовка (появится через %seconds% сек.)"
+    your_item: "&cВаш предмет (нажмите для отмены)"
+  button_previous_page: "&a◀ Предыдущая страница"
+  button_next_page: "&aСледующая страница ▶"
+  button_refresh: "&bОбновить список"
+  button_claim_chest: "&6Хранилище предметов"
+  button_claim_chest_lore:
+    - "&7Здесь хранятся купленные"
+    - "&7и возвращенные предметы."
+    - ""
+    - "&eНажмите, чтобы открыть"
+  button_my_listings: "&eМои лоты"
+  button_my_listings_lore:
+    - "&7Управление вашими лотами,"
+    - "&7выставленными на продажу."
+    - ""
+    - "&eНажмите, чтобы открыть"
+  confirm_buy_button: "&aПодтвердить покупку"
+  confirm_buy_lore:
+    - "&7Купить данный предмет"
+    - "&7за &e%price%"
+  cancel_button: "&cОтмена"
+  cancel_lore:
+    - "&7Отменить действие и"
+    - "&7вернуться назад"
+  click_to_cancel_listing: "&cНажмите, чтобы снять лот с продажи"
+  listing_cancelled: "&aЛот успешно снят с продажи и перемещен в хранилище!"
+  buy_success: "&aВы успешно купили %item% за &e%price%&a! Заберите его в хранилище."
+  item_sold_notify: "&aИгрок &f%buyer% &aкупил ваш лот &f%item% &aза &e%price%&a!"
+  not_enough_money: "&cУ вас недостаточно средств! Необходимо: &e%price%"
+  item_already_sold: "&cЭтот предмет уже был куплен или снят с продажи!"
+  sell_usage: "&cИспользование: /ah sell <цена>"
+  hold_item_to_sell: "&cВозьмите в руку предмет, который хотите продать!"
+  invalid_price: "&cУкажите корректную цену от &e%min% &cдо &e%max%&c!"
+  max_slots_reached: "&cВы достигли максимального количества лотов (%max%/%max%)!"
+  cooldown_active: "&cПожалуйста, подождите %seconds% сек. перед следующим выставлением!"
+  not_published_yet: "&cЭтот предмет еще готовится к продаже! Подождите %seconds% сек."
+  listing_created_timer: "&aПредмет &f%item% &aвыставлен! Он появится в продаже через &e%seconds% сек."
+  listing_created: "&aПредмет &f%item% &aвыставлен на аукцион за &e%price%&a!"
+  item_claimed: "&aПредмет успешно перемещен в ваш инвентарь!"
+  claim_lore: "&eНажмите, чтобы забрать в инвентарь"
+  inventory_full: "&cВаш инвентарь переполнен! Освободите место."
+
+buyer:
+  gui_title: "Скупщик"
+  balance_button: "&aБаланс"
+  balance_lore:
+    - "&7Ваш счет: &e%balance%"
+  sell_button: "&6Продать предметы"
+  sell_lore:
+    - "&7Положите предметы в окно выше"
+    - "&7и нажмите сюда для мгновенной продажи."
+    - ""
+    - "&eНажмите для продажи"
+  price_list_button: "&bЧто можно продать"
+  price_list_lore:
+    - "&7Просмотреть список всех"
+    - "&7принимаемых предметов и цены."
+    - ""
+    - "&eНажмите для просмотра"
+  price_list_title: "Список скупки [%page%/%max_page%]"
+  price_list_unit: "&7Цена за 1 шт: &a%price%"
+  button_back_to_buyer: "&c◀ Назад в скупщик"
+  price_list_stack: "&7Цена за 64 шт: &a%stack_price%"
+  sell_success: "&aВы продали &f%count% &aпредм. на сумму &e%money%&a!"
+  nothing_to_sell: "&cВ окне нет предметов, которые готов купить скупщик!"
+  returned_unsold: "&7Неподходящие предметы возвращены в инвентарь."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Базовая цена"
+  dynamic_market_info: "&7Рыночное предложение: %trend%"
+
+shop:
+  main_title: "Игровой Магазин"
+  section_title: "Магазин: %section%"
+  quantity_title: "Выбор количества"
+  item_locked_prefix: "&c[Заблокировано]"
+  item_locked_lore: "&cДанный товар временно заблокирован!"
+  item_locked_msg: "&cЭтот товар заблокирован в магазине!"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Базовая цена"
+  dynamic_market_info: "&7Рыночный спрос: %trend%"
+  exit_button: "&cВыйти"
+  exit_lore:
+    - "&7Закрыть магазин"
+  back_button: "&cНазад"
+  back_lore:
+    - "&7Вернуться к разделам"
+  button_confirm_buy: "&aКупить"
+  button_cancel_buy: "&cОтмена"
+  quantity_selector: "&eВыбрано: &f%amount% шт."
+  total_price: "&7Итого к оплате: &a%price%"
+  buy_success: "&aВы приобрели %amount%x %item% за &e%price%&a!"
+  not_enough_money: "&cНедостаточно средств для покупки! Нужно: &e%price%"
+  item_lore:
+    buy_price: "&7Покупка: &a%buy%"
+    sell_price: "&7Продажа: &e%sell%"
+    click_to_select: "&eНажмите для покупки"
+  button_back_to_sections: "&c◀ Назад к разделам"
+  button_back_to_sections_lore:
+    - "&7Вернуться в главное меню магазина"
+  button_prev_page: "&a◀ Предыдущая страница [%page%/%max_page%]"
+  button_next_page: "&aСледующая страница [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7Страница: &e%page% &7из &e%max_page%"
+    - "&7Всего товаров: &e%total%"
+  section_icon_lore:
+    - "&7Всего товаров: &e%total%"
+    - "&eНажмите для просмотра товаров"
+  not_for_sale: "&cНе продается"
+  set_amount_1: "&eУстановить: 1 шт."
+  set_amount_64: "&eУстановить: 64 шт."
+
+sections:
+  Blocks:
+    name: "&2&lБлоки"
+    lore:
+      - "&7Строительные и природные блоки"
+  Workstations:
+    name: "&6&lВерстаки и профессии"
+    lore:
+      - "&7Блоки профессий жителей и крафта"
+  Farming:
+    name: "&a&lСельское хозяйство"
+    lore:
+      - "&7Растения, семена и урожай"
+  Redstone:
+    name: "&c&lРедстоун"
+    lore:
+      - "&7Механизмы, провода и компоненты"
+  Decoration:
+    name: "&d&lДекорации"
+    lore:
+      - "&7Предметы интерьера и уюта"
+  Dyes:
+    name: "&b&lКрасители"
+    lore:
+      - "&7Все цвета и оттенки красителей"
+  Enchanting:
+    name: "&5&lЗачарования"
+    lore:
+      - "&7Книги, лазурит и магия"
+  Food:
+    name: "&e&lЕда"
+    lore:
+      - "&7Вкусная и питательная пища"
+  Miscellaneous:
+    name: "&7&lРазное"
+    lore:
+      - "&7Полезные предметы и материалы"
+  Mobs:
+    name: "&3&lДроп с мобов"
+    lore:
+      - "&7Добыча с монстров и животных"
+  Music:
+    name: "&9&lМузыка"
+    lore:
+      - "&7Музыкальные пластинки"
+  Ores:
+    name: "&f&lРуды и минералы"
+    lore:
+      - "&7Ценные ископаемые и слитки"
+  Potions:
+    name: "&d&lЗельеварение"
+    lore:
+      - "&7Зелья и ингредиенты для варки"
+  SpawnEggs:
+    name: "&a&lЯйца призыва"
+    lore:
+      - "&7Яйца призыва различных существ"
+  Spawners:
+    name: "&8&lСпавнеры"
+    lore:
+      - "&7Рассадники монстров"
+  Z_EverythingElse:
+    name: "&7&lПрочее"
+    lore:
+      - "&7Остальные предметы сервера"

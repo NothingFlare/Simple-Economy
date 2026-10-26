@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cこのコマンドを実行する権限がありません！"
+player_only: "&cこのコマンドはプレイヤーのみ実行できます！"
+module_disabled: "&cこの機能はサーバー管理者によって無効化されています！"
+reload_success: "&a設定ファイルと言語ファイルを正常に再読み込みしました！"
+
+auction:
+  gui_title: "オークション [%page%/%max_page%]"
+  confirm_title: "購入確認"
+  claims_title: "アイテム保管庫"
+  my_listings_title: "出品中のアイテム"
+  item_lore:
+    price: "&7価格: &a%price%"
+    seller: "&7出品者: &f%seller%"
+    expires: "&7残り時間: &e%time%"
+    click_to_buy: "&eクリックで購入"
+    published_in: "&6出品まであと: &e%seconds% 秒"
+    countdown_status: "&6準備中 (%seconds% 秒後に購入可能)"
+    your_item: "&cあなたが出品したアイテム (クリックで取り下げ)"
+  button_previous_page: "&a◀ 前のページ"
+  button_next_page: "&a次のページ ▶"
+  button_refresh: "&bオークションを更新"
+  button_claim_chest: "&6アイテム保管庫"
+  button_claim_chest_lore:
+    - "&7購入したアイテムや期限切れのアイテムが"
+    - "&7ここに保管されます。"
+    - ""
+    - "&eクリックして開く"
+  button_my_listings: "&eマイ出品"
+  button_my_listings_lore:
+    - "&7出品中のアイテムを"
+    - "&7管理します。"
+    - ""
+    - "&eクリックして開く"
+  confirm_buy_button: "&a購入を確定"
+  confirm_buy_lore:
+    - "&7この価格で購入します:"
+    - "&7&e%price%"
+  cancel_button: "&cキャンセル"
+  cancel_lore:
+    - "&7キャンセルして"
+    - "&7前に戻る"
+  click_to_cancel_listing: "&cクリックして出品を取り下げる"
+  listing_cancelled: "&a出品を取り下げました！アイテムは保管庫に送られました。"
+  buy_success: "&a%item% を &e%price% &aで購入しました！保管庫から受け取ってください。"
+  item_sold_notify: "&aプレイヤー &f%buyer% &aがあなたのアイテム &f%item% &aを &e%price% &aで購入しました！"
+  not_enough_money: "&c所持金が足りません！必要額: &e%price%"
+  item_already_sold: "&cこのアイテムはすでに購入されたか取り下げられました！"
+  sell_usage: "&c使用方法: /ah sell <価格>"
+  hold_item_to_sell: "&c売りたいアイテムを手に持ってください！"
+  invalid_price: "&c有効な価格を入力してください (&e%min% &c〜 &e%max%&c)！"
+  max_slots_reached: "&c出品上限枠に達しています (%max%/%max%)！"
+  cooldown_active: "&c次に出品するまで %seconds% 秒お待ちください！"
+  not_published_yet: "&cこの商品は出品準備中です！あと %seconds% 秒お待ちください。"
+  listing_created_timer: "&a商品 &f%item% &aを出品しました！ &e%seconds% 秒後に公開されます。"
+  listing_created: "&aアイテム &f%item% &aを &e%price% &aで出品しました！"
+  item_claimed: "&aアイテムをインベントリに受け取りました！"
+  claim_lore: "&eクリックしてインベントリに受け取る"
+  inventory_full: "&cインベントリがいっぱいです！空きを作ってください。"
+
+buyer:
+  button_back_to_buyer: "&c◀ 買取屋に戻る"
+  gui_title: "買取商人"
+  balance_button: "&a所持金"
+  balance_lore:
+    - "&7現在の残高: &e%balance%"
+  sell_button: "&6アイテムを売却"
+  sell_lore:
+    - "&7上のエリアにアイテムを置き、"
+    - "&7ここをクリックして売却します。"
+    - ""
+    - "&eクリックで売却"
+  sell_success: "&a&f%count% &a個のアイテムを売却し、&e%money% &aを獲得しました！"
+  nothing_to_sell: "&c買取可能なアイテムが見つかりませんでした！"
+  returned_unsold: "&7買い取れないアイテムはインベントリに返却されました。"
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 基本価格"
+  dynamic_market_info: "&7市場供給: %trend%"
+
+shop:
+  main_title: "サーバーショップ"
+  section_title: "カテゴリー: %section%"
+  quantity_title: "数量を選択"
+  item_locked_prefix: "&c[ロック中]"
+  item_locked_lore: "&cこの商品は現在ロックされています！"
+  item_locked_msg: "&cこの商品はショップでロックされています！"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 基本価格"
+  dynamic_market_info: "&7市場需要: %trend%"
+  exit_button: "&c終了"
+  exit_lore:
+    - "&7ショップを閉じる"
+  back_button: "&c戻る"
+  back_lore:
+    - "&7カテゴリーに戻る"
+  button_confirm_buy: "&a購入"
+  button_cancel_buy: "&cキャンセル"
+  quantity_selector: "&e選択数: &f%amount% 個"
+  total_price: "&7合計価格: &a%price%"
+  buy_success: "&a%amount%個の %item% を &e%price% &aで購入しました！"
+  not_enough_money: "&c所持金が足りません！必要額: &e%price%"
+  item_lore:
+    buy_price: "&7購入価格: &a%buy%"
+    sell_price: "&7売却価格: &e%sell%"
+    click_to_select: "&eクリックで数量選択"
+  button_back_to_sections: "&c◀ カテゴリに戻る"
+  button_back_to_sections_lore:
+    - "&7ショップのメインメニューに戻る"
+  button_prev_page: "&a◀ 前のページ [%page%/%max_page%]"
+  button_next_page: "&a次のページ [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7ページ: &e%page% &7/ &e%max_page%"
+    - "&7アイテム総数: &e%total%"
+  section_icon_lore:
+    - "&7アイテム総数: &e%total%"
+    - "&eクリックしてアイテムを表示"
+  not_for_sale: "&c非売品"
+  set_amount_1: "&e設定: 1個"
+  set_amount_64: "&e設定: 64個"
+
+sections:
+  Blocks:
+    name: "&2&lブロック"
+    lore:
+      - "&7建築ブロックと自然ブロック"
+  Workstations:
+    name: "&6&l職業ブロック"
+    lore:
+      - "&7村人の職業ブロックと作業台"
+  Farming:
+    name: "&a&l農業"
+    lore:
+      - "&7作物、種、農業用品"
+  Redstone:
+    name: "&c&lレッドストーン"
+    lore:
+      - "&7回路、装置、ギミック部品"
+  Decoration:
+    name: "&d&l装飾"
+    lore:
+      - "&7装飾ブロックと家具"
+  Dyes:
+    name: "&b&l染料"
+    lore:
+      - "&7すべての染料と色"
+  Enchanting:
+    name: "&5&lエンチャント"
+    lore:
+      - "&7本、ラピスラズリ、魔法の品"
+  Food:
+    name: "&e&l食料"
+    lore:
+      - "&7美味しく栄養価の高い食料"
+  Miscellaneous:
+    name: "&7&lその他"
+    lore:
+      - "&7便利な道具と素材"
+  Mobs:
+    name: "&3&lモブドロップ"
+    lore:
+      - "&7モンスターと動物の戦利品"
+  Music:
+    name: "&9&l音楽"
+    lore:
+      - "&7レコードとメロディ"
+  Ores:
+    name: "&f&l鉱石と鉱物"
+    lore:
+      - "&7貴重な鉱石、インゴット、宝石"
+  Potions:
+    name: "&d&lポーションと醸造"
+    lore:
+      - "&7ポーションと醸造素材"
+  SpawnEggs:
+    name: "&a&lスポーンエッグ"
+    lore:
+      - "&7生物を召喚する卵"
+  Spawners:
+    name: "&8&lスポナー"
+    lore:
+      - "&7モンスタースポナー"
+  Z_EverythingElse:
+    name: "&7&lその他すべて"
+    lore:
+      - "&7その他のショップ商品"

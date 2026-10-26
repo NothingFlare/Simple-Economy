@@ -1,0 +1,209 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&c你没有执行此命令的权限！"
+player_only: "&c只有玩家才能执行此命令！"
+module_disabled: "&c此功能模块已被服务器管理员禁用！"
+reload_success: "&a配置文件与语言包已成功重新加载！"
+
+auction:
+  gui_title: "拍卖行 [%page%/%max_page%]"
+  confirm_title: "确认购买"
+  claims_title: "物品暂存箱"
+  my_listings_title: "我的上架物品"
+  item_lore:
+    price: "&7价格: &a%price%"
+    seller: "&7卖家: &f%seller%"
+    expires: "&7到期时间: &e%time%"
+    click_to_buy: "&e点击购买"
+    published_in: "&6上架倒计时: &e%seconds% 秒"
+    countdown_status: "&6准备中 (将在 %seconds% 秒后可购买)"
+    your_item: "&c你的物品 (点击下架)"
+  button_previous_page: "&a◀ 上一页"
+  button_next_page: "&a下一页 ▶"
+  button_refresh: "&b刷新拍卖列表"
+  button_claim_chest: "&6物品暂存箱"
+  button_claim_chest_lore:
+    - "&7已购买或过期的物品"
+    - "&7存放在这里。"
+    - ""
+    - "&e点击打开"
+  button_my_listings: "&e我的上架"
+  button_my_listings_lore:
+    - "&7管理你在拍卖行中"
+    - "&7正在出售的物品。"
+    - ""
+    - "&e点击打开"
+  confirm_buy_button: "&a确认购买"
+  confirm_buy_lore:
+    - "&7以此价格购买此物品:"
+    - "&7&e%price%"
+  cancel_button: "&c取消"
+  cancel_lore:
+    - "&7取消操作并返回"
+  click_to_cancel_listing: "&c点击下架该物品"
+  listing_cancelled: "&a物品已下架并转移至暂存箱！"
+  buy_success: "&a你成功购买了 %item% 花费 &e%price%&a！请在暂存箱领取。"
+  item_sold_notify: "&a玩家 &f%buyer% &a购买了你的物品 &f%item% &a支付了 &e%price%&a！"
+  not_enough_money: "&c资金不足！需要: &e%price%"
+  item_already_sold: "&c此物品已被售出或下架！"
+  sell_usage: "&c用法: /ah sell <价格>"
+  hold_item_to_sell: "&c请手持你要出售的物品！"
+  invalid_price: "&c请输入有效价格 (从 &e%min% &c至 &e%max%&c)！"
+  max_slots_reached: "&c已达到最大上架数量限制 (%max%/%max%)！"
+  cooldown_active: "&c请等待 %seconds% 秒后再上架物品！"
+  not_published_yet: "&c该物品仍在准备上架中！请等待 %seconds% 秒。"
+  listing_created_timer: "&a物品 &f%item% &a已上架！将在 &e%seconds% 秒后正式开售。"
+  listing_created: "&a物品 &f%item% &a已成功上架，标价 &e%price%&a！"
+  item_claimed: "&a物品已领取至背包！"
+  claim_lore: "&e点击领取到背包"
+  inventory_full: "&c背包已满！请腾出空间。"
+
+buyer:
+  button_back_to_buyer: "&c◀ 返回回收商"
+  gui_title: "收购商"
+  balance_button: "&a当前余额"
+  balance_lore:
+    - "&7你的账户: &e%balance%"
+  sell_button: "&6出售物品"
+  sell_lore:
+    - "&7将物品放入上方区域"
+    - "&7点击这里即可快速出售。"
+    - ""
+    - "&e点击出售"
+  sell_success: "&a你出售了 &f%count% &a件物品，获得 &e%money%&a！"
+  nothing_to_sell: "&c没有找到可回收的物品！"
+  returned_unsold: "&7无法收购的物品已退回背包。"
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 基础价格"
+  dynamic_market_info: "&7市场供应: %trend%"
+
+shop:
+  main_title: "游戏商城"
+  section_title: "分类: %section%"
+  quantity_title: "选择购买数量"
+  item_locked_prefix: "&c[已锁定]"
+  item_locked_lore: "&c该商品目前已被锁定！"
+  item_locked_msg: "&c该商品在商店中处于锁定状态！"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 基础价格"
+  dynamic_market_info: "&7市场需求: %trend%"
+  exit_button: "&c退出"
+  exit_lore:
+    - "&7关闭商店"
+  back_button: "&c返回"
+  back_lore:
+    - "&7返回分类菜单"
+  button_confirm_buy: "&a购买"
+  button_cancel_buy: "&c取消"
+  quantity_selector: "&e已选数量: &f%amount% 个"
+  total_price: "&7总价: &a%price%"
+  buy_success: "&a你购买了 %amount% 个 %item%，花费 &e%price%&a！"
+  not_enough_money: "&c余额不足！需要: &e%price%"
+  item_lore:
+    buy_price: "&7购买价格: &a%buy%"
+    sell_price: "&7出售价格: &e%sell%"
+    click_to_select: "&e点击选择数量"
+  button_back_to_sections: "&c◀ 返回分类"
+  button_back_to_sections_lore:
+    - "&7返回商店主菜单"
+  button_prev_page: "&a◀ 上一页 [%page%/%max_page%]"
+  button_next_page: "&a下一页 [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7页码: &e%page% &7/ &e%max_page%"
+    - "&7商品总数: &e%total%"
+  section_icon_lore:
+    - "&7商品总数: &e%total%"
+    - "&e点击查看商品"
+  not_for_sale: "&c非卖品"
+  set_amount_1: "&e设为: 1 个"
+  set_amount_64: "&e设为: 64 个"
+
+sections:
+  Blocks:
+    name: "&2&l方块"
+    lore:
+      - "&7建筑与自然方块"
+  Workstations:
+    name: "&6&l工作站点"
+    lore:
+      - "&7村民职业方块与合成台"
+  Farming:
+    name: "&a&l农业"
+    lore:
+      - "&7农作物、种子与农业用品"
+  Redstone:
+    name: "&c&l红石"
+    lore:
+      - "&7线路、机械与红石组件"
+  Decoration:
+    name: "&d&l装饰"
+    lore:
+      - "&7室内装饰与家具方块"
+  Dyes:
+    name: "&b&l染料"
+    lore:
+      - "&7各种颜色的染料"
+  Enchanting:
+    name: "&5&l附魔"
+    lore:
+      - "&7附魔书、青金石与魔法物品"
+  Food:
+    name: "&e&l食物"
+    lore:
+      - "&7美味且补充饥饿度的食物"
+  Miscellaneous:
+    name: "&7&l杂项"
+    lore:
+      - "&7实用物品与日常材料"
+  Mobs:
+    name: "&3&l怪物掉落物"
+    lore:
+      - "&7来自生物与怪物的掉落战利品"
+  Music:
+    name: "&9&l音乐"
+    lore:
+      - "&7音乐唱片"
+  Ores:
+    name: "&f&l矿石与矿物"
+    lore:
+      - "&7珍贵矿石、宝石与金属锭"
+  Potions:
+    name: "&d&l药水与酿造"
+    lore:
+      - "&7药水与酿造配料"
+  SpawnEggs:
+    name: "&a&l刷怪蛋"
+    lore:
+      - "&7用于召唤各类生物的蛋"
+  Spawners:
+    name: "&8&l刷怪笼"
+    lore:
+      - "&7生物刷怪笼"
+  Z_EverythingElse:
+    name: "&7&l其他所有"
+    lore:
+      - "&7其他独特商品"

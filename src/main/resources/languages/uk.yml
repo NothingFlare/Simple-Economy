@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cУ вас немає дозволу на виконання цієї команди!"
+player_only: "&cЦю команду може виконувати тільки гравець!"
+module_disabled: "&cЦей розділ наразі вимкнено адміністрацією сервера!"
+reload_success: "&aКонфігурацію та мовні файли успішно перезавантажено!"
+
+auction:
+  gui_title: "Аукціон [%page%/%max_page%]"
+  confirm_title: "Підтвердження покупки"
+  claims_title: "Сховище предметів"
+  my_listings_title: "Мої лоти на аукціоні"
+  item_lore:
+    price: "&7Ціна: &a%price%"
+    seller: "&7Продавець: &f%seller%"
+    expires: "&7Закінчується через: &e%time%"
+    click_to_buy: "&eНатисніть, щоб купити"
+    published_in: "&6З'явиться у продажу через: &e%seconds% сек."
+    countdown_status: "&6Підготовка (з'явиться через %seconds% сек.)"
+    your_item: "&cВаш предмет (натисніть для скасування)"
+  button_previous_page: "&a◀ Попередня сторінка"
+  button_next_page: "&aНаступна сторінка ▶"
+  button_refresh: "&bОновити аукціон"
+  button_claim_chest: "&6Сховище предметів"
+  button_claim_chest_lore:
+    - "&7Тут зберігаються куплені"
+    - "&7та повернуті предмети."
+    - ""
+    - "&eНатисніть, щоб відкрити"
+  button_my_listings: "&eМої лоти"
+  button_my_listings_lore:
+    - "&7Керування вашими лотами,"
+    - "&7виставленими на продаж."
+    - ""
+    - "&eНатисніть, щоб відкрити"
+  confirm_buy_button: "&aПідтвердити покупку"
+  confirm_buy_lore:
+    - "&7Купити цей предмет"
+    - "&7за &e%price%"
+  cancel_button: "&cСкасувати"
+  cancel_lore:
+    - "&7Скасувати покупку та"
+    - "&7повернутися назад"
+  click_to_cancel_listing: "&cНатисніть, щоб зняти лот з продажу"
+  listing_cancelled: "&aЛот знято з продажу та переміщено у сховище!"
+  buy_success: "&aВи успішно купили %item% за &e%price%&a! Заберіть його у сховищі."
+  item_sold_notify: "&aГравець &f%buyer% &aкупив ваш лот &f%item% &aза &e%price%&a!"
+  not_enough_money: "&cУ вас недостатньо коштів! Потрібно: &e%price%"
+  item_already_sold: "&cЦей предмет уже куплений або знятий з продажу!"
+  sell_usage: "&cВикористання: /ah sell <ціна>"
+  hold_item_to_sell: "&cВізьміть у руку предмет, який бажаєте продати!"
+  invalid_price: "&cВкажіть коректну ціну від &e%min% &cдо &e%max%&c!"
+  max_slots_reached: "&cВи досягли ліміту лотів на аукціоні (%max%/%max%)!"
+  cooldown_active: "&cБудь ласка, зачекайте %seconds% сек. перед наступним виставленням!"
+  not_published_yet: "&cЦей предмет ще готується до продажу! Зачекайте %seconds% сек."
+  listing_created_timer: "&aПредмет &f%item% &aвиставлено! Він з'явиться у продажу через &e%seconds% сек."
+  listing_created: "&aПредмет &f%item% &aвиставлено на аукціон за &e%price%&a!"
+  item_claimed: "&aПредмет переміщено у ваш інвентар!"
+  claim_lore: "&eНатисніть, щоб забрати в інвентар"
+  inventory_full: "&cВаш інвентар переповнений! Звільніть місце."
+
+buyer:
+  button_back_to_buyer: "&c◀ Назад до скупника"
+  gui_title: "Скупник"
+  balance_button: "&aБаланс"
+  balance_lore:
+    - "&7Ваш рахунок: &e%balance%"
+  sell_button: "&6Продати предмети"
+  sell_lore:
+    - "&7Покладіть предмети у поле вище"
+    - "&7та натисніть сюди для продажу."
+    - ""
+    - "&eНатисніть для продажу"
+  sell_success: "&aВи продали &f%count% &aпредм. на суму &e%money%&a!"
+  nothing_to_sell: "&cУ слотах немає предметів, доступних для скупки!"
+  returned_unsold: "&7Невідповідні предмети повернуто в інвентар."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Базова ціна"
+  dynamic_market_info: "&7Ринкова пропозиція: %trend%"
+
+shop:
+  main_title: "Магазин Сервера"
+  section_title: "Магазин: %section%"
+  quantity_title: "Вибір кількості"
+  item_locked_prefix: "&c[Заблоковано]"
+  item_locked_lore: "&cЦей товар тимчасово заблоковано!"
+  item_locked_msg: "&cЦей товар заблоковано в магазині!"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Базова ціна"
+  dynamic_market_info: "&7Ринковий попит: %trend%"
+  exit_button: "&cВийти"
+  exit_lore:
+    - "&7Закрити магазин"
+  back_button: "&cНазад"
+  back_lore:
+    - "&7Повернутися до розділів"
+  button_confirm_buy: "&aКупити"
+  button_cancel_buy: "&cСкасувати"
+  quantity_selector: "&eВибрано: &f%amount% шт."
+  total_price: "&7Разом до сплати: &a%price%"
+  buy_success: "&aВи придбали %amount%x %item% за &e%price%&a!"
+  not_enough_money: "&cНедостатньо коштів для покупки! Потрібно: &e%price%"
+  item_lore:
+    buy_price: "&7Купівля: &a%buy%"
+    sell_price: "&7Продаж: &e%sell%"
+    click_to_select: "&eНатисніть для вибору кількості"
+  button_back_to_sections: "&c◀ Назад до розділів"
+  button_back_to_sections_lore:
+    - "&7Повернутися в головне меню магазину"
+  button_prev_page: "&a◀ Попередня сторінка [%page%/%max_page%]"
+  button_next_page: "&aНаступна сторінка [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7Сторінка: &e%page% &7з &e%max_page%"
+    - "&7Всього товарів: &e%total%"
+  section_icon_lore:
+    - "&7Всього товарів: &e%total%"
+    - "&eНатисніть для перегляду товарів"
+  not_for_sale: "&cНе продається"
+  set_amount_1: "&eВстановити: 1 шт."
+  set_amount_64: "&eВстановити: 64 шт."
+
+sections:
+  Blocks:
+    name: "&2&lБлоки"
+    lore:
+      - "&7Будівельні та природні блоки"
+  Workstations:
+    name: "&6&lВерстати та професії"
+    lore:
+      - "&7Блоки професій жителів та крафту"
+  Farming:
+    name: "&a&lСільське господарство"
+    lore:
+      - "&7Рослини, насіння та врожай"
+  Redstone:
+    name: "&c&lРедстоун"
+    lore:
+      - "&7Механізми, дроти та логіка"
+  Decoration:
+    name: "&d&lДекорації"
+    lore:
+      - "&7Декоративні блоки та затишок"
+  Dyes:
+    name: "&b&lБарвники"
+    lore:
+      - "&7Всі кольори та відтінки"
+  Enchanting:
+    name: "&5&lЗачарування"
+    lore:
+      - "&7Книги, лазурит та магія"
+  Food:
+    name: "&e&lЇжа"
+    lore:
+      - "&7Смачна та поживна їжа"
+  Miscellaneous:
+    name: "&7&lРізне"
+    lore:
+      - "&7Корисні предмети та матеріали"
+  Mobs:
+    name: "&3&lДроп з мобів"
+    lore:
+      - "&7Здобич з монстрів та тварин"
+  Music:
+    name: "&9&lМузика"
+    lore:
+      - "&7Платівки та мелодії"
+  Ores:
+    name: "&f&lРуди та мінерали"
+    lore:
+      - "&7Цінні копалини та злитки"
+  Potions:
+    name: "&d&lЗілляваріння"
+    lore:
+      - "&7Зілля та інгредієнти"
+  SpawnEggs:
+    name: "&a&lЯйця призову"
+    lore:
+      - "&7Яйця для призову істот"
+  Spawners:
+    name: "&8&lСпавнери"
+    lore:
+      - "&7Розплідники монстрів"
+  Z_EverythingElse:
+    name: "&7&lВсе інше"
+    lore:
+      - "&7Решта товарів магазину"

@@ -1,0 +1,141 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+pages:
+  page1:
+    items:
+      '1':
+        material: MUSIC_DISC_CREATOR
+        buy: 100
+        sell: 25
+      '2':
+        material: MUSIC_DISC_FAR
+        buy: 75
+        sell: 18.75
+      '3':
+        material: MUSIC_DISC_OTHERSIDE
+        buy: 75
+        sell: 18.75
+      '4':
+        material: MUSIC_DISC_PRECIPICE
+        buy: 100
+        sell: 25
+      '5':
+        material: MUSIC_DISC_RELIC
+        buy: 100
+        sell: 25
+      '6':
+        material: MUSIC_DISC_11
+        buy: 75
+        sell: 18.75
+      '7':
+        material: MUSIC_DISC_13
+        buy: 75
+        sell: 18.75
+      '8':
+        material: MUSIC_DISC_5
+        buy: 945
+        sell: 236.25
+      '9':
+        material: MUSIC_DISC_BLOCKS
+        buy: 75
+        sell: 18.75
+      '10':
+        material: MUSIC_DISC_CAT
+        buy: 75
+        sell: 18.75
+      '11':
+        material: MUSIC_DISC_CHIRP
+        buy: 75
+        sell: 18.75
+      '12':
+        material: MUSIC_DISC_CREATOR_MUSIC_BOX
+        buy: 100
+        sell: 25
+      '13':
+        material: MUSIC_DISC_MALL
+        buy: 75
+        sell: 18.75
+      '14':
+        material: MUSIC_DISC_MELLOHI
+        buy: 75
+        sell: 18.75
+      '15':
+        material: MUSIC_DISC_PIGSTEP
+        buy: 75
+        sell: 18.75
+      '16':
+        material: MUSIC_DISC_STAL
+        buy: 75
+        sell: 18.75
+      '17':
+        material: MUSIC_DISC_STRAD
+        buy: 75
+        sell: 18.75
+      '18':
+        material: MUSIC_DISC_WAIT
+        buy: 75
+        sell: 18.75
+      '19':
+        material: MUSIC_DISC_WARD
+        buy: 75
+        sell: 18.75
+      '20':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: ponder
+      '21':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: admire
+      '22':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: call
+      '23':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: dream
+      '24':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: feel
+      '25':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: seek
+      '26':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: sing
+      '27':
+        material: GOAT_HORN
+        buy: 100
+        sell: 25
+        instrument: yearn

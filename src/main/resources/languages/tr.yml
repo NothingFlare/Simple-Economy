@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cBu komutu kullanmak için yetkiniz yok!"
+player_only: "&cBu komutu sadece oyuncular kullanabilir!"
+module_disabled: "&cBu modül şu anda sunucu yönetimi tarafından devre dışı bırakılmıştır!"
+reload_success: "&aYapılandırma ve dil dosyaları başarıyla yeniden yüklendi!"
+
+auction:
+  gui_title: "Açık Artırma [%page%/%max_page%]"
+  confirm_title: "Satın Alma Onayı"
+  claims_title: "Eşya Deposu"
+  my_listings_title: "Satıştaki Eşyalarım"
+  item_lore:
+    price: "&7Fiyat: &a%price%"
+    seller: "&7Satıcı: &f%seller%"
+    expires: "&7Kalan Süre: &e%time%"
+    click_to_buy: "&eSatın almak için tıkla"
+    published_in: "&6Listelenmeye kalan: &e%seconds% sn."
+    countdown_status: "&6Hazırlanıyor (%seconds% sn. sonra hazır)"
+    your_item: "&cKendi eşyanız (iptal etmek için tıkla)"
+  button_previous_page: "&a◀ Önceki Sayfa"
+  button_next_page: "&aSonraki Sayfa ▶"
+  button_refresh: "&bİlanları Yenile"
+  button_claim_chest: "&6Eşya Deposu"
+  button_claim_chest_lore:
+    - "&7Satın alınan ve süresi dolan"
+    - "&7eşyalar burada saklanır."
+    - ""
+    - "&eAçmak için tıkla"
+  button_my_listings: "&eİlanlarım"
+  button_my_listings_lore:
+    - "&7Satıştaki eşyalarınızı"
+    - "&7buradan yönetin."
+    - ""
+    - "&eAçmak için tıkla"
+  confirm_buy_button: "&aSatın Almayı Onayla"
+  confirm_buy_lore:
+    - "&7Bu eşyayı şu fiyata al:"
+    - "&7&e%price%"
+  cancel_button: "&cİptal"
+  cancel_lore:
+    - "&7İşlemi iptal et ve"
+    - "&7geri dön"
+  click_to_cancel_listing: "&cİlanı iptal etmek için tıkla"
+  listing_cancelled: "&aİlan iptal edildi! Eşya deponuza aktarıldı."
+  buy_success: "&a%item% eşyasını &e%price%&a karşılığında başarıyla satın aldınız! Depodan teslim alın."
+  item_sold_notify: "&a&f%buyer% &aadlı oyuncu &f%item% &aeşyanızı &e%price%&a karşılığında satın aldı!"
+  not_enough_money: "&cYeterli paranız yok! Gerekli: &e%price%"
+  item_already_sold: "&cBu eşya zaten satıldı veya kaldırıldı!"
+  sell_usage: "&cKullanım: /ah sell <fiyat>"
+  hold_item_to_sell: "&cLütfen satmak istediğiniz eşyayı elinizde tutun!"
+  invalid_price: "&cLütfen geçerli bir fiyat girin (&e%min% &c- &e%max%&c)!"
+  max_slots_reached: "&cMaksimum ilan sınırına ulaştınız (%max%/%max%)!"
+  cooldown_active: "&cLütfen yeni bir ilan vermeden önce %seconds%s bekleyin!"
+  not_published_yet: "&cBu eşya henüz satışa sunulmadı! Lütfen %seconds% sn. bekleyin."
+  listing_created_timer: "&aEşya &f%item% &asatısa çıkarıldı! &e%seconds% sn. sonra listede görünecek."
+  listing_created: "&a&f%item% &aeşyası &e%price%&a karşılığında satışa çıkarıldı!"
+  item_claimed: "&aEşya envanterinize aktarıldı!"
+  claim_lore: "&eEnvantere almak için tıklayın"
+  inventory_full: "&cEnvanteriniz dolu! Lütfen yer açın."
+
+buyer:
+  button_back_to_buyer: "&c◀ Alıcıya Geri Dön"
+  gui_title: "Hurdacı / Alıcı"
+  balance_button: "&aBakiye"
+  balance_lore:
+    - "&7Mevcut bakiye: &e%balance%"
+  sell_button: "&6Eşyaları Sat"
+  sell_lore:
+    - "&7Eşyaları yukarıdaki alana koyun"
+    - "&7ve satmak için buraya tıklayın."
+    - ""
+    - "&eSatmak için tıkla"
+  sell_success: "&a&f%count% &aadet eşyayı &e%money%&a karşılığında sattınız!"
+  nothing_to_sell: "&cSatılabilecek uygun eşya bulunamadı!"
+  returned_unsold: "&cKabul edilmeyen eşyalar envanterinize iade edildi."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Taban Fiyat"
+  dynamic_market_info: "&7Piyasa Arzı: %trend%"
+
+shop:
+  main_title: "Sunucu Marketi"
+  section_title: "Kategori: %section%"
+  quantity_title: "Miktar Seçin"
+  item_locked_prefix: "&c[Kilitli]"
+  item_locked_lore: "&cBu ürün şu anda kilitlidir!"
+  item_locked_msg: "&cBu ürün mağazada kilitlidir!"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Taban Fiyat"
+  dynamic_market_info: "&7Piyasa Talebi: %trend%"
+  exit_button: "&cÇıkış"
+  exit_lore:
+    - "&7Marketi kapat"
+  back_button: "&cGeri"
+  back_lore:
+    - "&7Kategorilere dön"
+  button_confirm_buy: "&aSatın Al"
+  button_cancel_buy: "&cİptal"
+  quantity_selector: "&eMiktar: &f%amount% adet"
+  total_price: "&7Toplam Fiyat: &a%price%"
+  buy_success: "&a%amount%x %item% eşyasını &e%price%&a karşılığında satın aldınız!"
+  not_enough_money: "&cYetersiz bakiye! Gereken: &e%price%"
+  item_lore:
+    buy_price: "&7Alış: &a%buy%"
+    sell_price: "&7Satış: &e%sell%"
+    click_to_select: "&eMiktar seçmek için tıkla"
+  button_back_to_sections: "&c◀ Kategorilere Geri Dön"
+  button_back_to_sections_lore:
+    - "&7Market ana menüsüne dön"
+  button_prev_page: "&a◀ Önceki Sayfa [%page%/%max_page%]"
+  button_next_page: "&aSonraki Sayfa [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7Sayfa: &e%page% &7/ &e%max_page%"
+    - "&7Toplam ürün: &e%total%"
+  section_icon_lore:
+    - "&7Toplam ürün: &e%total%"
+    - "&eÜrünlere göz atmak için tıklayın"
+  not_for_sale: "&cSatılık değil"
+  set_amount_1: "&eAyarla: 1 adet"
+  set_amount_64: "&eAyarla: 64 adet"
+
+sections:
+  Blocks:
+    name: "&2&lBloklar"
+    lore:
+      - "&7Yapı ve doğal bloklar"
+  Workstations:
+    name: "&6&lİş İstasyonları"
+    lore:
+      - "&7Köylü meslek blokları ve masalar"
+  Farming:
+    name: "&a&lTarım"
+    lore:
+      - "&7Bitkiler, tohumlar ve tarım ürünleri"
+  Redstone:
+    name: "&c&lKızıltaş"
+    lore:
+      - "&7Kablolar, mekanikler ve mantık"
+  Decoration:
+    name: "&d&lDekorasyon"
+    lore:
+      - "&7Dekoratif bloklar ve mobilyalar"
+  Dyes:
+    name: "&b&lBoyalar"
+    lore:
+      - "&7Tüm boya renkleri ve tonları"
+  Enchanting:
+    name: "&5&lBüyüleme"
+    lore:
+      - "&7Büyü kitapları, lapis ve büyü"
+  Food:
+    name: "&e&lYiyecekler"
+    lore:
+      - "&7Lezzetli ve besleyici yiyecekler"
+  Miscellaneous:
+    name: "&7&lÇeşitli"
+    lore:
+      - "&7Faydalı eşyalar ve malzemeler"
+  Mobs:
+    name: "&3&lYaratık Ganimetleri"
+    lore:
+      - "&7Canavarlardan ve hayvanlardan ganimetler"
+  Music:
+    name: "&9&lMüzik"
+    lore:
+      - "&7Müzik diskleri ve melodiler"
+  Ores:
+    name: "&f&lMadenler ve Mineraller"
+    lore:
+      - "&7Değerli madenler ve külçeler"
+  Potions:
+    name: "&d&lİksirler ve Simya"
+    lore:
+      - "&7İksirler ve simya malzemeleri"
+  SpawnEggs:
+    name: "&a&lÇağırma Yumurtaları"
+    lore:
+      - "&7Yaratık çağırma yumurtaları"
+  Spawners:
+    name: "&8&lCanavar Doğurucular"
+    lore:
+      - "&7Canavar doğurucular"
+  Z_EverythingElse:
+    name: "&7&lDiğer Her Şey"
+    lore:
+      - "&7Diğer tüm market ürünleri"

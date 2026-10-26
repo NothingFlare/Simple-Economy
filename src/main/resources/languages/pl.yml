@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cNie masz uprawnień do wykonania tej komendy!"
+player_only: "&cTylko gracze mogą wykonać tę komendę!"
+module_disabled: "&cTen moduł jest obecnie wyłączony przez administrację!"
+reload_success: "&aPliki konfiguracyjne i językowe zostały przeładowane pomyślnie!"
+
+auction:
+  gui_title: "Aukcje [%page%/%max_page%]"
+  confirm_title: "Potwierdź Zakup"
+  claims_title: "Magazyn Przedmiotów"
+  my_listings_title: "Moje Przedmioty"
+  item_lore:
+    price: "&7Cena: &a%price%"
+    seller: "&7Sprzedawca: &f%seller%"
+    expires: "&7Wygasa za: &e%time%"
+    click_to_buy: "&eKliknij, aby kupić"
+    published_in: "&6Pojawi się za: &e%seconds% sek."
+    countdown_status: "&6Przygotowanie (dostępne za %seconds% sek.)"
+    your_item: "&cTwój przedmiot (kliknij, aby anulować)"
+  button_previous_page: "&a◀ Poprzednia strona"
+  button_next_page: "&aNastępna strona ▶"
+  button_refresh: "&bOdśwież aukcje"
+  button_claim_chest: "&6Magazyn Przedmiotów"
+  button_claim_chest_lore:
+    - "&7Zakupione i wygasłe"
+    - "&7przedmioty trafiają tutaj."
+    - ""
+    - "&eKliknij, aby otworzyć"
+  button_my_listings: "&eMoje Przedmioty"
+  button_my_listings_lore:
+    - "&7Zarządzaj swoimi przedmiotami"
+    - "&7wystawionymi na aukcji."
+    - ""
+    - "&eKliknij, aby otworzyć"
+  confirm_buy_button: "&aPotwierdź zakup"
+  confirm_buy_lore:
+    - "&7Kup ten przedmiot za"
+    - "&7&e%price%"
+  cancel_button: "&cAnuluj"
+  cancel_lore:
+    - "&7Anuluj zakup i"
+    - "&7wróć"
+  click_to_cancel_listing: "&cKliknij, aby wycofać z aukcji"
+  listing_cancelled: "&aWycofano z aukcji! Przedmiot przeniesiono do magazynu."
+  buy_success: "&aKupiłeś %item% za &e%price%&a! Odbierz go w magazynie."
+  item_sold_notify: "&aGracz &f%buyer% &akupił Twój przedmiot &f%item% &aza &e%price%&a!"
+  not_enough_money: "&cNie masz wystarczająco pieniędzy! Wymagane: &e%price%"
+  item_already_sold: "&cTen przedmiot został już sprzedany lub wycofany!"
+  sell_usage: "&cUżycie: /ah sell <cena>"
+  hold_item_to_sell: "&cTrzymaj w ręce przedmiot, który chcesz sprzedać!"
+  invalid_price: "&cPodaj prawidłową cenę od &e%min% &cdo &e%max%&c!"
+  max_slots_reached: "&cOsiągnięto limit wystawionych przedmiotów (%max%/%max%)!"
+  cooldown_active: "&cOdczekaj %seconds%s przed wystawieniem kolejnego przedmiotu!"
+  not_published_yet: "&cTen przedmiot jest jeszcze przygotowywany do sprzedaży! Poczekaj %seconds% sek."
+  listing_created_timer: "&aPrzedmiot &f%item% &awystawiony! Będzie dostępny za &e%seconds% sek."
+  listing_created: "&aPrzedmiot &f%item% &awystawiono na aukcję za &e%price%&a!"
+  item_claimed: "&aPrzedmiot odebrany do Twojego ekwipunku!"
+  claim_lore: "&eKliknij, aby odebrać do ekwipunku"
+  inventory_full: "&cTwój ekwipunek jest pełny! Zrób miejsce."
+
+buyer:
+  button_back_to_buyer: "&c◀ Wróć do skupu"
+  gui_title: "Skup"
+  balance_button: "&aStan konta"
+  balance_lore:
+    - "&7Twoje saldo: &e%balance%"
+  sell_button: "&6Sprzedaj przedmioty"
+  sell_lore:
+    - "&7Włóż przedmioty powyżej"
+    - "&7i kliknij tutaj, aby sprzedać."
+    - ""
+    - "&eKliknij, aby sprzedać"
+  sell_success: "&aSprzedałeś &f%count% &aprzedmiotów za &e%money%&a!"
+  nothing_to_sell: "&cNie znaleziono przedmiotów do skupu!"
+  returned_unsold: "&7Nieakceptowane przedmioty zostały zwrócone do ekwipunku."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Cena bazowa"
+  dynamic_market_info: "&7Podaż rynkowa: %trend%"
+
+shop:
+  main_title: "Sklep Serwerowy"
+  section_title: "Kategoria: %section%"
+  quantity_title: "Wybierz Ilość"
+  item_locked_prefix: "&c[Zablokowane]"
+  item_locked_lore: "&cTen przedmiot jest obecnie zablokowany!"
+  item_locked_msg: "&cTen przedmiot jest zablokowany w sklepie!"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Cena bazowa"
+  dynamic_market_info: "&7Popyt rynkowy: %trend%"
+  exit_button: "&cWyjdź"
+  exit_lore:
+    - "&7Zamknij sklep"
+  back_button: "&cWróć"
+  back_lore:
+    - "&7Wróć do kategorii"
+  button_confirm_buy: "&aKup"
+  button_cancel_buy: "&cAnuluj"
+  quantity_selector: "&eIlość: &f%amount% szt."
+  total_price: "&7Łączna cena: &a%price%"
+  buy_success: "&aKupiłeś %amount%x %item% za &e%price%&a!"
+  not_enough_money: "&cBrak wystarczających środków! Wymagane: &e%price%"
+  item_lore:
+    buy_price: "&7Kupno: &a%buy%"
+    sell_price: "&7Sprzedaż: &e%sell%"
+    click_to_select: "&eKliknij, aby wybrać ilość"
+  button_back_to_sections: "&c◀ Wróć do kategorii"
+  button_back_to_sections_lore:
+    - "&7Powrót do menu głównego sklepu"
+  button_prev_page: "&a◀ Poprzednia strona [%page%/%max_page%]"
+  button_next_page: "&aNastępna strona [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7Strona: &e%page% &7z &e%max_page%"
+    - "&7Wszystkich przedmiotów: &e%total%"
+  section_icon_lore:
+    - "&7Wszystkich przedmiotów: &e%total%"
+    - "&eKliknij, aby przeglądać"
+  not_for_sale: "&cNie na sprzedaż"
+  set_amount_1: "&eUstaw: 1 szt."
+  set_amount_64: "&eUstaw: 64 szt."
+
+sections:
+  Blocks:
+    name: "&2&lBloki"
+    lore:
+      - "&7Bloki budowlane i naturalne"
+  Workstations:
+    name: "&6&lStanowiska pracy"
+    lore:
+      - "&7Bloki zawodów wieśniaków i rzemiosła"
+  Farming:
+    name: "&a&lRolnictwo"
+    lore:
+      - "&7Uprawy, nasiona i rolnictwo"
+  Redstone:
+    name: "&c&lRedstone"
+    lore:
+      - "&7Okablowanie, mechanizmy i logika"
+  Decoration:
+    name: "&d&lDekoracje"
+    lore:
+      - "&7Bloki dekoracyjne i meble"
+  Dyes:
+    name: "&b&lBarwniki"
+    lore:
+      - "&7Wszystkie barwniki i odcienie"
+  Enchanting:
+    name: "&5&lZaklęcia"
+    lore:
+      - "&7Księgi, lazuryt i magia"
+  Food:
+    name: "&e&lJedzenie"
+    lore:
+      - "&7Pyszne i pożywne jedzenie"
+  Miscellaneous:
+    name: "&7&lRóżne"
+    lore:
+      - "&7Przydatne przedmioty i surowce"
+  Mobs:
+    name: "&3&lŁupy z mobów"
+    lore:
+      - "&7Łupy z potworów i zwierząt"
+  Music:
+    name: "&9&lMuzyka"
+    lore:
+      - "&7Płyty muzyczne i melodie"
+  Ores:
+    name: "&f&lRudy i minerały"
+    lore:
+      - "&7Cenne rudy, klejnoty i sztabki"
+  Potions:
+    name: "&d&lWarzenie i Mikstury"
+    lore:
+      - "&7Mikstury i składniki do warzenia"
+  SpawnEggs:
+    name: "&a&lJaja spawnujące"
+    lore:
+      - "&7Jaja przyzywające stworzenia"
+  Spawners:
+    name: "&8&lSpawnery"
+    lore:
+      - "&7Spawnery potworów"
+  Z_EverythingElse:
+    name: "&7&lWszystko inne"
+    lore:
+      - "&7Pozostałe towary sklepu"

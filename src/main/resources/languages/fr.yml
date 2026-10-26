@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&cVous n'avez pas la permission d'exécuter cette commande !"
+player_only: "&cSeuls les joueurs peuvent exécuter cette commande !"
+module_disabled: "&cCe module est actuellement désactivé par l'administration !"
+reload_success: "&aFichiers de configuration et de langue rechargés avec succès !"
+
+auction:
+  gui_title: "Hôtel des Ventes [%page%/%max_page%]"
+  confirm_title: "Confirmer l'achat"
+  claims_title: "Coffre de Récupération"
+  my_listings_title: "Mes Ventes en Cours"
+  item_lore:
+    price: "&7Prix: &a%price%"
+    seller: "&7Vendeur: &f%seller%"
+    expires: "&7Expire dans: &e%time%"
+    click_to_buy: "&eCliquez pour acheter"
+    published_in: "&6Disponible dans: &e%seconds% s"
+    countdown_status: "&6Préparation (disponible dans %seconds% s)"
+    your_item: "&cVotre objet (cliquez pour annuler)"
+  button_previous_page: "&a◀ Page Précédente"
+  button_next_page: "&aPage Suivante ▶"
+  button_refresh: "&bActualiser l'hôtel"
+  button_claim_chest: "&6Coffre de Récupération"
+  button_claim_chest_lore:
+    - "&7Les objets achetés ou expirés"
+    - "&7sont stockés ici."
+    - ""
+    - "&eCliquez pour ouvrir"
+  button_my_listings: "&eMes Ventes"
+  button_my_listings_lore:
+    - "&7Gérer vos objets mis"
+    - "&7en vente aux enchères."
+    - ""
+    - "&eCliquez pour ouvrir"
+  confirm_buy_button: "&aConfirmer l'achat"
+  confirm_buy_lore:
+    - "&7Acheter cet objet pour"
+    - "&7&e%price%"
+  cancel_button: "&cAnnuler"
+  cancel_lore:
+    - "&7Annuler l'achat et"
+    - "&7revenir en arrière"
+  click_to_cancel_listing: "&cCliquez pour annuler la vente"
+  listing_cancelled: "&aVente annulée ! Objet envoyé dans votre coffre."
+  buy_success: "&aVous avez acheté %item% pour &e%price%&a ! Récupérez-le dans le coffre."
+  item_sold_notify: "&aLe joueur &f%buyer% &aa acheté votre objet &f%item% &apour &e%price%&a !"
+  not_enough_money: "&cVous n'avez pas assez d'argent ! Requis: &e%price%"
+  item_already_sold: "&cCet objet a déjà été vendu ou retiré !"
+  sell_usage: "&cUtilisation: /ah sell <prix>"
+  hold_item_to_sell: "&cVeuillez tenir l'objet à vendre dans votre main !"
+  invalid_price: "&cVeuillez indiquer un prix valide entre &e%min% &cet &e%max%&c !"
+  max_slots_reached: "&cVous avez atteint la limite de ventes (%max%/%max%) !"
+  cooldown_active: "&cVeuillez patienter %seconds%s avant de remettre en vente !"
+  not_published_yet: "&cCet article est en cours de préparation! Veuillez patienter %seconds% s."
+  listing_created_timer: "&aArticle &f%item% &amis en vente! Il sera disponible dans &e%seconds% s."
+  listing_created: "&aObjet &f%item% &amis en vente pour &e%price%&a !"
+  item_claimed: "&aObjet récupéré dans votre inventaire !"
+  claim_lore: "&eCliquez pour récupérer"
+  inventory_full: "&cVotre inventaire est plein ! Veuillez faire de la place."
+
+buyer:
+  button_back_to_buyer: "&c◀ Retour à l'acheteur"
+  gui_title: "Acheteur"
+  balance_button: "&aSolde"
+  balance_lore:
+    - "&7Votre solde: &e%balance%"
+  sell_button: "&6Vendre les objets"
+  sell_lore:
+    - "&7Placez les objets ci-dessus"
+    - "&7et cliquez ici pour vendre."
+    - ""
+    - "&eCliquez pour vendre"
+  sell_success: "&aVous avez vendu &f%count% &aobjets pour &e%money%&a !"
+  nothing_to_sell: "&cAucun objet achetable trouvé !"
+  returned_unsold: "&7Les objets non achetables ont été retournés."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Prix de base"
+  dynamic_market_info: "&7Offre du marché: %trend%"
+
+shop:
+  main_title: "Boutique du Serveur"
+  section_title: "Catégorie: %section%"
+  quantity_title: "Choisir la Quantité"
+  item_locked_prefix: "&c[Verrouillé]"
+  item_locked_lore: "&cCet article est actuellement verrouillé !"
+  item_locked_msg: "&cCet article est verrouillé dans la boutique !"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● Prix de base"
+  dynamic_market_info: "&7Demande du marché: %trend%"
+  exit_button: "&cQuitter"
+  exit_lore:
+    - "&7Fermer la boutique"
+  back_button: "&cRetour"
+  back_lore:
+    - "&7Retour aux catégories"
+  button_confirm_buy: "&aAcheter"
+  button_cancel_buy: "&cAnnuler"
+  quantity_selector: "&eQuantité: &f%amount% pcs."
+  total_price: "&7Prix Total: &a%price%"
+  buy_success: "&aVous avez acheté %amount%x %item% pour &e%price%&a !"
+  not_enough_money: "&cPas assez d'argent ! Requis: &e%price%"
+  item_lore:
+    buy_price: "&7Achat: &a%buy%"
+    sell_price: "&7Vente: &e%sell%"
+    click_to_select: "&eCliquez pour choisir la quantité"
+  button_back_to_sections: "&c◀ Retour aux catégories"
+  button_back_to_sections_lore:
+    - "&7Retour au menu principal"
+  button_prev_page: "&a◀ Page précédente [%page%/%max_page%]"
+  button_next_page: "&aPage suivante [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7Page: &e%page% &7sur &e%max_page%"
+    - "&7Total articles: &e%total%"
+  section_icon_lore:
+    - "&7Total articles: &e%total%"
+    - "&eCliquez pour voir"
+  not_for_sale: "&cNon à vendre"
+  set_amount_1: "&eDéfinir: 1 pc."
+  set_amount_64: "&eDéfinir: 64 pcs."
+
+sections:
+  Blocks:
+    name: "&2&lBlocs"
+    lore:
+      - "&7Blocs de construction et naturels"
+  Workstations:
+    name: "&6&lPostes de travail"
+    lore:
+      - "&7Métiers de villageois et ateliers"
+  Farming:
+    name: "&a&lAgriculture"
+    lore:
+      - "&7Cultures, graines et récoltes"
+  Redstone:
+    name: "&c&lRedstone"
+    lore:
+      - "&7Câblage, mécanismes et logique"
+  Decoration:
+    name: "&d&lDécoration"
+    lore:
+      - "&7Blocs décoratifs et mobilier"
+  Dyes:
+    name: "&b&lTeintures"
+    lore:
+      - "&7Toutes les couleurs de teinture"
+  Enchanting:
+    name: "&5&lEnchantement"
+    lore:
+      - "&7Livres, lapis et magie"
+  Food:
+    name: "&e&lNourriture"
+    lore:
+      - "&7Nourriture délicieuse"
+  Miscellaneous:
+    name: "&7&lDivers"
+    lore:
+      - "&7Objets et matériaux utiles"
+  Mobs:
+    name: "&3&lButin de monstres"
+    lore:
+      - "&7Butin des monstres et créatures"
+  Music:
+    name: "&9&lMusique"
+    lore:
+      - "&7Disques de musique"
+  Ores:
+    name: "&f&lMinerais & Métaux"
+    lore:
+      - "&7Minerais précieux et lingots"
+  Potions:
+    name: "&d&lAlchimie & Potions"
+    lore:
+      - "&7Potions et ingrédients alchimiques"
+  SpawnEggs:
+    name: "&a&lŒufs d'apparition"
+    lore:
+      - "&7Œufs pour invoquer des créatures"
+  Spawners:
+    name: "&8&lGénérateurs"
+    lore:
+      - "&7Générateurs de monstres"
+  Z_EverythingElse:
+    name: "&7&lTout le reste"
+    lore:
+      - "&7Autres articles uniques"

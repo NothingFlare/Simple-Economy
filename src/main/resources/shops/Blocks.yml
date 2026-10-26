@@ -1,0 +1,1027 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+pages:
+  page1:
+    items:
+      '1':
+        material: PACKED_ICE
+        buy: 13.5
+        sell: 3.38
+      '2':
+        material: SNOW_BLOCK
+        buy: 12.6
+        sell: 3.15
+      '3':
+        material: TNT
+        buy: 106.58
+        sell: 26.65
+      '4':
+        material: ANDESITE
+        buy: 0.72
+        sell: 0.18
+      '5':
+        material: BLACKSTONE_SLAB
+        buy: 0.4
+        sell: 0.1
+      '6':
+        material: BLACKSTONE_STAIRS
+        buy: 0.79
+        sell: 0.2
+      '7':
+        material: POLISHED_BLACKSTONE_SLAB
+        buy: 0.4
+        sell: 0.1
+      '8':
+        material: POLISHED_BLACKSTONE_STAIRS
+        buy: 0.79
+        sell: 0.2
+      '9':
+        material: BRICKS
+        buy: 92.61
+        sell: 23.16
+      '10':
+        material: BASALT
+        buy: 1.43
+        sell: 0.92
+      '11':
+        material: BLUE_CONCRETE
+        buy: 8.72
+        sell: 2.18
+      '12':
+        material: PINK_CONCRETE
+        buy: 30.87
+        sell: 7.72
+      '13':
+        material: EXPOSED_CHISELED_COPPER
+        buy: 1.07
+        sell: 0.27
+      '14':
+        material: OXIDIZED_COPPER
+        buy: 4.47
+        sell: 1.12
+      '15':
+        material: WAXED_EXPOSED_CUT_COPPER_STAIRS
+        buy: 1.99
+        sell: 0.5
+      '16':
+        material: WAXED_OXIDIZED_CUT_COPPER_STAIRS
+        buy: 2.1
+        sell: 0.53
+      '17':
+        material: COBBLED_DEEPSLATE
+        buy: 0.68
+        sell: 0.17
+      '18':
+        material: COBBLED_DEEPSLATE_SLAB
+        buy: 0.36
+        sell: 0.09
+      '19':
+        material: DIORITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '20':
+        material: POLISHED_DIORITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '21':
+        material: DIRT
+        buy: 3
+        sell: 0.75
+      '22':
+        material: END_STONE
+        buy: 5
+        sell: 1.25
+      '23':
+        material: END_STONE_BRICKS
+        buy: 5.25
+        sell: 1.32
+      '24':
+        material: GLASS
+        buy: 6.3
+        sell: 1.58
+      '25':
+        material: GRANITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '26':
+        material: MUD
+        buy: 3.19
+        sell: 0.8
+      '27':
+        material: NETHER_BRICK_SLAB
+        buy: 0.47
+        sell: 0.12
+      '28':
+        material: PRISMARINE_STAIRS
+        buy: 30.87
+        sell: 7.72
+      '29':
+        material: PRISMARINE_BRICKS
+        buy: 66.15
+        sell: 16.54
+      '30':
+        material: QUARTZ_BRICKS
+        buy: 36.47
+        sell: 9.12
+      '31':
+        material: RED_SAND
+        buy: 8
+        sell: 2
+      '32':
+        material: SANDSTONE
+        buy: 12
+        sell: 3
+      '33':
+        material: RED_SANDSTONE
+        buy: 33.6
+        sell: 8.4
+      '34':
+        material: MOSSY_STONE_BRICK_STAIRS
+        buy: 8.05
+        sell: 1.64
+      '35':
+        material: CHISELED_TUFF
+        buy: 2.1
+        sell: 0.53
+      '36':
+        material: CHISELED_TUFF_BRICKS
+        buy: 2.1
+        sell: 0.53
+      '37':
+        material: POLISHED_TUFF_SLAB
+        buy: 1.05
+        sell: 0.27
+      '38':
+        material: POLISHED_TUFF_STAIRS
+        buy: 2.1
+        sell: 0.53
+      '39':
+        material: ACACIA_WOOD
+        buy: 4.2
+        sell: 1.05
+      '40':
+        material: CRIMSON_HYPHAE
+        buy: 4.2
+        sell: 1.05
+      '41':
+        material: JUNGLE_LOG
+        buy: 3
+        sell: 0.75
+      '42':
+        material: MANGROVE_WOOD
+        buy: 4.2
+        sell: 1.05
+      '43':
+        material: OAK_LOG
+        buy: 3
+        sell: 0.75
+      '44':
+        material: SPRUCE_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '45':
+        material: SPRUCE_SLAB
+        buy: 0.58
+        sell: 0.15
+  page2:
+    items:
+      '1':
+        material: SPRUCE_WOOD
+        buy: 4.2
+        sell: 1.05
+      '2':
+        material: CHERRY_PLANKS
+        buy: 0.79
+        sell: 0.2
+      '3':
+        material: WARPED_STAIRS
+        buy: 1.25
+        sell: 0.32
+      '4':
+        material: LIGHT_BLUE_WOOL
+        buy: 29.4
+        sell: 7.35
+      '5':
+        material: YELLOW_WOOL
+        buy: 29.4
+        sell: 7.35
+      '6':
+        material: CALCITE
+        buy: 2
+        sell: 0.5
+      '7':
+        material: DRIPSTONE_BLOCK
+        buy: 1
+        sell: 0.25
+      '8':
+        material: HAY_BLOCK
+        buy: 47.25
+        sell: 11.82
+      '9':
+        material: HONEY_BLOCK
+        buy: 33.34
+        sell: 8.34
+      '10':
+        material: MAGMA_BLOCK
+        buy: 33.63
+        sell: 8.41
+      '11':
+        material: ROOTED_DIRT
+        buy: 1
+        sell: 0.25
+      '12':
+        material: SLIME_BLOCK
+        buy: 47.25
+        sell: 11.82
+      '13':
+        material: SOUL_SAND
+        buy: 10
+        sell: 2.5
+      '14':
+        material: ANDESITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '15':
+        material: ANDESITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '16':
+        material: POLISHED_ANDESITE
+        buy: 0.75
+        sell: 0.19
+      '17':
+        material: POLISHED_ANDESITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '18':
+        material: POLISHED_ANDESITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '19':
+        material: BAMBOO_BLOCK
+        buy: 0.95
+        sell: 0.24
+      '20':
+        material: BAMBOO_MOSAIC
+        buy: 0.55
+        sell: 0.14
+      '21':
+        material: BAMBOO_MOSAIC_SLAB
+        buy: 0.29
+        sell: 0.08
+      '22':
+        material: BAMBOO_MOSAIC_STAIRS
+        buy: 0.79
+        sell: 0.2
+      '23':
+        material: BAMBOO_PLANKS
+        buy: 0.5
+        sell: 0.13
+      '24':
+        material: BAMBOO_SLAB
+        buy: 0.27
+        sell: 0.07
+      '25':
+        material: BAMBOO_STAIRS
+        buy: 0.79
+        sell: 0.2
+      '26':
+        material: BLACKSTONE
+        buy: 0.75
+        sell: 0.19
+      '27':
+        material: POLISHED_BLACKSTONE
+        buy: 0.79
+        sell: 0.2
+      '28':
+        material: POLISHED_BLACKSTONE_BRICK_SLAB
+        buy: 0.4
+        sell: 0.1
+      '29':
+        material: POLISHED_BLACKSTONE_BRICK_STAIRS
+        buy: 0.79
+        sell: 0.2
+      '30':
+        material: POLISHED_BLACKSTONE_BRICKS
+        buy: 0.79
+        sell: 0.2
+      '31':
+        material: BOOKSHELF
+        buy: 119.12
+        sell: 29.78
+      '32':
+        material: CHISELED_BOOKSHELF
+        buy: 8.77
+        sell: 2.2
+      '33':
+        material: BRICK_SLAB
+        buy: 48.63
+        sell: 12.16
+      '34':
+        material: BRICK_STAIRS
+        buy: 97.25
+        sell: 24.32
+      '35':
+        material: COBBLESTONE
+        buy: 0.68
+        sell: 0.17
+      '36':
+        material: COBBLESTONE_SLAB
+        buy: 0.36
+        sell: 0.09
+      '37':
+        material: COBBLESTONE_STAIRS
+        buy: 0.72
+        sell: 0.18
+      '38':
+        material: MOSSY_COBBLESTONE
+        buy: 7.57
+        sell: 1.52
+      '39':
+        material: MOSSY_COBBLESTONE_SLAB
+        buy: 3.74
+        sell: 0.56
+      '40':
+        material: MOSSY_COBBLESTONE_STAIRS
+        buy: 7.97
+        sell: 1.62
+      '41':
+        material: BLACK_CONCRETE
+        buy: 8.41
+        sell: 2.11
+      '42':
+        material: BROWN_CONCRETE
+        buy: 8.55
+        sell: 2.14
+      '43':
+        material: CYAN_CONCRETE
+        buy: 7.81
+        sell: 1.96
+      '44':
+        material: GRAY_CONCRETE
+        buy: 8.22
+        sell: 2.06
+      '45':
+        material: GREEN_CONCRETE
+        buy: 7.74
+        sell: 1.94
+  page3:
+    items:
+      '1':
+        material: LIGHT_BLUE_CONCRETE
+        buy: 7.87
+        sell: 1.97
+      '2':
+        material: LIGHT_GRAY_CONCRETE
+        buy: 7.87
+        sell: 1.97
+      '3':
+        material: LIME_CONCRETE
+        buy: 30.87
+        sell: 7.72
+      '4':
+        material: MAGENTA_CONCRETE
+        buy: 30.87
+        sell: 7.72
+      '5':
+        material: ORANGE_CONCRETE
+        buy: 30.87
+        sell: 7.72
+      '6':
+        material: PURPLE_CONCRETE
+        buy: 30.87
+        sell: 7.72
+      '7':
+        material: RED_CONCRETE
+        buy: 7.87
+        sell: 1.97
+      '8':
+        material: WHITE_CONCRETE
+        buy: 8.01
+        sell: 2.01
+      '9':
+        material: YELLOW_CONCRETE
+        buy: 7.82
+        sell: 1.96
+      '10':
+        material: CHISELED_COPPER
+        buy: 1.02
+        sell: 0.26
+      '11':
+        material: OXIDIZED_CHISELED_COPPER
+        buy: 1.18
+        sell: 0.3
+      '12':
+        material: WAXED_COPPER_BLOCK
+        buy: 7.36
+        sell: 1.84
+      '13':
+        material: WAXED_CUT_COPPER
+        buy: 1.94
+        sell: 0.49
+      '14':
+        material: WAXED_CUT_COPPER_SLAB
+        buy: 0.97
+        sell: 0.25
+      '15':
+        material: WAXED_CUT_COPPER_STAIRS
+        buy: 1.94
+        sell: 0.49
+      '16':
+        material: WAXED_EXPOSED_COPPER
+        buy: 7.57
+        sell: 1.9
+      '17':
+        material: WAXED_EXPOSED_CUT_COPPER
+        buy: 7.94
+        sell: 1.23
+      '18':
+        material: WAXED_EXPOSED_CUT_COPPER_SLAB
+        buy: 1
+        sell: 0.25
+      '19':
+        material: WAXED_OXIDIZED_COPPER
+        buy: 8
+        sell: 2
+      '20':
+        material: WAXED_OXIDIZED_CUT_COPPER
+        buy: 8.4
+        sell: 1.7
+      '21':
+        material: WAXED_OXIDIZED_CUT_COPPER_SLAB
+        buy: 1.05
+        sell: 0.27
+      '22':
+        material: WAXED_WEATHERED_COPPER
+        buy: 7.78
+        sell: 1.95
+      '23':
+        material: WAXED_WEATHERED_CUT_COPPER
+        buy: 8.17
+        sell: 1.38
+      '24':
+        material: WAXED_WEATHERED_CUT_COPPER_SLAB
+        buy: 1.03
+        sell: 0.26
+      '25':
+        material: WAXED_WEATHERED_CUT_COPPER_STAIRS
+        buy: 2.05
+        sell: 0.52
+      '26':
+        material: WEATHERED_CHISELED_COPPER
+        buy: 1.12
+        sell: 0.28
+      '27':
+        material: COBBLED_DEEPSLATE_STAIRS
+        buy: 0.72
+        sell: 0.18
+      '28':
+        material: DEEPSLATE
+        buy: 0.72
+        sell: 0.18
+      '29':
+        material: DEEPSLATE_TILE_SLAB
+        buy: 0.42
+        sell: 0.11
+      '30':
+        material: DEEPSLATE_TILE_STAIRS
+        buy: 0.83
+        sell: 0.21
+      '31':
+        material: DEEPSLATE_TILES
+        buy: 0.79
+        sell: 0.2
+      '32':
+        material: DIORITE
+        buy: 0.72
+        sell: 0.18
+      '33':
+        material: DIORITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '34':
+        material: POLISHED_DIORITE
+        buy: 0.75
+        sell: 0.19
+      '35':
+        material: POLISHED_DIORITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '36':
+        material: CLAY
+        buy: 21
+        sell: 5.25
+      '37':
+        material: CRIMSON_NYLIUM
+        buy: 6
+        sell: 1.5
+      '38':
+        material: GRASS_BLOCK
+        buy: 8
+        sell: 2
+      '39':
+        material: GRAVEL
+        buy: 8
+        sell: 2
+      '40':
+        material: MYCELIUM
+        buy: 8
+        sell: 2
+      '41':
+        material: PODZOL
+        buy: 8
+        sell: 2
+      '42':
+        material: WARPED_NYLIUM
+        buy: 6
+        sell: 1.5
+      '43':
+        material: END_STONE_BRICK_SLAB
+        buy: 2.63
+        sell: 0.66
+      '44':
+        material: END_STONE_BRICK_STAIRS
+        buy: 5.25
+        sell: 1.32
+      '45':
+        material: GLASS_PANE
+        buy: 2.49
+        sell: 0.63
+  page4:
+    items:
+      '1':
+        material: TINTED_GLASS
+        buy: 6.07
+        sell: 1.52
+      '2':
+        material: GRANITE
+        buy: 0.72
+        sell: 0.18
+      '3':
+        material: GRANITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '4':
+        material: POLISHED_GRANITE
+        buy: 0.75
+        sell: 0.19
+      '5':
+        material: POLISHED_GRANITE_SLAB
+        buy: 0.38
+        sell: 0.1
+      '6':
+        material: POLISHED_GRANITE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '7':
+        material: GLOWSTONE
+        buy: 29.4
+        sell: 7.35
+      '8':
+        material: MUD_BRICK_SLAB
+        buy: 4.74
+        sell: 1.19
+      '9':
+        material: MUD_BRICK_STAIRS
+        buy: 9.48
+        sell: 2.37
+      '10':
+        material: MUD_BRICK_WALL
+        buy: 9.48
+        sell: 2.37
+      '11':
+        material: MUD_BRICKS
+        buy: 9.03
+        sell: 2.26
+      '12':
+        material: PACKED_MUD
+        buy: 8.6
+        sell: 2.15
+      '13':
+        material: NETHERRACK
+        buy: 0.2
+        sell: 0.05
+      '14':
+        material: NETHER_BRICK_STAIRS
+        buy: 0.93
+        sell: 0.24
+      '15':
+        material: NETHER_BRICKS
+        buy: 0.89
+        sell: 0.23
+      '16':
+        material: RED_NETHER_BRICK_SLAB
+        buy: 4.28
+        sell: 1.07
+      '17':
+        material: RED_NETHER_BRICK_STAIRS
+        buy: 8.56
+        sell: 2.14
+      '18':
+        material: RED_NETHER_BRICKS
+        buy: 8.16
+        sell: 2.04
+      '19':
+        material: CRYING_OBSIDIAN
+        buy: 62.5
+        sell: 15.63
+      '20':
+        material: OBSIDIAN
+        buy: 31.25
+        sell: 7.82
+      '21':
+        material: PRISMARINE
+        buy: 29.4
+        sell: 7.35
+      '22':
+        material: PRISMARINE_SLAB
+        buy: 15.44
+        sell: 3.86
+      '23':
+        material: PRISMARINE_BRICK_SLAB
+        buy: 34.73
+        sell: 8.69
+      '24':
+        material: PRISMARINE_BRICK_STAIRS
+        buy: 69.46
+        sell: 17.37
+      '25':
+        material: DARK_PRISMARINE
+        buy: 64.05
+        sell: 16.02
+      '26':
+        material: DARK_PRISMARINE_SLAB
+        buy: 33.63
+        sell: 8.41
+      '27':
+        material: DARK_PRISMARINE_STAIRS
+        buy: 67.26
+        sell: 16.82
+      '28':
+        material: PURPUR_BLOCK
+        buy: 3.31
+        sell: 0.83
+      '29':
+        material: PURPUR_SLAB
+        buy: 1.74
+        sell: 0.44
+      '30':
+        material: PURPUR_STAIRS
+        buy: 3.48
+        sell: 0.87
+      '31':
+        material: QUARTZ_SLAB
+        buy: 18.24
+        sell: 4.56
+      '32':
+        material: QUARTZ_STAIRS
+        buy: 36.47
+        sell: 9.12
+      '33':
+        material: SAND
+        buy: 6
+        sell: 1.5
+      '34':
+        material: SANDSTONE_SLAB
+        buy: 6.3
+        sell: 1.58
+      '35':
+        material: SANDSTONE_STAIRS
+        buy: 12.6
+        sell: 3.15
+      '36':
+        material: SMOOTH_SANDSTONE
+        buy: 12.6
+        sell: 3.15
+      '37':
+        material: SMOOTH_SANDSTONE_SLAB
+        buy: 6.62
+        sell: 1.66
+      '38':
+        material: SMOOTH_SANDSTONE_STAIRS
+        buy: 13.23
+        sell: 3.31
+      '39':
+        material: RED_SANDSTONE_SLAB
+        buy: 17.64
+        sell: 4.41
+      '40':
+        material: RED_SANDSTONE_STAIRS
+        buy: 35.28
+        sell: 8.82
+      '41':
+        material: SMOOTH_RED_SANDSTONE
+        buy: 35.28
+        sell: 8.82
+      '42':
+        material: SMOOTH_RED_SANDSTONE_SLAB
+        buy: 18.53
+        sell: 4.64
+      '43':
+        material: SMOOTH_RED_SANDSTONE_STAIRS
+        buy: 37.05
+        sell: 9.27
+      '44':
+        material: STONE
+        buy: 0.72
+        sell: 0.18
+      '45':
+        material: STONE_SLAB
+        buy: 0.38
+        sell: 0.1
+  page5:
+    items:
+      '1':
+        material: STONE_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '2':
+        material: STONE_BRICK_SLAB
+        buy: 0.38
+        sell: 0.1
+      '3':
+        material: STONE_BRICK_STAIRS
+        buy: 0.75
+        sell: 0.19
+      '4':
+        material: STONE_BRICKS
+        buy: 0.75
+        sell: 0.19
+      '5':
+        material: MOSSY_STONE_BRICK_SLAB
+        buy: 0.4
+        sell: 0.1
+      '6':
+        material: MOSSY_STONE_BRICKS
+        buy: 7.64
+        sell: 1.54
+      '7':
+        material: TERRACOTTA
+        buy: 22.05
+        sell: 5.52
+      '8':
+        material: POLISHED_TUFF
+        buy: 2.1
+        sell: 0.53
+      '9':
+        material: TUFF
+        buy: 2
+        sell: 0.5
+      '10':
+        material: TUFF_BRICK_SLAB
+        buy: 1.05
+        sell: 0.27
+      '11':
+        material: TUFF_BRICK_STAIRS
+        buy: 2.1
+        sell: 0.53
+      '12':
+        material: TUFF_BRICKS
+        buy: 2.1
+        sell: 0.53
+      '13':
+        material: TUFF_SLAB
+        buy: 1.05
+        sell: 0.27
+      '14':
+        material: TUFF_STAIRS
+        buy: 2.1
+        sell: 0.53
+      '15':
+        material: ACACIA_LOG
+        buy: 3
+        sell: 0.75
+      '16':
+        material: ACACIA_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '17':
+        material: ACACIA_SLAB
+        buy: 0.58
+        sell: 0.15
+      '18':
+        material: ACACIA_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '19':
+        material: BIRCH_LOG
+        buy: 3
+        sell: 0.75
+      '20':
+        material: BIRCH_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '21':
+        material: BIRCH_SLAB
+        buy: 0.58
+        sell: 0.15
+      '22':
+        material: BIRCH_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '23':
+        material: BIRCH_WOOD
+        buy: 4.2
+        sell: 1.05
+      '24':
+        material: CRIMSON_PLANKS
+        buy: 0.79
+        sell: 0.2
+      '25':
+        material: CRIMSON_SLAB
+        buy: 0.42
+        sell: 0.11
+      '26':
+        material: CRIMSON_STAIRS
+        buy: 1.25
+        sell: 0.32
+      '27':
+        material: CRIMSON_STEM
+        buy: 3
+        sell: 0.75
+      '28':
+        material: DARK_OAK_LOG
+        buy: 3
+        sell: 0.75
+      '29':
+        material: DARK_OAK_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '30':
+        material: DARK_OAK_SLAB
+        buy: 0.58
+        sell: 0.15
+      '31':
+        material: DARK_OAK_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '32':
+        material: DARK_OAK_WOOD
+        buy: 4.2
+        sell: 1.05
+      '33':
+        material: JUNGLE_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '34':
+        material: JUNGLE_SLAB
+        buy: 0.58
+        sell: 0.15
+      '35':
+        material: JUNGLE_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '36':
+        material: JUNGLE_WOOD
+        buy: 4.2
+        sell: 1.05
+      '37':
+        material: MANGROVE_LOG
+        buy: 3
+        sell: 0.75
+      '38':
+        material: MANGROVE_PLANKS
+        buy: 0.79
+        sell: 0.2
+      '39':
+        material: MANGROVE_SLAB
+        buy: 0.42
+        sell: 0.11
+      '40':
+        material: MANGROVE_STAIRS
+        buy: 1.25
+        sell: 0.32
+      '41':
+        material: OAK_PLANKS
+        buy: 1.11
+        sell: 0.28
+      '42':
+        material: OAK_SLAB
+        buy: 0.58
+        sell: 0.15
+      '43':
+        material: OAK_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '44':
+        material: OAK_WOOD
+        buy: 4.2
+        sell: 1.05
+      '45':
+        material: SPRUCE_LOG
+        buy: 3
+        sell: 0.75
+  page6:
+    items:
+      '1':
+        material: SPRUCE_STAIRS
+        buy: 1.74
+        sell: 0.44
+      '2':
+        material: CHERRY_LOG
+        buy: 3
+        sell: 0.75
+      '3':
+        material: CHERRY_SLAB
+        buy: 0.42
+        sell: 0.11
+      '4':
+        material: CHERRY_STAIRS
+        buy: 1.25
+        sell: 0.32
+      '5':
+        material: CHERRY_WOOD
+        buy: 4.2
+        sell: 1.05
+      '6':
+        material: WARPED_HYPHAE
+        buy: 4.2
+        sell: 1.05
+      '7':
+        material: WARPED_PLANKS
+        buy: 0.79
+        sell: 0.2
+      '8':
+        material: WARPED_SLAB
+        buy: 0.42
+        sell: 0.11
+      '9':
+        material: WARPED_STEM
+        buy: 3
+        sell: 0.75
+      '10':
+        material: BLACK_WOOL
+        buy: 29.4
+        sell: 7.35
+      '11':
+        material: BLUE_WOOL
+        buy: 29.4
+        sell: 7.35
+      '12':
+        material: BROWN_WOOL
+        buy: 29.4
+        sell: 7.35
+      '13':
+        material: CYAN_WOOL
+        buy: 29.4
+        sell: 7.35
+      '14':
+        material: GRAY_WOOL
+        buy: 29.4
+        sell: 7.35
+      '15':
+        material: GREEN_WOOL
+        buy: 29.4
+        sell: 7.35
+      '16':
+        material: LIGHT_GRAY_WOOL
+        buy: 29.4
+        sell: 7.35
+      '17':
+        material: LIME_WOOL
+        buy: 29.4
+        sell: 7.35
+      '18':
+        material: MAGENTA_WOOL
+        buy: 29.4
+        sell: 7.35
+      '19':
+        material: ORANGE_WOOL
+        buy: 29.4
+        sell: 7.35
+      '20':
+        material: PINK_WOOL
+        buy: 29.4
+        sell: 7.35
+      '21':
+        material: PURPLE_WOOL
+        buy: 29.4
+        sell: 7.35
+      '22':
+        material: RED_WOOL
+        buy: 29.4
+        sell: 7.35
+      '23':
+        material: WHITE_WOOL
+        buy: 29.4
+        sell: 7.35

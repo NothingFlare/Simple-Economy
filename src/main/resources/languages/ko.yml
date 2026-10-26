@@ -1,0 +1,210 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+prefix: ""
+no_permission: "&c이 명령어를 실행할 권한이 없습니다!"
+player_only: "&c플레이어만 이 명령어를 실행할 수 있습니다!"
+module_disabled: "&c이 기능은 서버 관리자에 의해 비활성화되었습니다!"
+reload_success: "&a설정 및 언어 파일이 성공적으로 다시 로드되었습니다!"
+
+auction:
+  gui_title: "경매장 [%page%/%max_page%]"
+  confirm_title: "구매 확인"
+  claims_title: "아이템 보관함"
+  my_listings_title: "내 등록 아이템"
+  item_lore:
+    price: "&7가격: &a%price%"
+    seller: "&7판매자: &f%seller%"
+    expires: "&7만료까지: &e%time%"
+    click_to_buy: "&e클릭하여 구매"
+    published_in: "&6등록까지 남은 시간: &e%seconds%초"
+    countdown_status: "&6준비 중 (%seconds%초 후 구매 가능)"
+    your_item: "&c내 아이템 (클릭하여 취소)"
+  button_previous_page: "&a◀ 이전 페이지"
+  button_next_page: "&a다음 페이지 ▶"
+  button_refresh: "&b경매장 새로고침"
+  button_claim_chest: "&6아이템 보관함"
+  button_claim_chest_lore:
+    - "&7구매했거나 만료된 아이템이"
+    - "&7이곳에 보관됩니다."
+    - ""
+    - "&e클릭하여 열기"
+  button_my_listings: "&e내 등록 아이템"
+  button_my_listings_lore:
+    - "&7경매장에 등록한 아이템을"
+    - "&7관리합니다."
+    - ""
+    - "&e클릭하여 열기"
+  confirm_buy_button: "&a구매 확정"
+  confirm_buy_lore:
+    - "&7이 아이템을 다음 가격으로 구매:"
+    - "&7&e%price%"
+  cancel_button: "&c취소"
+  cancel_lore:
+    - "&7구매를 취소하고"
+    - "&7뒤로 돌아갑니다"
+  click_to_cancel_listing: "&c클릭하여 등록 취소"
+  listing_cancelled: "&a등록이 취소되었습니다! 보관함으로 이동했습니다."
+  buy_success: "&a%item% 아이템을 &e%price%&a에 구매했습니다! 보관함에서 수령하세요."
+  item_sold_notify: "&a플레이어 &f%buyer%&a님이 회원님의 &f%item% &a아이템을 &e%price%&a에 구매했습니다!"
+  not_enough_money: "&c돈이 부족합니다! 필요 금액: &e%price%"
+  item_already_sold: "&c이 아이템은 이미 판매되었거나 취소되었습니다!"
+  sell_usage: "&c사용법: /ah sell <가격>"
+  hold_item_to_sell: "&c판매할 아이템을 손에 들어주세요!"
+  invalid_price: "&c유효한 가격을 입력하세요 (&e%min% &c~ &e%max%&c)!"
+  max_slots_reached: "&c최대 등록 슬롯 한도에 도달했습니다 (%max%/%max%)!"
+  cooldown_active: "&c다음 아이템 등록까지 %seconds%초 기다려주세요!"
+  not_published_yet: "&c이 아이템은 아직 판매 준비 중입니다! %seconds%초만 기다려주세요."
+  listing_created_timer: "&a아이템 &f%item%&a이(가) 등록되었습니다! &e%seconds%초 후 판매가 시작됩니다."
+  listing_created: "&a아이템 &f%item%&a이(가) &e%price%&a에 등록되었습니다!"
+  item_claimed: "&a아이템을 인벤토리로 수령했습니다!"
+  claim_lore: "&e클릭하여 인벤토리로 받기"
+  inventory_full: "&c인벤토리가 가득 찼습니다! 공간을 확보해주세요."
+
+buyer:
+  button_back_to_buyer: "&c◀ 구매상인에게 돌아가기"
+  gui_title: "매입상"
+  balance_button: "&a잔액"
+  balance_lore:
+    - "&7현재 잔액: &e%balance%"
+  sell_button: "&6아이템 판매"
+  sell_lore:
+    - "&7위 공간에 아이템을 넣고"
+    - "&7여기를 클릭하여 판매하세요."
+    - ""
+    - "&e클릭하여 판매"
+  sell_success: "&a&f%count%&a개의 아이템을 &e%money%&a에 판매했습니다!"
+  nothing_to_sell: "&c판매 가능한 아이템이 없습니다!"
+  returned_unsold: "&7판매할 수 없는 아이템은 인벤토리로 반환되었습니다."
+
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 기본 가격"
+  dynamic_market_info: "&7시장 공급: %trend%"
+
+shop:
+  main_title: "서버 상점"
+  section_title: "카테고리: %section%"
+  quantity_title: "수량 선택"
+  item_locked_prefix: "&c[잠김]"
+  item_locked_lore: "&c이 상품은 현재 잠겨 있습니다!"
+  item_locked_msg: "&c이 상품은 상점에서 잠겨 있습니다!"
+  dynamic_trend_up: "&a▲ +%percent%%"
+  dynamic_trend_down: "&c▼ -%percent%%"
+  dynamic_trend_stable: "&7● 기본 가격"
+  dynamic_market_info: "&7시장 수요: %trend%"
+  exit_button: "&c나가기"
+  exit_lore:
+    - "&7상점 닫기"
+  back_button: "&c뒤로"
+  back_lore:
+    - "&7카테고리로 이동"
+  button_confirm_buy: "&a구매"
+  button_cancel_buy: "&c취소"
+  quantity_selector: "&e수량: &f%amount%개"
+  total_price: "&7총 금액: &a%price%"
+  buy_success: "&a%amount%개의 %item% 아이템을 &e%price%&a에 구매했습니다!"
+  not_enough_money: "&c잔액이 부족합니다! 필요 금액: &e%price%"
+  item_lore:
+    buy_price: "&7구매가: &a%buy%"
+    sell_price: "&7판매가: &e%sell%"
+    click_to_select: "&e수량을 선택하려면 클릭"
+  button_back_to_sections: "&c◀ 카테고리로 돌아가기"
+  button_back_to_sections_lore:
+    - "&7상점 메인 메뉴로 돌아가기"
+  button_prev_page: "&a◀ 이전 페이지 [%page%/%max_page%]"
+  button_next_page: "&a다음 페이지 [%page%/%max_page%] ▶"
+  section_info_lore:
+    - "&7페이지: &e%page% &7/ &e%max_page%"
+    - "&7총 아이템 수: &e%total%"
+  section_icon_lore:
+    - "&7총 아이템 수: &e%total%"
+    - "&e클릭하여 아이템 보기"
+  not_for_sale: "&c판매 불가"
+  set_amount_1: "&e설정: 1개"
+  set_amount_64: "&e설정: 64개"
+
+sections:
+  Blocks:
+    name: "&2&l블록"
+    lore:
+      - "&7건축 및 자연 블록"
+  Workstations:
+    name: "&6&l작업 블록"
+    lore:
+      - "&7주민 직업 블록 및 제작대"
+  Farming:
+    name: "&a&l농업"
+    lore:
+      - "&7작물, 씨앗 및 농업용품"
+  Redstone:
+    name: "&c&l레드스톤"
+    lore:
+      - "&7배선, 장치 및 논리 부품"
+  Decoration:
+    name: "&d&l장식"
+    lore:
+      - "&7장식 블록 및 인테리어"
+  Dyes:
+    name: "&b&l염료"
+    lore:
+      - "&7모든 색상의 염료"
+  Enchanting:
+    name: "&5&l마법부여"
+    lore:
+      - "&7마법부여 책, 청금석 및 마법"
+  Food:
+    name: "&e&l음식"
+    lore:
+      - "&7맛있고 든든한 음식"
+  Miscellaneous:
+    name: "&7&l기타"
+    lore:
+      - "&7유용한 아이템 및 일반 재료"
+  Mobs:
+    name: "&3&l몬스터 전리품"
+    lore:
+      - "&7몬스터와 동물 전리품"
+  Music:
+    name: "&9&l음악"
+    lore:
+      - "&7음반 및 멜로디"
+  Ores:
+    name: "&f&l광석 및 광물"
+    lore:
+      - "&7귀중한 광석, 보석 및 주괴"
+  Potions:
+    name: "&d&l물약 및 양조"
+    lore:
+      - "&7물약 및 양조 재료"
+  SpawnEggs:
+    name: "&a&l생성 알"
+    lore:
+      - "&7생명체를 소환하는 알"
+  Spawners:
+    name: "&8&l스포너"
+    lore:
+      - "&7몬스터 스포너"
+  Z_EverythingElse:
+    name: "&7&l기타 모든 것"
+    lore:
+      - "&7기타 상점 아이템"

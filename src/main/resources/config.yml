@@ -1,0 +1,119 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Язык плагина.
+# Доступные языки: en, ru, zh, de, fr, es, pt, ja, uk, it, pl, tr, ko
+language: "ru"
+
+# Настройка отображения валюты
+# Вы можете настроить символ и формат отображения.
+# Примеры format:
+#   "%amount%%symbol%"   -> "60$" или "60р"
+#   "%amount% %symbol%"  -> "60 руб."
+#   "%amount%(%symbol%)" -> "60(долларов)"
+#   "%symbol%%amount%"   -> "$60"
+currency:
+  symbol: "$"
+  format: "%amount%%symbol%"
+
+# Звуковые эффекты в меню и действиях (клик, смена страницы, покупка, продажа)
+sounds:
+  enabled: true
+
+# Включение и выключение отдельных модулей (по умолчанию всё включено)
+modules:
+  shop: true     # Игровой магазин (/shop)
+  auction: true  # Аукцион (/ah)
+  buyer: true    # Скупщик предметов (/buyer)
+
+# Настройка базы данных
+# Поддерживаемые типы: sqlite, mysql (или mariadb)
+database:
+  type: "sqlite"
+  sqlite:
+    file: "database.db"
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "simple_economy"
+    username: "root"
+    password: ""
+    pool-size: 10
+    connection-timeout: 30000
+
+# Настройки Аукциона (/ah)
+auction:
+  # Максимальное количество одновременно активных лотов у одного игрока
+  max_slots: 5
+  # Кулдаун перед следующим выставлением предмета на аукцион (в секундах, 0 - без кулдауна)
+  listing_cooldown_seconds: 0
+  # Задержка перед появлением предмета на аукционе (в секундах)
+  # При выставлении лот сначала появляется в слотах с таймером обратного отсчета
+  publish_delay_seconds: 5
+  # Сколько часов предмет хранится на аукционе до истечения срока
+  expire_hours: 48
+  # Минимальная допустимая цена лота
+  min_price: 1.0
+  # Максимальная допустимая цена лота
+  max_price: 100000000.0
+
+# Настройки Скупщика (/buyer)
+buyer:
+  # Воспроизводить ли звук при успешной продаже предметов
+  sound_enabled: true
+  # Выбрасывать ли оставшиеся предметы на землю при закрытии окна, если инвентарь полон
+  drop_items_on_close_if_full: true
+
+# Настройки Магазина (/shop)
+shop:
+  # Закрывать ли меню магазина после успешной покупки товара
+  close_on_buy: false
+
+  # Блокировка предметов в категориях магазина
+  # Позволяет ограничить доступ к части ассортимента (например, разрешить только первые N% предметов)
+  item_lock:
+    # Включена ли блокировка части предметов в категориях (по умолчанию выключено)
+    enabled: false
+    # Процент разрешенных (доступных) товаров от общего числа в категории (от 0 до 100)
+    # Например: 70 означает, что первые 70% предметов доступны к покупке, а остальные заблокированы
+    allowed_percentage: 100
+    # Право для обхода блокировки товаров
+    bypass_permission: "simpleeconomy.shop.bypass"
+
+# Динамическая рыночная экономика (реальный рынок)
+# В магазине (/shop) при покупках цена растет от спроса, если товар стоит без покупок — цена падает.
+# В скупщике (/buyer) при продаже предметов цена падает (перенасыщение), если товар не продают — цена восстанавливается.
+dynamic_market:
+  # Включена ли динамическая рыночная экономика
+  enabled: true
+  # Изменение цены за 1 предмет (в процентах, например 0.1% за штуку)
+  change_percent_per_item: 0.1
+  # Минимальный множитель цены от базовой (0.5 = цена не опустится ниже 50% от базовой)
+  min_price_multiplier: 0.5
+  # Максимальный множитель цены от базовой (3.0 = цена не поднимется выше 300% от базовой)
+  max_price_multiplier: 3.0
+  # Интервал проверки рынка и падения/роста цен на залежавшиеся товары (в секундах, 300 = 5 минут)
+  decay_interval_seconds: 300
+  # Процент изменения цены за каждый интервал простоя (например, 1.5%)
+  decay_percent: 1.5
+  # Показывать ли рыночный тренд (▲ / ▼) в подсказках предметов
+  show_trends: true

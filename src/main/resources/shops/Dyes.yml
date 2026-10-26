@@ -1,0 +1,153 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+pages:
+  page1:
+    items:
+      '1':
+        material: BLACK_DYE
+        buy: 5.25
+        sell: 1.32
+      '2':
+        material: BROWN_DYE
+        buy: 6.3
+        sell: 1.58
+      '3':
+        material: ORANGE_DYE
+        buy: 1.05
+        sell: 0.27
+      '4':
+        material: PINK_DYE
+        buy: 1.05
+        sell: 0.27
+      '5':
+        material: PITCHER_PLANT
+        buy: 20.75
+        sell: 5.19
+      '6':
+        material: RED_TULIP
+        buy: 1
+        sell: 0.25
+      '7':
+        material: TORCHFLOWER
+        buy: 20.75
+        sell: 5.19
+      '8':
+        material: BLUE_DYE
+        buy: 1.05
+        sell: 0.27
+      '9':
+        material: CYAN_DYE
+        buy: 0.61
+        sell: 0.16
+      '10':
+        material: GRAY_DYE
+        buy: 3.62
+        sell: 0.91
+      '11':
+        material: GREEN_DYE
+        buy: 0.11
+        sell: 0.03
+      '12':
+        material: LIGHT_BLUE_DYE
+        buy: 1.05
+        sell: 0.27
+      '13':
+        material: LIGHT_GRAY_DYE
+        buy: 1.05
+        sell: 0.27
+      '14':
+        material: LIME_DYE
+        buy: 6.3
+        sell: 0.87
+      '15':
+        material: MAGENTA_DYE
+        buy: 1.05
+        sell: 0.27
+      '16':
+        material: PURPLE_DYE
+        buy: 1.11
+        sell: 0.28
+      '17':
+        material: RED_DYE
+        buy: 1.05
+        sell: 0.27
+      '18':
+        material: WHITE_DYE
+        buy: 1.63
+        sell: 0.41
+      '19':
+        material: YELLOW_DYE
+        buy: 0.7
+        sell: 0.18
+      '20':
+        material: AZURE_BLUET
+        buy: 1
+        sell: 0.25
+      '21':
+        material: BLUE_ORCHID
+        buy: 1
+        sell: 0.25
+      '22':
+        material: CORNFLOWER
+        buy: 1
+        sell: 0.25
+      '23':
+        material: LILAC
+        buy: 1
+        sell: 0.25
+      '24':
+        material: LILY_OF_THE_VALLEY
+        buy: 1
+        sell: 0.25
+      '25':
+        material: ORANGE_TULIP
+        buy: 1
+        sell: 0.25
+      '26':
+        material: OXEYE_DAISY
+        buy: 1
+        sell: 0.25
+      '27':
+        material: PEONY
+        buy: 1
+        sell: 0.25
+      '28':
+        material: PINK_PETALS
+        buy: 1
+        sell: 0.25
+      '29':
+        material: PINK_TULIP
+        buy: 1
+        sell: 0.25
+      '30':
+        material: POPPY
+        buy: 1
+        sell: 0.25
+      '31':
+        material: SUNFLOWER
+        buy: 1
+        sell: 0.25
+      '32':
+        material: INK_SAC
+        buy: 5
+        sell: 1.25

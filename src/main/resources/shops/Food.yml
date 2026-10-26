@@ -1,0 +1,109 @@
+# MIT License
+#
+# Copyright (c) 2026 NothingFlare
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+pages:
+  page1:
+    items:
+      '1':
+        material: CAKE
+        buy: 79.32
+        sell: 19.83
+      '2':
+        material: GLOW_BERRIES
+        buy: 1
+        sell: 0.25
+      '3':
+        material: COOKED_MUTTON
+        buy: 6.3
+        sell: 1.58
+      '4':
+        material: MUTTON
+        buy: 6
+        sell: 1.5
+      '5':
+        material: APPLE
+        buy: 10
+        sell: 2.5
+      '6':
+        material: BREAD
+        buy: 15.75
+        sell: 3.94
+      '7':
+        material: COOKED_SALMON
+        buy: 6.3
+        sell: 1.58
+      '8':
+        material: COOKIE
+        buy: 2.1
+        sell: 0.53
+      '9':
+        material: GLISTERING_MELON_SLICE
+        buy: 8
+        sell: 2
+      '10':
+        material: GOLDEN_CARROT
+        buy: 12.2
+        sell: 3.05
+      '11':
+        material: HONEY_BOTTLE
+        buy: 7.94
+        sell: 1.99
+      '12':
+        material: BAKED_POTATO
+        buy: 5.25
+        sell: 1.32
+      '13':
+        material: COOKED_BEEF
+        buy: 6.3
+        sell: 1.58
+      '14':
+        material: COOKED_CHICKEN
+        buy: 6.3
+        sell: 1.58
+      '15':
+        material: COOKED_PORKCHOP
+        buy: 6.3
+        sell: 1.58
+      '16':
+        material: COOKED_RABBIT
+        buy: 6.3
+        sell: 1.58
+      '17':
+        material: BEEF
+        buy: 6
+        sell: 1.5
+      '18':
+        material: CHICKEN
+        buy: 6
+        sell: 1.5
+      '19':
+        material: PORKCHOP
+        buy: 6
+        sell: 1.5
+      '20':
+        material: RABBIT
+        buy: 6
+        sell: 1.5
+      '21':
+        material: BEETROOT_SOUP
+        buy: 38.72
+        sell: 9.68
