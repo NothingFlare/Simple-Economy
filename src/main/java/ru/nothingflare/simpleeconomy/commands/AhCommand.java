@@ -33,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import ru.nothingflare.simpleeconomy.SimpleEconomyPlugin;
 import ru.nothingflare.simpleeconomy.config.LanguageManager;
+import ru.nothingflare.simpleeconomy.gui.ah.AuctionAdminGui;
 import ru.nothingflare.simpleeconomy.gui.ah.AuctionMainGui;
 import ru.nothingflare.simpleeconomy.scheduler.TaskScheduler;
 import ru.nothingflare.simpleeconomy.util.ItemNameUtil;
@@ -74,6 +75,22 @@ public class AhCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 0) {
             new AuctionMainGui(plugin, player, 1).open();
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("admin")) {
+            if (!plugin.getConfigManager().isAuctionAdminAllowed(player)) {
+                SoundUtil.playError(player);
+                if (!player.isOp()) {
+                    MessageUtil.sendMessage(player, lm.getPrefix() + lm.getMessage("no_permission"));
+                } else {
+                    MessageUtil.sendMessage(player, lm.getPrefix() + lm.getMessage("auction.admin_not_whitelisted"));
+                }
+                return true;
+            }
+
+            SoundUtil.playClick(player);
+            new AuctionAdminGui(plugin, player, 1).open();
             return true;
         }
 
@@ -186,7 +203,11 @@ public class AhCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        MessageUtil.sendMessage(player, lm.getPrefix() + lm.getMessage("auction.sell_usage"));
+        if (plugin.getConfigManager().isAuctionAdminAllowed(player)) {
+            MessageUtil.sendMessage(player, lm.getPrefix() + "&cИспользование: /ah [sell <цена> | admin]");
+        } else {
+            MessageUtil.sendMessage(player, lm.getPrefix() + lm.getMessage("auction.sell_usage"));
+        }
         return true;
     }
 
@@ -196,6 +217,12 @@ public class AhCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if ("sell".startsWith(args[0].toLowerCase())) {
                 completions.add("sell");
+            }
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                if (plugin.getConfigManager().isAuctionAdminAllowed(p) && "admin".startsWith(args[0].toLowerCase())) {
+                    completions.add("admin");
+                }
             }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("sell")) {
             List<String> suggestions = Arrays.asList("10", "50", "100", "500", "1000");

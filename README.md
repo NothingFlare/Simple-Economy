@@ -7,7 +7,7 @@
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.20+-2b2b2b.svg?style=flat-square)](https://papermc.io)
 [![Java Version](https://img.shields.io/badge/Java-17+-2b2b2b.svg?style=flat-square)](https://www.oracle.com/java/)
 [![Folia](https://img.shields.io/badge/Folia-Supported-2b2b2b.svg?style=flat-square)](https://papermc.io/software/folia)
-[![Release](https://img.shields.io/badge/Release-1.3-2b2b2b.svg?style=flat-square)]()
+[![Release](https://img.shields.io/badge/Release-1.4-2b2b2b.svg?style=flat-square)]()
 [![License](https://img.shields.io/badge/License-MIT-2b2b2b.svg?style=flat-square)](LICENSE)
 
 [Overview](#overview) • [Key Features](#key-features) • [Compatibility](#compatibility) • [Commands and Permissions](#commands-and-permissions) • [Configuration](#configuration) • [Localization](#localization) • [Installation](#installation) • [Compiling from Source](#compiling-from-source)
@@ -38,6 +38,7 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
   - Isolated Claims Storage GUI: stores purchased, expired, and cancelled items safely, avoiding inventory overflow drops.
   - Atomic database transactions ensuring protection against duplicate claims and concurrent purchase conflicts.
   - Configurable listing cooldowns (including zero-cooldown instant listing).
+  - Admin Moderation Suite (`/ah admin`): Dedicated OP-only moderation interface allowing immediate removal of illicit listings with database audit logging (`se_auction_admin_logs`), protected by an optional admin whitelist.
 
 - **Scrap Buyer (`/buyer`)**
   - Mass-selling interface allowing players to deposit multiple inventory items simultaneously for instant liquidation.
@@ -84,6 +85,7 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
 | `/shop` | `/eshop` | Opens the server shop category interface | `simpleeconomy.shop.use` |
 | `/ah` | `/auction` | Opens the player auction house interface | `simpleeconomy.auction.use` |
 | `/ah sell <price>` | `/auction sell` | Lists the item currently held in main hand | `simpleeconomy.auction.use` |
+| `/ah admin` | None | Opens auction moderation GUI to delete listings | `op` (and whitelist if active) |
 | `/buyer` | `/scrapper`, `/sell` | Opens the scrap buyer bulk selling interface | `simpleeconomy.buyer.use` |
 | `/simpleeconomy reload` | `/se reload` | Reloads configurations, shops, market state, and languages | `simpleeconomy.admin` |
 
@@ -150,6 +152,11 @@ auction:
   expire_hours: 48
   min_price: 1.0
   max_price: 100000000.0
+  admin_whitelist:
+    enabled: false
+    players:
+      - "Admin"
+      - "Owner"
 
 # Scrap Buyer (/buyer) parameters
 buyer:
@@ -201,7 +208,7 @@ Pre-configured interface languages and item dictionaries are located in `plugins
 
 ## Installation
 
-1. Download `simple-economy-1.3.jar` from the release section.
+1. Download `simple-economy-1.4.jar` from the release section.
 2. Place the JAR file into your server's `plugins/` directory.
 3. Ensure `Vault` and an economy service provider (e.g., `EssentialsX`) are installed.
 4. Start or restart the server to generate default configurations, shops, and database tables.
@@ -227,7 +234,7 @@ mvn clean package
 
 The resulting binary will be located in:
 ```text
-target/simple-economy-1.3.jar
+target/simple-economy-1.4.jar
 ```
 
 ---

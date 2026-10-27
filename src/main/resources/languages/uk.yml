@@ -36,6 +36,7 @@ auction:
     seller: "&7Продавець: &f%seller%"
     expires: "&7Закінчується через: &e%time%"
     click_to_buy: "&eНатисніть, щоб купити"
+    click_to_delete_admin: "&c✖ Натисніть для видалення (Адмін)"
     published_in: "&6З'явиться у продажу через: &e%seconds% сек."
     countdown_status: "&6Підготовка (з'явиться через %seconds% сек.)"
     your_item: "&cВаш предмет (натисніть для скасування)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aПредмет переміщено у ваш інвентар!"
   claim_lore: "&eНатисніть, щоб забрати в інвентар"
   inventory_full: "&cВаш інвентар переповнений! Звільніть місце."
+
+  admin_gui_title: "&4Аукціон [Адмін] &8[%page%/%max_page%]"
+  admin_confirm_title: "Видалення лота адміністратором"
+  button_confirm_admin_delete: "&c&lВидалити лот"
+  confirm_admin_delete_lore:
+    - "&7Видалити лот гравця &f%seller%"
+    - "&7Предмет буде безповоротно видалено"
+    - "&7і занесено до бази даних."
+  admin_delete_success: "&aЛот гравця &f%seller% &a(%item%) успішно видалено з аукціону та занесено до БД!"
+  admin_not_whitelisted: "&cВи не внесені до білого списку адміністраторів аукціону!"
+  button_back_to_ah: "&c◀ Назад до аукціону"
+  admin_indicator_name: "&4&lРежим Адміністратора"
+  admin_indicator_lore:
+    - "&7Ви перебуваєте в меню модерації аукціону."
+    - "&7Натисніть на будь-який лот для його видалення."
 
 buyer:
   button_back_to_buyer: "&c◀ Назад до скупника"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lВсе інше"
     lore:
       - "&7Решта товарів магазину"
+console:
+  updates-checking: "[SimpleEconomy] Перевірка наявності оновлень..."
+  updates-latest: "[SimpleEconomy] Ви використовуєте найновішу версію (v{version})"
+  updates-available: "[SimpleEconomy] Доступна нова версія: v{remote} (Поточна: v{current})"
+  updates-download: "[SimpleEconomy] Завантажити оновлення можна тут:"
+  updates-fail: "[SimpleEconomy] Не вдалося отримати останню версію з GitHub API."
+  updates-error: "[SimpleEconomy] Помилка перевірки оновлень: {error}"

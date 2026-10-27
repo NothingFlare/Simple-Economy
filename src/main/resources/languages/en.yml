@@ -36,6 +36,7 @@ auction:
     seller: "&7Seller: &f%seller%"
     expires: "&7Expires in: &e%time%"
     click_to_buy: "&eClick to purchase"
+    click_to_delete_admin: "&c✖ Click to delete (Admin)"
     published_in: "&6Listed on auction in: &e%seconds%s"
     countdown_status: "&6Pending (available in %seconds%s)"
     your_item: "&cYour item (click to cancel)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aItem claimed to your inventory!"
   claim_lore: "&eClick to take into inventory"
   inventory_full: "&cYour inventory is full! Please make space."
+
+  admin_gui_title: "&4Auction [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Admin Listing Removal"
+  button_confirm_admin_delete: "&c&lDelete Listing"
+  confirm_admin_delete_lore:
+    - "&7Delete listing by &f%seller%"
+    - "&7The item will be permanently deleted"
+    - "&7and logged in the database."
+  admin_delete_success: "&aListing by &f%seller% &a(%item%) was successfully deleted and logged!"
+  admin_not_whitelisted: "&cYou are not on the auction admin whitelist!"
+  button_back_to_ah: "&c◀ Back to Auction"
+  admin_indicator_name: "&4&lAdministrator Mode"
+  admin_indicator_lore:
+    - "&7You are in auction moderation mode."
+    - "&7Click on any listing to remove it."
 
 buyer:
   gui_title: "Buyer"
@@ -217,3 +233,10 @@ sections:
     name: "&7&lEverything Else"
     lore:
       - "&7Other unique shop items"
+console:
+  updates-checking: "[SimpleEconomy] Checking for updates..."
+  updates-latest: "[SimpleEconomy] You are running on the latest version (v{version})"
+  updates-available: "[SimpleEconomy] A new version is available: v{remote} (Current: v{current})"
+  updates-download: "[SimpleEconomy] Download the update at:"
+  updates-fail: "[SimpleEconomy] Could not retrieve the latest version from GitHub API."
+  updates-error: "[SimpleEconomy] Could not check for updates: {error}"

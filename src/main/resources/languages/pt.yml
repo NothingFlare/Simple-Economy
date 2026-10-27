@@ -36,6 +36,7 @@ auction:
     seller: "&7Vendedor: &f%seller%"
     expires: "&7Expira em: &e%time%"
     click_to_buy: "&eClique para comprar"
+    click_to_delete_admin: "&c✖ Clique para excluir (Admin)"
     published_in: "&6Disponível em: &e%seconds% s"
     countdown_status: "&6Em preparação (disponível em %seconds% s)"
     your_item: "&cSeu item (clique para cancelar)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aItem resgatado para seu inventário!"
   claim_lore: "&eClique para resgatar"
   inventory_full: "&cSeu inventário está cheio! Abra espaço."
+
+  admin_gui_title: "&4Leilão [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Exclusão de anúncio (Admin)"
+  button_confirm_admin_delete: "&c&lExcluir anúncio"
+  confirm_admin_delete_lore:
+    - "&7Excluir anúncio de &f%seller%"
+    - "&7O item será permanentemente excluído"
+    - "&7e registrado no banco de dados."
+  admin_delete_success: "&aO anúncio de &f%seller% &a(%item%) foi excluído e registrado com sucesso!"
+  admin_not_whitelisted: "&cVocê não está na lista branca de administradores do leilão!"
+  button_back_to_ah: "&c◀ Voltar ao leilão"
+  admin_indicator_name: "&4&lModo Administrador"
+  admin_indicator_lore:
+    - "&7Você está no modo moderação de leilão."
+    - "&7Clique em qualquer anúncio para excluí-lo."
 
 buyer:
   button_back_to_buyer: "&c◀ Voltar ao comprador"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lTudo o mais"
     lore:
       - "&7Outros itens da loja"
+console:
+  updates-checking: "[SimpleEconomy] Verificando atualizações..."
+  updates-latest: "[SimpleEconomy] Você está usando a versão mais recente (v{version})"
+  updates-available: "[SimpleEconomy] Nova versão disponível: v{remote} (Atual: v{current})"
+  updates-download: "[SimpleEconomy] Baixe a atualização em:"
+  updates-fail: "[SimpleEconomy] Não foi possível obter a versão mais recente pela GitHub API."
+  updates-error: "[SimpleEconomy] Erro ao verificar atualizações: {error}"

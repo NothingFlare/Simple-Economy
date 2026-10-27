@@ -36,6 +36,7 @@ auction:
     seller: "&7Satıcı: &f%seller%"
     expires: "&7Kalan Süre: &e%time%"
     click_to_buy: "&eSatın almak için tıkla"
+    click_to_delete_admin: "&c✖ Silmek için tıkla (Yönetici)"
     published_in: "&6Listelenmeye kalan: &e%seconds% sn."
     countdown_status: "&6Hazırlanıyor (%seconds% sn. sonra hazır)"
     your_item: "&cKendi eşyanız (iptal etmek için tıkla)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aEşya envanterinize aktarıldı!"
   claim_lore: "&eEnvantere almak için tıklayın"
   inventory_full: "&cEnvanteriniz dolu! Lütfen yer açın."
+
+  admin_gui_title: "&4Açık Artırma [Yönetici] &8[%page%/%max_page%]"
+  admin_confirm_title: "İlan Kaldırmayı Onayla"
+  button_confirm_admin_delete: "&c&lİlanı Sil"
+  confirm_admin_delete_lore:
+    - "&7&f%seller% &7tarafından verilen ilanı sil"
+    - "&7Öğe kalıcı olarak silinecek"
+    - "&7ve veritabanına kaydedilecektir."
+  admin_delete_success: "&a&f%seller% &aadlı oyuncunun ilanı (%item%) başarıyla silindi ve kaydedildi!"
+  admin_not_whitelisted: "&cAçık artırma yönetici beyaz listesinde değilsiniz!"
+  button_back_to_ah: "&c◀ Açık Artırmaya Geri Dön"
+  admin_indicator_name: "&4&lYönetici Modu"
+  admin_indicator_lore:
+    - "&7Açık artırma moderasyon modundasınız."
+    - "&7Kaldırmak için herhangi bir ilana tıklayın."
 
 buyer:
   button_back_to_buyer: "&c◀ Alıcıya Geri Dön"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lDiğer Her Şey"
     lore:
       - "&7Diğer tüm market ürünleri"
+console:
+  updates-checking: "[SimpleEconomy] Güncellemeler kontrol ediliyor..."
+  updates-latest: "[SimpleEconomy] En son sürümü kullanıyorsunuz (v{version})"
+  updates-available: "[SimpleEconomy] Yeni bir sürüm mevcut: v{remote} (Mevcut: v{current})"
+  updates-download: "[SimpleEconomy] Güncellemeyi buradan indirin:"
+  updates-fail: "[SimpleEconomy] GitHub API üzerinden son sürüm bilgisi alınamadı."
+  updates-error: "[SimpleEconomy] Güncelleme kontrolünde hata oluştu: {error}"

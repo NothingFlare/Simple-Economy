@@ -36,6 +36,7 @@ import ru.nothingflare.simpleeconomy.economy.EconomyHook;
 import ru.nothingflare.simpleeconomy.gui.GuiListener;
 import ru.nothingflare.simpleeconomy.market.DynamicMarketManager;
 import ru.nothingflare.simpleeconomy.scheduler.TaskScheduler;
+import ru.nothingflare.simpleeconomy.update.UpdateChecker;
 import ru.nothingflare.simpleeconomy.util.SoundUtil;
 
 public class SimpleEconomyPlugin extends JavaPlugin {
@@ -116,6 +117,11 @@ public class SimpleEconomyPlugin extends JavaPlugin {
 
         // 7. Print Console Banner
         printBanner();
+
+        // 8. Check for Updates
+        if (configManager.isCheckUpdates()) {
+            new UpdateChecker(getDescription().getVersion(), getLogger(), languageManager).checkAsync();
+        }
     }
 
     private void printBanner() {

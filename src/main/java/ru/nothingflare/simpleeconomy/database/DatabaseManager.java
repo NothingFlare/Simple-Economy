@@ -142,9 +142,22 @@ public class DatabaseManager {
                 "PRIMARY KEY (market_type, item_key)" +
                 ");";
 
+        String createAdminLogs = "CREATE TABLE IF NOT EXISTS se_auction_admin_logs (" +
+                idDef + ", " +
+                "listing_id BIGINT NOT NULL, " +
+                "admin_uuid VARCHAR(36) NOT NULL, " +
+                "admin_name VARCHAR(64) NOT NULL, " +
+                "seller_uuid VARCHAR(36) NOT NULL, " +
+                "seller_name VARCHAR(64) NOT NULL, " +
+                "item_data TEXT NOT NULL, " +
+                "price DOUBLE NOT NULL, " +
+                "deleted_at BIGINT NOT NULL" +
+                ");";
+
         String idxListingsStatus = "CREATE INDEX IF NOT EXISTS idx_auction_status_created ON se_auction_listings (status, created_at);";
         String idxListingsSeller = "CREATE INDEX IF NOT EXISTS idx_auction_seller ON se_auction_listings (seller_uuid, status);";
         String idxClaimsPlayer = "CREATE INDEX IF NOT EXISTS idx_auction_claims_player ON se_auction_claims (player_uuid);";
+        String idxAdminLogs = "CREATE INDEX IF NOT EXISTS idx_auction_admin_logs ON se_auction_admin_logs (deleted_at);";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
@@ -152,10 +165,12 @@ public class DatabaseManager {
             stmt.execute(createClaims);
             stmt.execute(createBuyer);
             stmt.execute(createMarket);
+            stmt.execute(createAdminLogs);
             try {
                 stmt.execute(idxListingsStatus);
                 stmt.execute(idxListingsSeller);
                 stmt.execute(idxClaimsPlayer);
+                stmt.execute(idxAdminLogs);
             } catch (SQLException ignored) {}
 
             try {
@@ -307,6 +322,74 @@ public class DatabaseManager {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             plugin.getLogger().severe("Failed to cancel listing: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean adminDeleteListing(long listingId, UUID adminUuid, String adminName) {
+        String selectSql = "SELECT seller_uuid, seller_name, item_data, price FROM se_auction_listings WHERE id = ? AND status = 'ACTIVE'";
+        String updateSql = "UPDATE se_auction_listings SET status = 'ADMIN_DELETED' WHERE id = ? AND status = 'ACTIVE'";
+        String logSql = "INSERT INTO se_auction_admin_logs (listing_id, admin_uuid, admin_name, seller_uuid, seller_name, item_data, price, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = getConnection()) {
+            boolean originalAutoCommit = conn.getAutoCommit();
+            conn.setAutoCommit(false);
+            try {
+                String sellerUuid = null;
+                String sellerName = null;
+                String itemData = null;
+                double price = 0.0;
+
+                try (PreparedStatement psSelect = conn.prepareStatement(selectSql)) {
+                    psSelect.setLong(1, listingId);
+                    try (ResultSet rs = psSelect.executeQuery()) {
+                        if (rs.next()) {
+                            sellerUuid = rs.getString("seller_uuid");
+                            sellerName = rs.getString("seller_name");
+                            itemData = rs.getString("item_data");
+                            price = rs.getDouble("price");
+                        } else {
+                            conn.rollback();
+                            conn.setAutoCommit(originalAutoCommit);
+                            return false;
+                        }
+                    }
+                }
+
+                int updated;
+                try (PreparedStatement psUpdate = conn.prepareStatement(updateSql)) {
+                    psUpdate.setLong(1, listingId);
+                    updated = psUpdate.executeUpdate();
+                }
+
+                if (updated <= 0) {
+                    conn.rollback();
+                    conn.setAutoCommit(originalAutoCommit);
+                    return false;
+                }
+
+                try (PreparedStatement psLog = conn.prepareStatement(logSql)) {
+                    psLog.setLong(1, listingId);
+                    psLog.setString(2, adminUuid.toString());
+                    psLog.setString(3, adminName);
+                    psLog.setString(4, sellerUuid);
+                    psLog.setString(5, sellerName);
+                    psLog.setString(6, itemData);
+                    psLog.setDouble(7, price);
+                    psLog.setLong(8, System.currentTimeMillis());
+                    psLog.executeUpdate();
+                }
+
+                conn.commit();
+                conn.setAutoCommit(originalAutoCommit);
+                return true;
+            } catch (SQLException ex) {
+                conn.rollback();
+                conn.setAutoCommit(originalAutoCommit);
+                throw ex;
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Failed to admin-delete listing " + listingId + ": " + e.getMessage());
             return false;
         }
     }

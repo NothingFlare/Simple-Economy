@@ -36,6 +36,7 @@ auction:
     seller: "&7Продавец: &f%seller%"
     expires: "&7Истекает через: &e%time%"
     click_to_buy: "&eНажмите, чтобы купить"
+    click_to_delete_admin: "&c✖ Нажмите для удаления (Админ)"
     published_in: "&6Появится в продаже через: &e%seconds% сек."
     countdown_status: "&6Подготовка (появится через %seconds% сек.)"
     your_item: "&cВаш предмет (нажмите для отмены)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aПредмет успешно перемещен в ваш инвентарь!"
   claim_lore: "&eНажмите, чтобы забрать в инвентарь"
   inventory_full: "&cВаш инвентарь переполнен! Освободите место."
+
+  admin_gui_title: "&4Аукцион [Админ] &8[%page%/%max_page%]"
+  admin_confirm_title: "Удаление лота администратором"
+  button_confirm_admin_delete: "&c&lУдалить лот"
+  confirm_admin_delete_lore:
+    - "&7Удалить лот игрока &f%seller%"
+    - "&7Предмет будет безвозвратно удален"
+    - "&7и залогирован в базе данных."
+  admin_delete_success: "&aЛот игрока &f%seller% &a(%item%) успешно удален с аукциона и залогирован в БД!"
+  admin_not_whitelisted: "&cВы не внесены в белый список администраторов аукциона!"
+  button_back_to_ah: "&c◀ Назад к аукциону"
+  admin_indicator_name: "&4&lРежим Администратора"
+  admin_indicator_lore:
+    - "&7Вы находитесь в меню модерации аукциона."
+    - "&7Нажмите на любой лот для его удаления."
 
 buyer:
   gui_title: "Скупщик"
@@ -217,3 +233,10 @@ sections:
     name: "&7&lПрочее"
     lore:
       - "&7Остальные предметы сервера"
+console:
+  updates-checking: "[SimpleEconomy] Проверка наличия обновлений..."
+  updates-latest: "[SimpleEconomy] Вы используете актуальную версию (v{version})"
+  updates-available: "[SimpleEconomy] Доступна новая версия: v{remote} (Текущая: v{current})"
+  updates-download: "[SimpleEconomy] Скачать обновление можно здесь:"
+  updates-fail: "[SimpleEconomy] Не удалось получить информацию о последней версии с GitHub API."
+  updates-error: "[SimpleEconomy] Ошибка при проверке обновлений: {error}"

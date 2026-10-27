@@ -36,6 +36,7 @@ auction:
     seller: "&7Vendedor: &f%seller%"
     expires: "&7Expira en: &e%time%"
     click_to_buy: "&eHaz clic para comprar"
+    click_to_delete_admin: "&c✖ Clic para eliminar (Admin)"
     published_in: "&6Aparecerá en: &e%seconds% seg."
     countdown_status: "&6En preparación (disponible en %seconds% seg.)"
     your_item: "&cTu objeto (haz clic para cancelar)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&a¡Objeto reclamado a tu inventario!"
   claim_lore: "&eClic para reclamar al inventario"
   inventory_full: "&c¡Tu inventario está lleno! Por favor haz espacio."
+
+  admin_gui_title: "&4Subasta [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Eliminación de subasta (Admin)"
+  button_confirm_admin_delete: "&c&lEliminar subasta"
+  confirm_admin_delete_lore:
+    - "&7Eliminar subasta de &f%seller%"
+    - "&7El artículo será eliminado permanentemente"
+    - "&7y registrado en la base de datos."
+  admin_delete_success: "&a¡La subasta de &f%seller% &a(%item%) fue eliminada y registrada con éxito!"
+  admin_not_whitelisted: "&c¡No estás en la lista blanca de administradores de subastas!"
+  button_back_to_ah: "&c◀ Volver a la subasta"
+  admin_indicator_name: "&4&lModo Administrador"
+  admin_indicator_lore:
+    - "&7Estás en modo moderación de subasta."
+    - "&7Haz clic en cualquier subasta para eliminarla."
 
 buyer:
   button_back_to_buyer: "&c◀ Volver al comprador"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lTodo lo demás"
     lore:
       - "&7Otros artículos de la tienda"
+console:
+  updates-checking: "[SimpleEconomy] Buscando actualizaciones..."
+  updates-latest: "[SimpleEconomy] Estás ejecutando la última versión (v{version})"
+  updates-available: "[SimpleEconomy] Nueva versión disponible: v{remote} (Actual: v{current})"
+  updates-download: "[SimpleEconomy] Descarga la actualización en:"
+  updates-fail: "[SimpleEconomy] No se pudo obtener la versión de la API de GitHub."
+  updates-error: "[SimpleEconomy] Error al buscar actualizaciones: {error}"

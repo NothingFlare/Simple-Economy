@@ -25,6 +25,7 @@
 package ru.nothingflare.simpleeconomy.config;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -43,6 +44,8 @@ public class ConfigManager {
 
     private final SimpleEconomyPlugin plugin;
 
+    private boolean checkUpdates = true;
+
     private boolean shopEnabled = true;
     private boolean auctionEnabled = true;
     private boolean buyerEnabled = true;
@@ -53,6 +56,8 @@ public class ConfigManager {
     private int expireHours = 48;
     private double minPrice = 1.0;
     private double maxPrice = 100000000.0;
+    private boolean auctionAdminWhitelistEnabled = false;
+    private final List<String> auctionAdminWhitelist = new ArrayList<>();
 
     private boolean buyerSoundEnabled = true;
     private boolean buyerDropIfFull = true;
@@ -84,6 +89,8 @@ public class ConfigManager {
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
 
+        this.checkUpdates = config.getBoolean("check_updates", config.getBoolean("check-updates", true));
+
         this.shopEnabled = config.getBoolean("modules.shop", true);
         this.auctionEnabled = config.getBoolean("modules.auction", true);
         this.buyerEnabled = config.getBoolean("modules.buyer", true);
@@ -94,6 +101,9 @@ public class ConfigManager {
         this.expireHours = config.getInt("auction.expire_hours", 48);
         this.minPrice = config.getDouble("auction.min_price", 1.0);
         this.maxPrice = config.getDouble("auction.max_price", 100000000.0);
+        this.auctionAdminWhitelistEnabled = config.getBoolean("auction.admin_whitelist.enabled", false);
+        this.auctionAdminWhitelist.clear();
+        this.auctionAdminWhitelist.addAll(config.getStringList("auction.admin_whitelist.players"));
 
         this.buyerSoundEnabled = config.getBoolean("buyer.sound_enabled", true);
         this.buyerDropIfFull = config.getBoolean("buyer.drop_items_on_close_if_full", true);
@@ -389,5 +399,32 @@ public class ConfigManager {
 
     public ShopSection getSection(String id) {
         return sections.get(id);
+    }
+
+    public boolean isAuctionAdminAllowed(Player player) {
+        if (player == null || !player.isOp()) {
+            return false;
+        }
+        if (!auctionAdminWhitelistEnabled) {
+            return true;
+        }
+        for (String name : auctionAdminWhitelist) {
+            if (name.equalsIgnoreCase(player.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAuctionAdminWhitelistEnabled() {
+        return auctionAdminWhitelistEnabled;
+    }
+
+    public List<String> getAuctionAdminWhitelist() {
+        return Collections.unmodifiableList(auctionAdminWhitelist);
+    }
+
+    public boolean isCheckUpdates() {
+        return checkUpdates;
     }
 }

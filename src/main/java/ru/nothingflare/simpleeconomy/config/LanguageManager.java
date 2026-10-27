@@ -91,6 +91,28 @@ public class LanguageManager {
         return "";
     }
 
+    public String get(String path, Object... placeholders) {
+        String msg = null;
+        if (langConfig != null) {
+            msg = langConfig.getString(path);
+        }
+        if (msg == null && fallbackConfig != null) {
+            msg = fallbackConfig.getString(path);
+        }
+        if (msg == null) {
+            return path;
+        }
+
+        if (placeholders != null && placeholders.length > 0 && placeholders.length % 2 == 0) {
+            for (int i = 0; i < placeholders.length; i += 2) {
+                String key = String.valueOf(placeholders[i]);
+                String val = String.valueOf(placeholders[i + 1]);
+                msg = msg.replace("%" + key + "%", val).replace("{" + key + "}", val);
+            }
+        }
+        return MessageUtil.color(msg);
+    }
+
     public String getMessage(String path) {
         return getMessage(path, null);
     }

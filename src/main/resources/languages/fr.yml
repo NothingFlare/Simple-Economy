@@ -36,6 +36,7 @@ auction:
     seller: "&7Vendeur: &f%seller%"
     expires: "&7Expire dans: &e%time%"
     click_to_buy: "&eCliquez pour acheter"
+    click_to_delete_admin: "&c✖ Cliquer pour supprimer (Admin)"
     published_in: "&6Disponible dans: &e%seconds% s"
     countdown_status: "&6Préparation (disponible dans %seconds% s)"
     your_item: "&cVotre objet (cliquez pour annuler)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aObjet récupéré dans votre inventaire !"
   claim_lore: "&eCliquez pour récupérer"
   inventory_full: "&cVotre inventaire est plein ! Veuillez faire de la place."
+
+  admin_gui_title: "&4Enchères [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Suppression d'enchère (Admin)"
+  button_confirm_admin_delete: "&c&lSupprimer l'enchère"
+  confirm_admin_delete_lore:
+    - "&7Supprimer l'enchère de &f%seller%"
+    - "&7L'objet sera définitivement supprimé"
+    - "&7et enregistré dans la base de données."
+  admin_delete_success: "&aL'enchère de &f%seller% &a(%item%) a été supprimée et enregistrée avec succès!"
+  admin_not_whitelisted: "&cVous n'êtes pas sur la liste blanche des administrateurs d'enchères!"
+  button_back_to_ah: "&c◀ Retour aux enchères"
+  admin_indicator_name: "&4&lMode Administrateur"
+  admin_indicator_lore:
+    - "&7Vous êtes en mode modération des enchères."
+    - "&7Cliquez sur une enchère pour la supprimer."
 
 buyer:
   button_back_to_buyer: "&c◀ Retour à l'acheteur"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lTout le reste"
     lore:
       - "&7Autres articles uniques"
+console:
+  updates-checking: "[SimpleEconomy] Recherche de mises à jour..."
+  updates-latest: "[SimpleEconomy] Vous utilisez la dernière version (v{version})"
+  updates-available: "[SimpleEconomy] Nouvelle version disponible : v{remote} (Actuelle : v{current})"
+  updates-download: "[SimpleEconomy] Télécharger la mise à jour sur :"
+  updates-fail: "[SimpleEconomy] Impossible de récupérer la version depuis l'API GitHub."
+  updates-error: "[SimpleEconomy] Erreur lors de la vérification des mises à jour : {error}"

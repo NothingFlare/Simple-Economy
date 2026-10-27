@@ -36,6 +36,7 @@ auction:
     seller: "&7Sprzedawca: &f%seller%"
     expires: "&7Wygasa za: &e%time%"
     click_to_buy: "&eKliknij, aby kupić"
+    click_to_delete_admin: "&c✖ Kliknij, aby usunąć (Admin)"
     published_in: "&6Pojawi się za: &e%seconds% sek."
     countdown_status: "&6Przygotowanie (dostępne za %seconds% sek.)"
     your_item: "&cTwój przedmiot (kliknij, aby anulować)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aPrzedmiot odebrany do Twojego ekwipunku!"
   claim_lore: "&eKliknij, aby odebrać do ekwipunku"
   inventory_full: "&cTwój ekwipunek jest pełny! Zrób miejsce."
+
+  admin_gui_title: "&4Aukcja [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Usuwanie oferty (Admin)"
+  button_confirm_admin_delete: "&c&lUsuń ofertę"
+  confirm_admin_delete_lore:
+    - "&7Usuń ofertę gracza &f%seller%"
+    - "&7Przedmiot zostanie trwale usunięty"
+    - "&7i zapisany w bazie danych."
+  admin_delete_success: "&aOferta gracza &f%seller% &a(%item%) została pomyślnie usunięta i zarejestrowana!"
+  admin_not_whitelisted: "&cTwoja nazwa nie znajduje się na białej liście administratorów aukcji!"
+  button_back_to_ah: "&c◀ Powrót do aukcji"
+  admin_indicator_name: "&4&lTryb Administratora"
+  admin_indicator_lore:
+    - "&7Jesteś w trybie moderacji aukcji."
+    - "&7Kliknij na dowolną ofertę, aby ją usunąć."
 
 buyer:
   button_back_to_buyer: "&c◀ Wróć do skupu"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lWszystko inne"
     lore:
       - "&7Pozostałe towary sklepu"
+console:
+  updates-checking: "[SimpleEconomy] Sprawdzanie aktualizacji..."
+  updates-latest: "[SimpleEconomy] Używasz najnowszej wersji (v{version})"
+  updates-available: "[SimpleEconomy] Dostępna jest nowa wersja: v{remote} (Obecna: v{current})"
+  updates-download: "[SimpleEconomy] Pobierz aktualizację tutaj:"
+  updates-fail: "[SimpleEconomy] Nie udało się pobrać informacji o wersji z GitHub API."
+  updates-error: "[SimpleEconomy] Błąd podczas sprawdzania aktualizacji: {error}"

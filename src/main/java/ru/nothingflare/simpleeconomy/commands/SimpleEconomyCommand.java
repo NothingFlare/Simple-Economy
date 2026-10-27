@@ -59,6 +59,9 @@ public class SimpleEconomyCommand implements CommandExecutor, TabCompleter {
             if (plugin.getDynamicMarketManager() != null) {
                 plugin.getDynamicMarketManager().load();
             }
+            if (plugin.getConfigManager().isCheckUpdates()) {
+                new ru.nothingflare.simpleeconomy.update.UpdateChecker(plugin.getDescription().getVersion(), plugin.getLogger(), plugin.getLanguageManager()).checkAsync();
+            }
             MessageUtil.sendMessage(sender, lm.getPrefix() + lm.getMessage("reload_success"));
             return true;
         }

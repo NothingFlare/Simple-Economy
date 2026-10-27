@@ -36,6 +36,7 @@ auction:
     seller: "&7出品者: &f%seller%"
     expires: "&7残り時間: &e%time%"
     click_to_buy: "&eクリックで購入"
+    click_to_delete_admin: "&c✖ クリックして削除 (管理者)"
     published_in: "&6出品まであと: &e%seconds% 秒"
     countdown_status: "&6準備中 (%seconds% 秒後に購入可能)"
     your_item: "&cあなたが出品したアイテム (クリックで取り下げ)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aアイテムをインベントリに受け取りました！"
   claim_lore: "&eクリックしてインベントリに受け取る"
   inventory_full: "&cインベントリがいっぱいです！空きを作ってください。"
+
+  admin_gui_title: "&4オークション [管理者] &8[%page%/%max_page%]"
+  admin_confirm_title: "出品の削除確認 (管理者)"
+  button_confirm_admin_delete: "&c&l出品を削除"
+  confirm_admin_delete_lore:
+    - "&f%seller% &7の出品を削除"
+    - "&7アイテムは完全に削除され"
+    - "&7データベースにログ記録されます。"
+  admin_delete_success: "&a&f%seller% &aの出品 (%item%) が正常に削除され、ログに記録されました！"
+  admin_not_whitelisted: "&cオークション管理者ホワイトリストに登録されていません！"
+  button_back_to_ah: "&c◀ オークションに戻る"
+  admin_indicator_name: "&4&l管理者モード"
+  admin_indicator_lore:
+    - "&7オークション管理モードです。"
+    - "&7出品をクリックして削除します。"
 
 buyer:
   button_back_to_buyer: "&c◀ 買取屋に戻る"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lその他すべて"
     lore:
       - "&7その他のショップ商品"
+console:
+  updates-checking: "[SimpleEconomy] アップデートを確認中..."
+  updates-latest: "[SimpleEconomy] 最新バージョンを使用しています (v{version})"
+  updates-available: "[SimpleEconomy] 新しいバージョンが利用可能です: v{remote} (現在: v{current})"
+  updates-download: "[SimpleEconomy] ダウンロードはこちら:"
+  updates-fail: "[SimpleEconomy] GitHub API から最新バージョンを取得できませんでした。"
+  updates-error: "[SimpleEconomy] アップデート確認エラー: {error}"

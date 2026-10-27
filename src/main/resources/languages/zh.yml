@@ -36,6 +36,7 @@ auction:
     seller: "&7卖家: &f%seller%"
     expires: "&7到期时间: &e%time%"
     click_to_buy: "&e点击购买"
+    click_to_delete_admin: "&c✖ 点击删除拍品 (管理员)"
     published_in: "&6上架倒计时: &e%seconds% 秒"
     countdown_status: "&6准备中 (将在 %seconds% 秒后可购买)"
     your_item: "&c你的物品 (点击下架)"
@@ -78,6 +79,21 @@ auction:
   item_claimed: "&a物品已领取至背包！"
   claim_lore: "&e点击领取到背包"
   inventory_full: "&c背包已满！请腾出空间。"
+
+  admin_gui_title: "&4拍卖行 [管理员] &8[%page%/%max_page%]"
+  admin_confirm_title: "管理员删除拍品确认"
+  button_confirm_admin_delete: "&c&l删除此拍品"
+  confirm_admin_delete_lore:
+    - "&7删除玩家 &f%seller% &7的拍品"
+    - "&7该物品将被彻底清除"
+    - "&7并在数据库中完整记录日志。"
+  admin_delete_success: "&a已成功删除玩家 &f%seller% &a的拍品 (%item%) 并已记录至数据库！"
+  admin_not_whitelisted: "&c您不在拍卖行管理员白名单中！"
+  button_back_to_ah: "&c◀ 返回拍卖行"
+  admin_indicator_name: "&4&l管理员管理模式"
+  admin_indicator_lore:
+    - "&7您当前处于拍卖行管理模式。"
+    - "&7点击任意拍品即可将其下架删除。"
 
 buyer:
   button_back_to_buyer: "&c◀ 返回回收商"
@@ -207,3 +223,10 @@ sections:
     name: "&7&l其他所有"
     lore:
       - "&7其他独特商品"
+console:
+  updates-checking: "[SimpleEconomy] 正在检查更新..."
+  updates-latest: "[SimpleEconomy] 当前运行的是最新版本 (v{version})"
+  updates-available: "[SimpleEconomy] 发现新版本: v{remote} (当前版本: v{current})"
+  updates-download: "[SimpleEconomy] 下载更新地址:"
+  updates-fail: "[SimpleEconomy] 无法从 GitHub API 获取最新版本信息。"
+  updates-error: "[SimpleEconomy] 检查更新时出错: {error}"

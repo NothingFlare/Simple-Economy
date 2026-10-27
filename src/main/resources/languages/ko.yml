@@ -36,6 +36,7 @@ auction:
     seller: "&7판매자: &f%seller%"
     expires: "&7만료까지: &e%time%"
     click_to_buy: "&e클릭하여 구매"
+    click_to_delete_admin: "&c✖ 클릭하여 삭제 (관리자)"
     published_in: "&6등록까지 남은 시간: &e%seconds%초"
     countdown_status: "&6준비 중 (%seconds%초 후 구매 가능)"
     your_item: "&c내 아이템 (클릭하여 취소)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&a아이템을 인벤토리로 수령했습니다!"
   claim_lore: "&e클릭하여 인벤토리로 받기"
   inventory_full: "&c인벤토리가 가득 찼습니다! 공간을 확보해주세요."
+
+  admin_gui_title: "&4경매장 [관리자] &8[%page%/%max_page%]"
+  admin_confirm_title: "관리자 물품 삭제 확인"
+  button_confirm_admin_delete: "&c&l물품 삭제"
+  confirm_admin_delete_lore:
+    - "&f%seller% &7플레이어의 물품 삭제"
+    - "&7물품은 영구적으로 삭제되며"
+    - "&7데이터베이스에 기록됩니다."
+  admin_delete_success: "&a&f%seller% &a플레이어의 물품(%item%)이 성공적으로 삭제되고 기록되었습니다!"
+  admin_not_whitelisted: "&c경매장 관리자 화이트리스트에 등록되어 있지 않습니다!"
+  button_back_to_ah: "&c◀ 경매장으로 돌아가기"
+  admin_indicator_name: "&4&l관리자 모드"
+  admin_indicator_lore:
+    - "&7경매장 관리 모드입니다."
+    - "&7물품을 클릭하여 삭제할 수 있습니다."
 
 buyer:
   button_back_to_buyer: "&c◀ 구매상인에게 돌아가기"
@@ -208,3 +224,10 @@ sections:
     name: "&7&l기타 모든 것"
     lore:
       - "&7기타 상점 아이템"
+console:
+  updates-checking: "[SimpleEconomy] 업데이트 확인 중..."
+  updates-latest: "[SimpleEconomy] 최신 버전을 실행 중입니다 (v{version})"
+  updates-available: "[SimpleEconomy] 새로운 버전을 사용할 수 있습니다: v{remote} (현재: v{current})"
+  updates-download: "[SimpleEconomy] 업데이트 다운로드:"
+  updates-fail: "[SimpleEconomy] GitHub API에서 최신 버전 정보를 가져오지 못했습니다."
+  updates-error: "[SimpleEconomy] 업데이트 확인 중 오류 발생: {error}"

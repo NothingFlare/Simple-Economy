@@ -36,6 +36,7 @@ auction:
     seller: "&7Verkäufer: &f%seller%"
     expires: "&7Endet in: &e%time%"
     click_to_buy: "&eKlicken zum Kaufen"
+    click_to_delete_admin: "&c✖ Klicken zum Löschen (Admin)"
     published_in: "&6Erscheint in: &e%seconds% Sek."
     countdown_status: "&6Vorbereitung (verfügbar in %seconds% Sek.)"
     your_item: "&cDein Gegenstand (Klicken zum Abbrechen)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aGegenstand in dein Inventar gelegt!"
   claim_lore: "&eKlicken zum Abholen"
   inventory_full: "&cDein Inventar ist voll! Bitte Platz schaffen."
+
+  admin_gui_title: "&4Auktion [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Auktionsentfernung (Admin)"
+  button_confirm_admin_delete: "&c&lAuktion löschen"
+  confirm_admin_delete_lore:
+    - "&7Auktion von &f%seller% &7löschen"
+    - "&7Der Gegenstand wird dauerhaft gelöscht"
+    - "&7und in der Datenbank protokolliert."
+  admin_delete_success: "&aAuktion von &f%seller% &a(%item%) wurde erfolgreich gelöscht und protokolliert!"
+  admin_not_whitelisted: "&cSie stehen nicht auf der Auktions-Admin-Whitelist!"
+  button_back_to_ah: "&c◀ Zurück zur Auktion"
+  admin_indicator_name: "&4&lAdministrator-Modus"
+  admin_indicator_lore:
+    - "&7Sie befinden sich im Moderationsmodus."
+    - "&7Klicken Sie auf ein Angebot, um es zu löschen."
 
 buyer:
   button_back_to_buyer: "&c◀ Zurück zum Ankäufer"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lAlles andere"
     lore:
       - "&7Weitere Shop-Artikel"
+console:
+  updates-checking: "[SimpleEconomy] Suche nach Aktualisierungen..."
+  updates-latest: "[SimpleEconomy] Du verwendest die neueste Version (v{version})"
+  updates-available: "[SimpleEconomy] Neue Version verfügbar: v{remote} (Aktuell: v{current})"
+  updates-download: "[SimpleEconomy] Download-Link:"
+  updates-fail: "[SimpleEconomy] Neueste Version konnte nicht über GitHub API abgerufen werden."
+  updates-error: "[SimpleEconomy] Fehler bei Updateprüfung: {error}"

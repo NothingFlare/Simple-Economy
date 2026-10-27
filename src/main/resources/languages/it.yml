@@ -36,6 +36,7 @@ auction:
     seller: "&7Venditore: &f%seller%"
     expires: "&7Scade tra: &e%time%"
     click_to_buy: "&eClicca per acquistare"
+    click_to_delete_admin: "&c✖ Clicca per eliminare (Admin)"
     published_in: "&6Disponibile tra: &e%seconds% s"
     countdown_status: "&6In preparazione (disponibile tra %seconds% s)"
     your_item: "&cIl tuo oggetto (clicca per annullare)"
@@ -79,6 +80,21 @@ auction:
   item_claimed: "&aOggetto riscattato nel tuo inventario!"
   claim_lore: "&eClicca per ritirare"
   inventory_full: "&cIl tuo inventario è pieno! Fai spazio prima."
+
+  admin_gui_title: "&4Asta [Admin] &8[%page%/%max_page%]"
+  admin_confirm_title: "Rimozione asta (Admin)"
+  button_confirm_admin_delete: "&c&lElimina annuncio"
+  confirm_admin_delete_lore:
+    - "&7Elimina annuncio di &f%seller%"
+    - "&7L'oggetto verrà eliminato permanentemente"
+    - "&7e registrato nel database."
+  admin_delete_success: "&aL'annuncio di &f%seller% &a(%item%) è stato eliminato e registrato con successo!"
+  admin_not_whitelisted: "&cNon sei nella whitelist degli amministratori dell'asta!"
+  button_back_to_ah: "&c◀ Torna all'asta"
+  admin_indicator_name: "&4&lModalità Amministratore"
+  admin_indicator_lore:
+    - "&7Sei in modalità moderazione dell'asta."
+    - "&7Clicca su qualsiasi annuncio per eliminarlo."
 
 buyer:
   button_back_to_buyer: "&c◀ Torna all'acquirente"
@@ -208,3 +224,10 @@ sections:
     name: "&7&lTutto il resto"
     lore:
       - "&7Altri articoli del negozio"
+console:
+  updates-checking: "[SimpleEconomy] Verifica aggiornamenti in corso..."
+  updates-latest: "[SimpleEconomy] Stai utilizzando la versione più recente (v{version})"
+  updates-available: "[SimpleEconomy] Nuova versione disponibile: v{remote} (Attuale: v{current})"
+  updates-download: "[SimpleEconomy] Scarica l'aggiornamento su:"
+  updates-fail: "[SimpleEconomy] Impossibile recuperare la versione più recente dall'API GitHub."
+  updates-error: "[SimpleEconomy] Errore durante il controllo degli aggiornamenti: {error}"
