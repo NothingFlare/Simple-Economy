@@ -51,6 +51,8 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
   - Autonomous supply and demand mechanics active across both `/shop` and `/buyer`.
   - Shop buy prices increase with continuous player purchases and gradually decay downward toward baseline discounts during prolonged inactivity.
   - Buyer scrap payouts decrease during heavy market saturation and recover toward premium payouts during resource scarcity.
+  - **Anti-Arbitrage Corridor (`max_buyer_payout_ratio`)**: mathematically guarantees that `/buyer` payout prices can never exceed `/shop` purchase prices for the same item, entirely eliminating infinite money arbitrage loops.
+  - **Hyperbolic AMM Curve**: volume-weighted pricing curve preventing price collapse on large scrap deposits while remaining symmetric with demand spikes.
   - **Hardcore Unbounded Mode (`hardcore_mode: true`)**: eliminates arbitrary price ceiling and floor multipliers, enabling infinite price spikes under extreme demand and unrestricted price drops down to an absolute floor ($0.01) under market saturation.
   - Standard mode with configurable minimum floor and maximum ceiling multipliers to maintain traditional bounded economic corridors.
   - Scheduled background decay task with database persistence (`se_dynamic_market`) across server restarts.
@@ -198,6 +200,7 @@ dynamic_market:
   decay_interval_seconds: 300
   decay_percent: 1.5
   show_trends: true
+  max_buyer_payout_ratio: 0.75
 
 # Transaction & Purchase Logging (Console, Dedicated File, Database)
 logging:

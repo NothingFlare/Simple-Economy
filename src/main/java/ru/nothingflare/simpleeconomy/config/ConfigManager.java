@@ -86,6 +86,7 @@ public class ConfigManager {
     private int dynamicMarketDecayInterval = 300;
     private double dynamicMarketDecayPercent = 1.5;
     private boolean dynamicMarketShowTrends = true;
+    private double dynamicMarketMaxBuyerPayoutRatio = 0.75;
 
     private boolean logPurchasesConsole = true;
     private boolean logPurchasesFile = true;
@@ -150,6 +151,7 @@ public class ConfigManager {
         this.dynamicMarketDecayInterval = config.getInt("dynamic_market.decay_interval_seconds", 300);
         this.dynamicMarketDecayPercent = config.getDouble("dynamic_market.decay_percent", 1.5);
         this.dynamicMarketShowTrends = config.getBoolean("dynamic_market.show_trends", true);
+        this.dynamicMarketMaxBuyerPayoutRatio = Math.max(0.01, Math.min(1.0, config.getDouble("dynamic_market.max_buyer_payout_ratio", 0.75)));
 
         this.logPurchasesConsole = config.getBoolean("logging.console", true);
         this.logPurchasesFile = config.getBoolean("logging.file", true);
@@ -522,6 +524,10 @@ public class ConfigManager {
 
     public boolean isDynamicMarketShowTrends() {
         return dynamicMarketShowTrends;
+    }
+
+    public double getDynamicMarketMaxBuyerPayoutRatio() {
+        return dynamicMarketMaxBuyerPayoutRatio;
     }
 
     public boolean isLogPurchasesConsole() {
