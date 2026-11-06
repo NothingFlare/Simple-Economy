@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● 基本価格"
   dynamic_market_info: "&7市場供給: %trend%"
 
+  item_locked_prefix: "&c[ロック中]"
+  item_locked_lore: "&cこのアイテムは買取ローテーションにより現在ロックされています！"
+  item_locked_msg: "&cこのアイテムは買取ローテーションでロックされており、売却できません！"
+  returned_locked: "&c一部のアイテムは買取ローテーションによりロックされているため売却されませんでした。"
 shop:
   main_title: "サーバーショップ"
   section_title: "カテゴリー: %section%"

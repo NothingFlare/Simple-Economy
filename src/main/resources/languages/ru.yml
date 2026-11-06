@@ -126,6 +126,10 @@ buyer:
   dynamic_trend_stable: "&7● Базовая цена"
   dynamic_market_info: "&7Рыночное предложение: %trend%"
 
+  item_locked_prefix: "&c[Заблокировано]"
+  item_locked_lore: "&cЭтот предмет временно не скупается (ротация)!"
+  item_locked_msg: "&cЭтот предмет заблокирован ротацией скупщика и не принимается!"
+  returned_locked: "&cНекоторые предметы заблокированы ротацией скупщика и не были проданы."
 shop:
   main_title: "Игровой Магазин"
   section_title: "Магазин: %section%"

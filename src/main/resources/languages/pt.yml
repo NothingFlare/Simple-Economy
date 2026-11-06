@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Preço base"
   dynamic_market_info: "&7Oferta de mercado: %trend%"
 
+  item_locked_prefix: "&c[Bloqueado]"
+  item_locked_lore: "&cEste item está bloqueado pela rotação do comprador!"
+  item_locked_msg: "&cEste item está bloqueado pela rotação do comprador e não é aceito!"
+  returned_locked: "&cAlguns itens estão bloqueados pela rotação e não foram vendidos."
 shop:
   main_title: "Loja do Servidor"
   section_title: "Categoria: %section%"

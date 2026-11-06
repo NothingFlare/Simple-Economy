@@ -97,9 +97,16 @@ public class ShopItemsGui {
         int allowedCount = cfg.isShopItemLockEnabled()
                 ? (int) Math.ceil(totalSectionItems * (cfg.getShopItemLockAllowedPercentage() / 100.0))
                 : totalSectionItems;
+        allowedCount = Math.max(1, Math.min(totalSectionItems, allowedCount));
 
         boolean canBypassLock = player.hasPermission("simpleeconomy.admin")
                 || player.hasPermission(cfg.getShopItemLockBypassPermission());
+
+        int offset = 0;
+        if (cfg.getShopRotationIntervalHours() > 0 && totalSectionItems > 0) {
+            long currentPeriod = System.currentTimeMillis() / ((long) cfg.getShopRotationIntervalHours() * 3600000L);
+            offset = (int) ((currentPeriod * allowedCount) % totalSectionItems);
+        }
 
         for (int i = 0; i < pageItems.size() && i < 45; i++) {
             ShopItem shopItem = pageItems.get(i);
@@ -109,7 +116,15 @@ public class ShopItemsGui {
             }
 
             int globalIndex = (page - 1) * 45 + i;
-            boolean isLocked = cfg.isShopItemLockEnabled() && !canBypassLock && (globalIndex >= allowedCount);
+            boolean isLocked = false;
+            if (cfg.isShopItemLockEnabled() && !canBypassLock) {
+                if (cfg.getShopRotationIntervalHours() > 0 && totalSectionItems > 0) {
+                    int dist = (globalIndex - offset + totalSectionItems) % totalSectionItems;
+                    isLocked = dist >= allowedCount;
+                } else {
+                    isLocked = globalIndex >= allowedCount;
+                }
+            }
 
             double buyPrice = dmm.getShopBuyPrice(section, shopItem);
             double sellPrice = shopItem.getSellPrice();

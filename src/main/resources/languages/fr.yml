@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Prix de base"
   dynamic_market_info: "&7Offre du marché: %trend%"
 
+  item_locked_prefix: "&c[Verrouillé]"
+  item_locked_lore: "&cCet objet est actuellement verrouillé par la rotation de l'acheteur !"
+  item_locked_msg: "&cCet objet est verrouillé par la rotation de l'acheteur et n'est pas accepté !"
+  returned_locked: "&cCertains objets sont verrouillés par la rotation et n'ont pas été vendus."
 shop:
   main_title: "Boutique du Serveur"
   section_title: "Catégorie: %section%"

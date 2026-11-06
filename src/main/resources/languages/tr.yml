@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Taban Fiyat"
   dynamic_market_info: "&7Piyasa Arzı: %trend%"
 
+  item_locked_prefix: "&c[Kilitli]"
+  item_locked_lore: "&cBu eşya şu anda alıcı rotasyonu nedeniyle kilitlidir!"
+  item_locked_msg: "&cBu eşya alıcı rotasyonu nedeniyle kilitlidir ve satılamaz!"
+  returned_locked: "&cBazı eşyalar alıcı rotasyonu nedeniyle satılamadı."
 shop:
   main_title: "Sunucu Marketi"
   section_title: "Kategori: %section%"

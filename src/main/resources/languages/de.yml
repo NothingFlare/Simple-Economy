@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Basispreis"
   dynamic_market_info: "&7Marktangebot: %trend%"
 
+  item_locked_prefix: "&c[Gesperrt]"
+  item_locked_lore: "&cDieser Gegenstand ist derzeit durch die Rotation gesperrt!"
+  item_locked_msg: "&cDieser Gegenstand ist durch die Rotation des Ankäufers gesperrt!"
+  returned_locked: "&cEinige Gegenstände sind durch die Rotation gesperrt und wurden nicht verkauft."
 shop:
   main_title: "Server Shop"
   section_title: "Kategorie: %section%"

@@ -133,6 +133,7 @@ public class BuyerGui {
         double totalEarned = 0.0;
         int totalItemsSold = 0;
         boolean hasUnsold = false;
+        boolean hasLocked = false;
         Map<Material, Integer> soldCounts = new HashMap<>();
 
         for (int i = 0; i < 45; i++) {
@@ -143,6 +144,12 @@ public class BuyerGui {
 
             double pricePerUnit = plugin.getDynamicMarketManager().getBuyerSellPrice(item.getType());
             if (pricePerUnit > 0) {
+                if (!plugin.getConfigManager().isBuyerMaterialAllowed(item.getType(), player)) {
+                    hasLocked = true;
+                    hasUnsold = true;
+                    continue;
+                }
+
                 int amt = item.getAmount();
                 totalEarned += pricePerUnit * amt;
                 totalItemsSold += amt;
@@ -171,12 +178,18 @@ public class BuyerGui {
             ph.put("money", MessageUtil.formatCurrency(totalEarned));
             MessageUtil.sendMessage(player, lm.getMessage("buyer.sell_success", ph));
 
-            if (hasUnsold) {
+            if (hasLocked) {
+                MessageUtil.sendMessage(player, lm.getMessage("buyer.returned_locked"));
+            } else if (hasUnsold) {
                 MessageUtil.sendMessage(player, lm.getMessage("buyer.returned_unsold"));
             }
         } else {
             SoundUtil.playError(player);
-            MessageUtil.sendMessage(player, lm.getMessage("buyer.nothing_to_sell"));
+            if (hasLocked) {
+                MessageUtil.sendMessage(player, lm.getMessage("buyer.item_locked_msg"));
+            } else {
+                MessageUtil.sendMessage(player, lm.getMessage("buyer.nothing_to_sell"));
+            }
         }
     }
 }

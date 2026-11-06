@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Базова ціна"
   dynamic_market_info: "&7Ринкова пропозиція: %trend%"
 
+  item_locked_prefix: "&c[Заблоковано]"
+  item_locked_lore: "&cЦей предмет тимчасово не скуповується (ротація)!"
+  item_locked_msg: "&cЦей предмет заблоковано ротацією скупника і не приймається!"
+  returned_locked: "&cДеякі предмети заблоковані ротацією скупника і не були продані."
 shop:
   main_title: "Магазин Сервера"
   section_title: "Магазин: %section%"

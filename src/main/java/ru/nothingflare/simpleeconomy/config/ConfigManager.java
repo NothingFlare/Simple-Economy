@@ -61,10 +61,20 @@ public class ConfigManager {
 
     private boolean buyerSoundEnabled = true;
     private boolean buyerDropIfFull = true;
+    private boolean buyerItemLockEnabled = true;
+    private double buyerItemLockAllowedPercentage = 10.0;
+    private int buyerRotationIntervalHours = 24;
+    private String buyerItemLockBypassPermission = "simpleeconomy.buyer.bypass";
+
+    private final Object buyerLockMutex = new Object();
+    private Set<Material> cachedAllowedBuyerMaterials = null;
+    private long cachedBuyerRotationPeriod = -1;
+
     private boolean shopCloseOnBuy = false;
 
     private boolean shopItemLockEnabled = false;
     private double shopItemLockAllowedPercentage = 100.0;
+    private int shopRotationIntervalHours = 0;
     private String shopItemLockBypassPermission = "simpleeconomy.shop.bypass";
 
     private boolean dynamicMarketEnabled = true;
@@ -107,10 +117,21 @@ public class ConfigManager {
 
         this.buyerSoundEnabled = config.getBoolean("buyer.sound_enabled", true);
         this.buyerDropIfFull = config.getBoolean("buyer.drop_items_on_close_if_full", true);
+        this.buyerItemLockEnabled = config.getBoolean("buyer.item_lock.enabled", true);
+        this.buyerItemLockAllowedPercentage = config.getDouble("buyer.item_lock.allowed_percentage", 10.0);
+        this.buyerRotationIntervalHours = config.getInt("buyer.item_lock.rotation_interval_hours", 24);
+        this.buyerItemLockBypassPermission = config.getString("buyer.item_lock.bypass_permission", "simpleeconomy.buyer.bypass");
+
+        synchronized (buyerLockMutex) {
+            this.cachedAllowedBuyerMaterials = null;
+            this.cachedBuyerRotationPeriod = -1;
+        }
+
         this.shopCloseOnBuy = config.getBoolean("shop.close_on_buy", false);
 
         this.shopItemLockEnabled = config.getBoolean("shop.item_lock.enabled", false);
         this.shopItemLockAllowedPercentage = config.getDouble("shop.item_lock.allowed_percentage", 100.0);
+        this.shopRotationIntervalHours = config.getInt("shop.item_lock.rotation_interval_hours", 0);
         this.shopItemLockBypassPermission = config.getString("shop.item_lock.bypass_permission", "simpleeconomy.shop.bypass");
 
         this.dynamicMarketEnabled = config.getBoolean("dynamic_market.enabled", true);
@@ -349,6 +370,91 @@ public class ConfigManager {
         return buyerDropIfFull;
     }
 
+    public boolean isBuyerItemLockEnabled() {
+        return buyerItemLockEnabled;
+    }
+
+    public double getBuyerItemLockAllowedPercentage() {
+        return buyerItemLockAllowedPercentage;
+    }
+
+    public int getBuyerRotationIntervalHours() {
+        return buyerRotationIntervalHours;
+    }
+
+    public String getBuyerItemLockBypassPermission() {
+        return buyerItemLockBypassPermission;
+    }
+
+    public Set<Material> getAllowedBuyerMaterials() {
+        if (!buyerItemLockEnabled) {
+            return null;
+        }
+
+        long currentPeriod = 0;
+        if (buyerRotationIntervalHours > 0) {
+            currentPeriod = System.currentTimeMillis() / ((long) buyerRotationIntervalHours * 3600000L);
+        }
+
+        synchronized (buyerLockMutex) {
+            if (cachedAllowedBuyerMaterials != null && cachedBuyerRotationPeriod == currentPeriod) {
+                return cachedAllowedBuyerMaterials;
+            }
+
+            Map<Material, Double> allPrices = plugin.getDatabaseManager() != null
+                    ? plugin.getDatabaseManager().getAllBuyerPrices()
+                    : Collections.emptyMap();
+
+            List<Material> validMaterials = new ArrayList<>();
+            for (Map.Entry<Material, Double> entry : allPrices.entrySet()) {
+                if (entry.getValue() > 0 && entry.getKey() != null && entry.getKey() != Material.AIR) {
+                    validMaterials.add(entry.getKey());
+                }
+            }
+            validMaterials.sort(Comparator.comparing(Enum::name));
+
+            int total = validMaterials.size();
+            if (total == 0) {
+                cachedAllowedBuyerMaterials = Collections.emptySet();
+                cachedBuyerRotationPeriod = currentPeriod;
+                return cachedAllowedBuyerMaterials;
+            }
+
+            int allowedCount = (int) Math.ceil(total * (buyerItemLockAllowedPercentage / 100.0));
+            allowedCount = Math.max(1, Math.min(total, allowedCount));
+
+            int offset = 0;
+            if (buyerRotationIntervalHours > 0) {
+                offset = (int) ((currentPeriod * allowedCount) % total);
+            }
+
+            Set<Material> allowed = new HashSet<>(allowedCount);
+            for (int i = 0; i < allowedCount; i++) {
+                int idx = (offset + i) % total;
+                allowed.add(validMaterials.get(idx));
+            }
+
+            cachedAllowedBuyerMaterials = Collections.unmodifiableSet(allowed);
+            cachedBuyerRotationPeriod = currentPeriod;
+            return cachedAllowedBuyerMaterials;
+        }
+    }
+
+    public boolean isBuyerMaterialAllowed(Material material, Player player) {
+        if (!buyerItemLockEnabled) {
+            return true;
+        }
+        if (material == null || material == Material.AIR) {
+            return false;
+        }
+        if (player != null && (player.hasPermission("simpleeconomy.admin")
+                || player.hasPermission(buyerItemLockBypassPermission))) {
+            return true;
+        }
+        Set<Material> allowed = getAllowedBuyerMaterials();
+        return allowed == null || allowed.contains(material);
+    }
+
     public boolean isShopCloseOnBuy() {
         return shopCloseOnBuy;
     }
@@ -359,6 +465,10 @@ public class ConfigManager {
 
     public double getShopItemLockAllowedPercentage() {
         return shopItemLockAllowedPercentage;
+    }
+
+    public int getShopRotationIntervalHours() {
+        return shopRotationIntervalHours;
     }
 
     public String getShopItemLockBypassPermission() {

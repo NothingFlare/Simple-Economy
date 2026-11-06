@@ -116,6 +116,10 @@ buyer:
   dynamic_trend_stable: "&7● 基础价格"
   dynamic_market_info: "&7市场供应: %trend%"
 
+  item_locked_prefix: "&c[已锁定]"
+  item_locked_lore: "&c此物品目前因回收轮换已被锁定！"
+  item_locked_msg: "&c此物品因收购商轮换被锁定，暂不收购！"
+  returned_locked: "&c部分物品因收购商轮换已被锁定，未能出售。"
 shop:
   main_title: "游戏商城"
   section_title: "分类: %section%"

@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● 기본 가격"
   dynamic_market_info: "&7시장 공급: %trend%"
 
+  item_locked_prefix: "&c[잠김]"
+  item_locked_lore: "&c이 아이템은 매입 로테이션으로 인해 현재 잠겨 있습니다!"
+  item_locked_msg: "&c이 아이템은 매입 로테이션으로 인해 잠겨 있어 판매할 수 없습니다!"
+  returned_locked: "&c일부 아이템은 매입 로테이션으로 인해 판매되지 않았습니다."
 shop:
   main_title: "서버 상점"
   section_title: "카테고리: %section%"

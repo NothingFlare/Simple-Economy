@@ -44,6 +44,7 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
   - Mass-selling interface allowing players to deposit multiple inventory items simultaneously for instant liquidation.
   - Live emerald balance monitor displaying updated Vault player funds in real time.
   - Built-in, paginated price catalog displaying per-unit and 64-unit stack payouts for every accepted resource.
+  - Periodic Item Rotation & Lock mechanism: restricts scrap liquidation to a configurable percentage of items (e.g. 10%) with automated periodic rotation and permission bypass.
   - Safe return fallback: unaccepted items are returned to player inventories or dropped safely at their feet if full.
 
 - **Real-Time Dynamic Market Engine**
@@ -97,6 +98,7 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
 | `simpleeconomy.shop.bypass` | Bypasses category item lock limits in `/shop` | `op` |
 | `simpleeconomy.auction.use` | Allows viewing, buying, and listing items on `/ah` | `true` (all players) |
 | `simpleeconomy.buyer.use` | Allows opening and selling resources via `/buyer` | `true` (all players) |
+| `simpleeconomy.buyer.bypass` | Bypasses buyer item rotation and lock limits in `/buyer` | `op` |
 | `simpleeconomy.admin` | Access to administrative reload command and all system bypasses | `op` |
 
 ---
@@ -162,6 +164,11 @@ auction:
 buyer:
   sound_enabled: true
   drop_items_on_close_if_full: true
+  item_lock:
+    enabled: true
+    allowed_percentage: 10.0
+    rotation_interval_hours: 24
+    bypass_permission: "simpleeconomy.buyer.bypass"
 
 # Server Shop (/shop) parameters
 shop:
@@ -169,6 +176,7 @@ shop:
   item_lock:
     enabled: false
     allowed_percentage: 100
+    rotation_interval_hours: 0
     bypass_permission: "simpleeconomy.shop.bypass"
 
 # Dynamic Market Engine (Real Market Mechanics)

@@ -126,6 +126,10 @@ buyer:
   dynamic_trend_stable: "&7● Base Price"
   dynamic_market_info: "&7Market Supply: %trend%"
 
+  item_locked_prefix: "&c[Locked]"
+  item_locked_lore: "&cThis item is currently locked by buyer rotation!"
+  item_locked_msg: "&cThis item is locked by buyer rotation and cannot be sold!"
+  returned_locked: "&cSome items are locked by buyer rotation and were not sold."
 shop:
   main_title: "Server Shop"
   section_title: "Shop: %section%"

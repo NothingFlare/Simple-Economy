@@ -63,8 +63,15 @@ public class BuyerPriceListGui {
             }
         }
 
-        // Sort alphabetically by material name
-        validPrices.sort(Comparator.comparing(e -> e.getKey().name()));
+        // Sort items: Allowed/unlocked items first (alphabetically), followed by locked items (alphabetically)
+        validPrices.sort((e1, e2) -> {
+            boolean allowed1 = plugin.getConfigManager().isBuyerMaterialAllowed(e1.getKey(), player);
+            boolean allowed2 = plugin.getConfigManager().isBuyerMaterialAllowed(e2.getKey(), player);
+            if (allowed1 != allowed2) {
+                return allowed1 ? -1 : 1;
+            }
+            return e1.getKey().name().compareTo(e2.getKey().name());
+        });
 
         int total = validPrices.size();
         int maxPage = Math.max(1, (int) Math.ceil((double) total / 45.0));
@@ -86,6 +93,7 @@ public class BuyerPriceListGui {
         for (int i = 0; i < 45 && (startIndex + i) < total; i++) {
             Map.Entry<Material, Double> entry = validPrices.get(startIndex + i);
             Material mat = entry.getKey();
+            boolean isLocked = !plugin.getConfigManager().isBuyerMaterialAllowed(mat, player);
             double unitPrice = plugin.getDynamicMarketManager().getBuyerSellPrice(mat);
             double stackPrice = unitPrice * 64;
 
@@ -93,18 +101,34 @@ public class BuyerPriceListGui {
             itemPh.put("price", MessageUtil.formatCurrency(unitPrice));
             itemPh.put("stack_price", MessageUtil.formatCurrency(stackPrice));
 
-            ItemBuilder builder = ItemBuilder.from(mat)
-                    .name("&f" + ItemNameUtil.formatMaterial(mat))
-                    .addLore("")
-                    .addLore(lm.getMessage("buyer.price_list_unit", itemPh))
-                    .addLore(lm.getMessage("buyer.price_list_stack", itemPh));
+            ItemBuilder builder = ItemBuilder.from(mat);
+            String rawName = ItemNameUtil.formatMaterial(mat);
 
-            String trendLore = plugin.getDynamicMarketManager().getBuyerTrendLore(mat);
-            if (trendLore != null && !trendLore.isEmpty()) {
-                builder.addLore(trendLore);
+            if (isLocked) {
+                builder.name(lm.getMessage("buyer.item_locked_prefix") + " &7" + rawName);
+                builder.addLore("");
+                builder.addLore(lm.getMessage("buyer.price_list_unit", itemPh));
+                builder.addLore(lm.getMessage("buyer.price_list_stack", itemPh));
+                builder.addLore("");
+                builder.addLore(lm.getMessage("buyer.item_locked_lore"));
+                inv.setItem(i, builder.build());
+                holder.setAction(i, event -> {
+                    SoundUtil.playError(player);
+                    MessageUtil.sendMessage(player, lm.getMessage("buyer.item_locked_msg"));
+                });
+            } else {
+                builder.name("&f" + rawName);
+                builder.addLore("");
+                builder.addLore(lm.getMessage("buyer.price_list_unit", itemPh));
+                builder.addLore(lm.getMessage("buyer.price_list_stack", itemPh));
+
+                String trendLore = plugin.getDynamicMarketManager().getBuyerTrendLore(mat);
+                if (trendLore != null && !trendLore.isEmpty()) {
+                    builder.addLore(trendLore);
+                }
+
+                inv.setItem(i, builder.build());
             }
-
-            inv.setItem(i, builder.build());
         }
 
         // Bottom row filler (slots 45 - 53)

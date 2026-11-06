@@ -117,6 +117,10 @@ buyer:
   dynamic_trend_stable: "&7● Cena bazowa"
   dynamic_market_info: "&7Podaż rynkowa: %trend%"
 
+  item_locked_prefix: "&c[Zablokowane]"
+  item_locked_lore: "&cTen przedmiot jest obecnie zablokowany przez rotację skupu!"
+  item_locked_msg: "&cTen przedmiot jest zablokowany przez rotację skupu i nie jest przyjmowany!"
+  returned_locked: "&cNiektóre przedmioty są zablokowane przez rotację skupu i nie zostały sprzedane."
 shop:
   main_title: "Sklep Serwerowy"
   section_title: "Kategoria: %section%"

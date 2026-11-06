@@ -58,9 +58,15 @@ permissions:
   simpleeconomy.buyer.use:
     description: Allows using /buyer
     default: true
+  simpleeconomy.buyer.bypass:
+    description: Allows bypassing buyer item rotation/lock
+    default: op
   simpleeconomy.shop.use:
     description: Allows using /shop
     default: true
+  simpleeconomy.shop.bypass:
+    description: Allows bypassing shop item lock limits
+    default: op
   simpleeconomy.admin:
     description: Admin commands and management
     default: op
