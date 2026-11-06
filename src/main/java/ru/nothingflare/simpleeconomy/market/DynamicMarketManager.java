@@ -40,7 +40,9 @@ public class DynamicMarketManager {
     private final SimpleEconomyPlugin plugin;
 
     private boolean enabled = true;
-    private double changePercentPerItem = 0.1;
+    private boolean hardcoreMode = true;
+    private double absoluteMinPrice = 0.01;
+    private double changePercentPerItem = 0.2;
     private double minPriceMultiplier = 0.5;
     private double maxPriceMultiplier = 3.0;
     private int decayIntervalSeconds = 300;
@@ -59,7 +61,10 @@ public class DynamicMarketManager {
     public void load() {
         FileConfiguration config = plugin.getConfig();
         this.enabled = config.getBoolean("dynamic_market.enabled", true);
-        this.changePercentPerItem = config.getDouble("dynamic_market.change_percent_per_item", 0.1);
+        this.hardcoreMode = config.getBoolean("dynamic_market.hardcore_mode",
+                config.getBoolean("dynamic_market.unlimited_limits", true));
+        this.absoluteMinPrice = Math.max(0.001, config.getDouble("dynamic_market.absolute_min_price", 0.01));
+        this.changePercentPerItem = config.getDouble("dynamic_market.change_percent_per_item", 0.2);
         this.minPriceMultiplier = config.getDouble("dynamic_market.min_price_multiplier", 0.5);
         this.maxPriceMultiplier = config.getDouble("dynamic_market.max_price_multiplier", 3.0);
         this.decayIntervalSeconds = Math.max(10, config.getInt("dynamic_market.decay_interval_seconds", 300));
@@ -99,10 +104,14 @@ public class DynamicMarketManager {
         }
 
         double price = data.getCurrentPrice();
-        double minCap = base * minPriceMultiplier;
-        double maxCap = base * maxPriceMultiplier;
-        if (price < minCap) price = minCap;
-        if (price > maxCap) price = maxCap;
+        if (!hardcoreMode) {
+            double minCap = base * minPriceMultiplier;
+            double maxCap = base * maxPriceMultiplier;
+            if (price < minCap) price = minCap;
+            if (price > maxCap) price = maxCap;
+        } else {
+            if (price < absoluteMinPrice) price = absoluteMinPrice;
+        }
 
         return Math.round(price * 100.0) / 100.0;
     }
@@ -123,9 +132,11 @@ public class DynamicMarketManager {
         double multiplier = 1.0 + ((changePercentPerItem * amount) / 100.0);
         double newPrice = current * multiplier;
 
-        double maxCap = base * maxPriceMultiplier;
-        if (newPrice > maxCap) {
-            newPrice = maxCap;
+        if (!hardcoreMode) {
+            double maxCap = base * maxPriceMultiplier;
+            if (newPrice > maxCap) {
+                newPrice = maxCap;
+            }
         }
 
         newPrice = Math.round(newPrice * 100.0) / 100.0;
@@ -187,10 +198,14 @@ public class DynamicMarketManager {
         }
 
         double price = data.getCurrentPrice();
-        double minFloor = base * minPriceMultiplier;
-        double maxCap = base * maxPriceMultiplier;
-        if (price < minFloor) price = minFloor;
-        if (price > maxCap) price = maxCap;
+        if (!hardcoreMode) {
+            double minFloor = base * minPriceMultiplier;
+            double maxCap = base * maxPriceMultiplier;
+            if (price < minFloor) price = minFloor;
+            if (price > maxCap) price = maxCap;
+        } else {
+            if (price < absoluteMinPrice) price = absoluteMinPrice;
+        }
 
         return Math.round(price * 100.0) / 100.0;
     }
@@ -212,11 +227,18 @@ public class DynamicMarketManager {
         double current = data.getCurrentPrice();
         // Market gets saturated -> scrap payout price drops
         double multiplier = 1.0 - ((changePercentPerItem * amount) / 100.0);
+        if (multiplier < 0.001) multiplier = 0.001;
         double newPrice = current * multiplier;
 
-        double minFloor = base * minPriceMultiplier;
-        if (newPrice < minFloor) {
-            newPrice = minFloor;
+        if (!hardcoreMode) {
+            double minFloor = base * minPriceMultiplier;
+            if (newPrice < minFloor) {
+                newPrice = minFloor;
+            }
+        } else {
+            if (newPrice < absoluteMinPrice) {
+                newPrice = absoluteMinPrice;
+            }
         }
 
         newPrice = Math.round(newPrice * 100.0) / 100.0;
@@ -268,17 +290,23 @@ public class DynamicMarketManager {
         long thresholdMillis = (long) decayIntervalSeconds * 1000L;
 
         // 1. Process Shop Prices:
-        // Items that sit unbought drop in price towards clearance discount (minPriceMultiplier * base)
+        // Items that sit unbought drop in price towards clearance discount
         for (MarketItemData data : shopPrices.values()) {
             if ((now - data.getLastUpdate()) >= thresholdMillis) {
                 double current = data.getCurrentPrice();
                 double base = data.getBasePrice();
                 if (base <= 0) continue;
 
-                double minPrice = base * minPriceMultiplier;
                 double newPrice = current * (1.0 - (decayPercent / 100.0));
-                if (newPrice < minPrice) {
-                    newPrice = minPrice;
+                if (!hardcoreMode) {
+                    double minPrice = base * minPriceMultiplier;
+                    if (newPrice < minPrice) {
+                        newPrice = minPrice;
+                    }
+                } else {
+                    if (newPrice < absoluteMinPrice) {
+                        newPrice = absoluteMinPrice;
+                    }
                 }
                 newPrice = Math.round(newPrice * 100.0) / 100.0;
 
@@ -298,10 +326,12 @@ public class DynamicMarketManager {
                 double base = data.getBasePrice();
                 if (base <= 0) continue;
 
-                double maxPrice = base * maxPriceMultiplier;
                 double newPrice = current * (1.0 + (decayPercent / 100.0));
-                if (newPrice > maxPrice) {
-                    newPrice = maxPrice;
+                if (!hardcoreMode) {
+                    double maxPrice = base * maxPriceMultiplier;
+                    if (newPrice > maxPrice) {
+                        newPrice = maxPrice;
+                    }
                 }
                 newPrice = Math.round(newPrice * 100.0) / 100.0;
 
@@ -332,6 +362,14 @@ public class DynamicMarketManager {
 
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean isHardcoreMode() {
+        return hardcoreMode;
+    }
+
+    public double getAbsoluteMinPrice() {
+        return absoluteMinPrice;
     }
 
     public boolean isShowTrends() {

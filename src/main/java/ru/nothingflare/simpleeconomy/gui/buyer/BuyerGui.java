@@ -164,8 +164,22 @@ public class BuyerGui {
             plugin.getEconomyHook().deposit(player, totalEarned);
             updateBalanceSlot(inv, holder);
 
-            // Record dynamic market sale -> price decreases due to market supply saturation
+            // Record dynamic market sale and log purchase/sale
             for (Map.Entry<Material, Integer> entry : soldCounts.entrySet()) {
+                double unitPrice = plugin.getDynamicMarketManager().getBuyerSellPrice(entry.getKey());
+                double subTotal = unitPrice * entry.getValue();
+                plugin.getDatabaseManager().logPurchase(
+                        "BUYER",
+                        player.getUniqueId(),
+                        player.getName(),
+                        null,
+                        null,
+                        entry.getKey().name(),
+                        entry.getValue(),
+                        unitPrice,
+                        subTotal,
+                        "Server buyer sale"
+                );
                 plugin.getDynamicMarketManager().recordBuyerSale(entry.getKey(), entry.getValue());
             }
 

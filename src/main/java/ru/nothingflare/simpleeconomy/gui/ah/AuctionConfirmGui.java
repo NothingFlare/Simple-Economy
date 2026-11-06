@@ -171,6 +171,23 @@ public class AuctionConfirmGui {
             OfflinePlayer seller = Bukkit.getOfflinePlayer(listing.getSellerUuid());
             plugin.getEconomyHook().deposit(seller, listing.getPrice());
 
+            // Log purchase to log file and database
+            int itemAmount = listing.getItem() != null ? listing.getItem().getAmount() : 1;
+            double unitPrice = listing.getPrice() / Math.max(1, itemAmount);
+            String itemType = listing.getItem() != null ? listing.getItem().getType().name() : "UNKNOWN";
+            plugin.getDatabaseManager().logPurchase(
+                    "AUCTION",
+                    player.getUniqueId(),
+                    player.getName(),
+                    listing.getSellerUuid(),
+                    listing.getSellerName(),
+                    itemType,
+                    itemAmount,
+                    unitPrice,
+                    listing.getPrice(),
+                    "Listing #" + listing.getId()
+            );
+
             TaskScheduler.runEntity(plugin, player, () -> {
                 SoundUtil.playSuccess(player);
 

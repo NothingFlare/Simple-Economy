@@ -32,12 +32,22 @@ import ru.nothingflare.simpleeconomy.SimpleEconomyPlugin;
 import ru.nothingflare.simpleeconomy.database.models.AuctionClaim;
 import ru.nothingflare.simpleeconomy.database.models.AuctionListing;
 import ru.nothingflare.simpleeconomy.market.DynamicMarketManager;
+import ru.nothingflare.simpleeconomy.scheduler.TaskScheduler;
 import ru.nothingflare.simpleeconomy.util.ItemSerializer;
+import ru.nothingflare.simpleeconomy.util.MessageUtil;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 public class DatabaseManager {
 
@@ -154,10 +164,27 @@ public class DatabaseManager {
                 "deleted_at BIGINT NOT NULL" +
                 ");";
 
+        String createPurchaseLogs = "CREATE TABLE IF NOT EXISTS se_purchase_logs (" +
+                idDef + ", " +
+                "purchase_type VARCHAR(16) NOT NULL, " +
+                "player_uuid VARCHAR(36) NOT NULL, " +
+                "player_name VARCHAR(64) NOT NULL, " +
+                "target_uuid VARCHAR(36), " +
+                "target_name VARCHAR(64), " +
+                "item_info VARCHAR(128) NOT NULL, " +
+                "amount INT NOT NULL, " +
+                "price_per_unit DOUBLE NOT NULL, " +
+                "total_price DOUBLE NOT NULL, " +
+                "details TEXT, " +
+                "created_at BIGINT NOT NULL" +
+                ");";
+
         String idxListingsStatus = "CREATE INDEX IF NOT EXISTS idx_auction_status_created ON se_auction_listings (status, created_at);";
         String idxListingsSeller = "CREATE INDEX IF NOT EXISTS idx_auction_seller ON se_auction_listings (seller_uuid, status);";
         String idxClaimsPlayer = "CREATE INDEX IF NOT EXISTS idx_auction_claims_player ON se_auction_claims (player_uuid);";
         String idxAdminLogs = "CREATE INDEX IF NOT EXISTS idx_auction_admin_logs ON se_auction_admin_logs (deleted_at);";
+        String idxPurchaseLogs = "CREATE INDEX IF NOT EXISTS idx_purchase_logs_created ON se_purchase_logs (created_at);";
+        String idxPurchaseLogsPlayer = "CREATE INDEX IF NOT EXISTS idx_purchase_logs_player ON se_purchase_logs (player_uuid, purchase_type);";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
@@ -166,11 +193,14 @@ public class DatabaseManager {
             stmt.execute(createBuyer);
             stmt.execute(createMarket);
             stmt.execute(createAdminLogs);
+            stmt.execute(createPurchaseLogs);
             try {
                 stmt.execute(idxListingsStatus);
                 stmt.execute(idxListingsSeller);
                 stmt.execute(idxClaimsPlayer);
                 stmt.execute(idxAdminLogs);
+                stmt.execute(idxPurchaseLogs);
+                stmt.execute(idxPurchaseLogsPlayer);
             } catch (SQLException ignored) {}
 
             try {
@@ -627,6 +657,88 @@ public class DatabaseManager {
         } catch (SQLException e) {
             plugin.getLogger().severe("Failed to batch save dynamic market items: " + e.getMessage());
         }
+    }
+
+    private final Object logFileMutex = new Object();
+    private static final DateTimeFormatter LOG_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public void logPurchase(String purchaseType, UUID playerUuid, String playerName,
+                            UUID targetUuid, String targetName,
+                            String itemInfo, int amount, double pricePerUnit, double totalPrice,
+                            String details) {
+        long now = System.currentTimeMillis();
+        String targetUuidStr = targetUuid != null ? targetUuid.toString() : null;
+        String playerUuidStr = playerUuid != null ? playerUuid.toString() : "";
+        String pName = playerName != null ? playerName : "Unknown";
+        String tName = targetName != null ? targetName : "";
+
+        // 1. Console & Server latest.log
+        String formattedMsg;
+        if ("AUCTION".equalsIgnoreCase(purchaseType)) {
+            formattedMsg = String.format("[Purchase] [AUCTION] Buyer: %s (%s) bought %dx %s from Seller: %s (%s) for %s [%s]",
+                    pName, playerUuidStr, amount, itemInfo, tName, targetUuidStr, MessageUtil.formatCurrency(totalPrice), details != null ? details : "");
+        } else if ("BUYER".equalsIgnoreCase(purchaseType)) {
+            formattedMsg = String.format("[Purchase] [BUYER] Player: %s (%s) sold %dx %s for %s (Unit: %s) [%s]",
+                    pName, playerUuidStr, amount, itemInfo, MessageUtil.formatCurrency(totalPrice), MessageUtil.formatCurrency(pricePerUnit), details != null ? details : "");
+        } else {
+            formattedMsg = String.format("[Purchase] [SHOP] Player: %s (%s) bought %dx %s for %s (Unit: %s) [%s]",
+                    pName, playerUuidStr, amount, itemInfo, MessageUtil.formatCurrency(totalPrice), MessageUtil.formatCurrency(pricePerUnit), details != null ? details : "");
+        }
+
+        if (plugin.getConfigManager() == null || plugin.getConfigManager().isLogPurchasesConsole()) {
+            plugin.getLogger().info(formattedMsg);
+        }
+
+        // 2. Dedicated log file: plugins/SimpleEconomy/logs/purchases.log
+        if (plugin.getConfigManager() == null || plugin.getConfigManager().isLogPurchasesFile()) {
+            writePurchaseToFile(now, formattedMsg);
+        }
+
+        // 3. Database log table: se_purchase_logs
+        if (plugin.getConfigManager() == null || plugin.getConfigManager().isLogPurchasesDatabase()) {
+            TaskScheduler.runAsync(plugin, () -> {
+                String sql = "INSERT INTO se_purchase_logs (purchase_type, player_uuid, player_name, target_uuid, target_name, item_info, amount, price_per_unit, total_price, details, created_at) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                try (Connection conn = getConnection();
+                     PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, purchaseType);
+                    ps.setString(2, playerUuidStr);
+                    ps.setString(3, pName);
+                    ps.setString(4, targetUuidStr);
+                    ps.setString(5, tName);
+                    ps.setString(6, itemInfo != null ? itemInfo : "UNKNOWN");
+                    ps.setInt(7, amount);
+                    ps.setDouble(8, pricePerUnit);
+                    ps.setDouble(9, totalPrice);
+                    ps.setString(10, details != null ? details : "");
+                    ps.setLong(11, now);
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    plugin.getLogger().log(Level.WARNING, "Failed to write purchase log to database: " + e.getMessage(), e);
+                }
+            });
+        }
+    }
+
+    private void writePurchaseToFile(long timestamp, String message) {
+        TaskScheduler.runAsync(plugin, () -> {
+            synchronized (logFileMutex) {
+                try {
+                    File logsFolder = new File(plugin.getDataFolder(), "logs");
+                    if (!logsFolder.exists()) {
+                        logsFolder.mkdirs();
+                    }
+                    File logFile = new File(logsFolder, "purchases.log");
+                    String timeStr = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+                            .format(LOG_DATE_FORMAT);
+                    String line = "[" + timeStr + "] " + message + System.lineSeparator();
+                    Files.writeString(logFile.toPath(), line, StandardCharsets.UTF_8,
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } catch (Exception e) {
+                    plugin.getLogger().warning("Could not write to purchases.log: " + e.getMessage());
+                }
+            }
+        });
     }
 
     private AuctionListing mapListing(ResultSet rs) throws SQLException {

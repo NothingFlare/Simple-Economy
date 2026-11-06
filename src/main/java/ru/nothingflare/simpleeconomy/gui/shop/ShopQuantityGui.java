@@ -221,6 +221,20 @@ public class ShopQuantityGui {
         // Record market purchase -> price increases due to demand!
         plugin.getDynamicMarketManager().recordShopPurchase(section, shopItem, amount);
 
+        // Log purchase to log file and database
+        plugin.getDatabaseManager().logPurchase(
+                "SHOP",
+                player.getUniqueId(),
+                player.getName(),
+                null,
+                null,
+                shopItem.getMaterial().name(),
+                amount,
+                unitPrice,
+                totalPrice,
+                "Section: " + (section != null ? section.getId() : "Unknown") + ", ShopItem: " + shopItem.getId()
+        );
+
         // Give items with metadata preserved
         int remaining = amount;
         int maxStack = shopItem.getMaterial().getMaxStackSize();

@@ -51,9 +51,17 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
   - Autonomous supply and demand mechanics active across both `/shop` and `/buyer`.
   - Shop buy prices increase with continuous player purchases and gradually decay downward toward baseline discounts during prolonged inactivity.
   - Buyer scrap payouts decrease during heavy market saturation and recover toward premium payouts during resource scarcity.
-  - Bounded by configurable minimum floor and maximum ceiling multipliers to prevent runaway inflation or deflation.
+  - **Hardcore Unbounded Mode (`hardcore_mode: true`)**: eliminates arbitrary price ceiling and floor multipliers, enabling infinite price spikes under extreme demand and unrestricted price drops down to an absolute floor ($0.01) under market saturation.
+  - Standard mode with configurable minimum floor and maximum ceiling multipliers to maintain traditional bounded economic corridors.
   - Scheduled background decay task with database persistence (`se_dynamic_market`) across server restarts.
   - Real-time visual market trend indicators rendered directly in item tooltips (`▲ +%`, `▼ -%`, `● Base Price`).
+
+- **Comprehensive Transaction & Purchase Logging**
+  - Unified logging pipeline tracking every economic exchange across `/shop`, `/ah`, and `/buyer`.
+  - Three independent, configurable output targets:
+    - **Console**: real-time console notices for administrative monitoring.
+    - **Dedicated File**: asynchronous, thread-safe append writes to `plugins/SimpleEconomy/logs/purchases.log`.
+    - **Database (`se_purchase_logs`)**: indexed asynchronous database records tracking transaction type, buyer/seller UUIDs and names, item keys, quantities, unit prices, total prices, and contextual metadata.
 
 - **Multi-Threading and Folia Compatibility**
   - Full compatibility with Folia's regionalized multi-threading model using `EntityScheduler`, `GlobalRegionScheduler`, and `AsyncScheduler`.
@@ -182,12 +190,20 @@ shop:
 # Dynamic Market Engine (Real Market Mechanics)
 dynamic_market:
   enabled: true
-  change_percent_per_item: 0.1
+  hardcore_mode: true
+  absolute_min_price: 0.01
+  change_percent_per_item: 0.2
   min_price_multiplier: 0.5
   max_price_multiplier: 3.0
   decay_interval_seconds: 300
   decay_percent: 1.5
   show_trends: true
+
+# Transaction & Purchase Logging (Console, Dedicated File, Database)
+logging:
+  console: true
+  file: true
+  database: true
 ```
 
 ---
@@ -235,8 +251,8 @@ Pre-configured interface languages and item dictionaries are located in `plugins
 ### Build Instructions
 
 ```bash
-git clone https://github.com/NothingFlare/SimpleEconomy.git
-cd SimpleEconomy
+git clone https://github.com/NothingFlare/Simple-Economy.git
+cd Simple-Economy
 mvn clean package
 ```
 

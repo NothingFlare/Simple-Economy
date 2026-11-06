@@ -78,12 +78,18 @@ public class ConfigManager {
     private String shopItemLockBypassPermission = "simpleeconomy.shop.bypass";
 
     private boolean dynamicMarketEnabled = true;
-    private double dynamicMarketChangePercent = 0.1;
+    private boolean dynamicMarketHardcoreMode = true;
+    private double dynamicMarketAbsoluteMinPrice = 0.01;
+    private double dynamicMarketChangePercent = 0.2;
     private double dynamicMarketMinMultiplier = 0.5;
     private double dynamicMarketMaxMultiplier = 3.0;
     private int dynamicMarketDecayInterval = 300;
     private double dynamicMarketDecayPercent = 1.5;
     private boolean dynamicMarketShowTrends = true;
+
+    private boolean logPurchasesConsole = true;
+    private boolean logPurchasesFile = true;
+    private boolean logPurchasesDatabase = true;
 
     private final Map<String, ShopSection> sections = new LinkedHashMap<>();
     private final Map<Material, Double> defaultBuyerPrices = new HashMap<>();
@@ -135,12 +141,19 @@ public class ConfigManager {
         this.shopItemLockBypassPermission = config.getString("shop.item_lock.bypass_permission", "simpleeconomy.shop.bypass");
 
         this.dynamicMarketEnabled = config.getBoolean("dynamic_market.enabled", true);
-        this.dynamicMarketChangePercent = config.getDouble("dynamic_market.change_percent_per_item", 0.1);
+        this.dynamicMarketHardcoreMode = config.getBoolean("dynamic_market.hardcore_mode",
+                config.getBoolean("dynamic_market.unlimited_limits", true));
+        this.dynamicMarketAbsoluteMinPrice = Math.max(0.001, config.getDouble("dynamic_market.absolute_min_price", 0.01));
+        this.dynamicMarketChangePercent = config.getDouble("dynamic_market.change_percent_per_item", 0.2);
         this.dynamicMarketMinMultiplier = config.getDouble("dynamic_market.min_price_multiplier", 0.5);
         this.dynamicMarketMaxMultiplier = config.getDouble("dynamic_market.max_price_multiplier", 3.0);
         this.dynamicMarketDecayInterval = config.getInt("dynamic_market.decay_interval_seconds", 300);
         this.dynamicMarketDecayPercent = config.getDouble("dynamic_market.decay_percent", 1.5);
         this.dynamicMarketShowTrends = config.getBoolean("dynamic_market.show_trends", true);
+
+        this.logPurchasesConsole = config.getBoolean("logging.console", true);
+        this.logPurchasesFile = config.getBoolean("logging.file", true);
+        this.logPurchasesDatabase = config.getBoolean("logging.database", true);
 
         SoundUtil.setEnabled(config.getBoolean("sounds.enabled", true));
 
@@ -479,6 +492,14 @@ public class ConfigManager {
         return dynamicMarketEnabled;
     }
 
+    public boolean isDynamicMarketHardcoreMode() {
+        return dynamicMarketHardcoreMode;
+    }
+
+    public double getDynamicMarketAbsoluteMinPrice() {
+        return dynamicMarketAbsoluteMinPrice;
+    }
+
     public double getDynamicMarketChangePercent() {
         return dynamicMarketChangePercent;
     }
@@ -501,6 +522,18 @@ public class ConfigManager {
 
     public boolean isDynamicMarketShowTrends() {
         return dynamicMarketShowTrends;
+    }
+
+    public boolean isLogPurchasesConsole() {
+        return logPurchasesConsole;
+    }
+
+    public boolean isLogPurchasesFile() {
+        return logPurchasesFile;
+    }
+
+    public boolean isLogPurchasesDatabase() {
+        return logPurchasesDatabase;
     }
 
     public Map<String, ShopSection> getSections() {
