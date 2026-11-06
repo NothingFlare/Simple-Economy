@@ -546,19 +546,26 @@ public class DatabaseManager {
             buyerPricesCache.putAll(defaults);
         }
 
-        String sql = "SELECT material, sell_price FROM se_buyer_prices";
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                String matStr = rs.getString("material");
-                try {
-                    Material mat = Material.valueOf(matStr.toUpperCase());
-                    buyerPricesCache.put(mat, rs.getDouble("sell_price"));
-                } catch (IllegalArgumentException ignored) {}
+        // Synchronize buyer_prices.yml into database table se_buyer_prices
+        if (defaults != null && !defaults.isEmpty()) {
+            String syncSql = databaseType == DatabaseType.MYSQL
+                    ? "INSERT INTO se_buyer_prices (material, sell_price) VALUES (?, ?) ON DUPLICATE KEY UPDATE sell_price = VALUES(sell_price)"
+                    : "INSERT OR REPLACE INTO se_buyer_prices (material, sell_price) VALUES (?, ?)";
+            try (Connection conn = getConnection();
+                 PreparedStatement ps = conn.prepareStatement(syncSql)) {
+                boolean autoCommit = conn.getAutoCommit();
+                conn.setAutoCommit(false);
+                for (Map.Entry<Material, Double> entry : defaults.entrySet()) {
+                    ps.setString(1, entry.getKey().name());
+                    ps.setDouble(2, entry.getValue());
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+                conn.commit();
+                conn.setAutoCommit(autoCommit);
+            } catch (SQLException e) {
+                plugin.getLogger().severe("Failed to sync buyer prices into database: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            plugin.getLogger().severe("Failed to load buyer prices from database: " + e.getMessage());
         }
     }
 

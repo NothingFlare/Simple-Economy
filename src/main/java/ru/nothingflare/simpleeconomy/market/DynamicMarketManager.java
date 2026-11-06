@@ -78,25 +78,65 @@ public class DynamicMarketManager {
             plugin.getDatabaseManager().loadDynamicMarket(shopPrices, buyerPrices);
         }
 
-        // 2. Pre-populate all configured shop items into the market if not present
+        // 2. Pre-populate and synchronize all configured shop items into the market
         if (plugin.getConfigManager() != null) {
+            List<MarketItemData> modifiedShopItems = new ArrayList<>();
             for (ShopSection sec : plugin.getConfigManager().getSections().values()) {
                 if (!sec.isEnabled()) continue;
                 for (ShopItem it : sec.getItems()) {
-                    if (it.getBuyPrice() > 0) {
+                    double base = it.getBuyPrice();
+                    if (base > 0) {
                         String key = sec.getId() + ":" + it.getId();
-                        shopPrices.putIfAbsent(key, new MarketItemData("SHOP", key, it.getBuyPrice(), it.getBuyPrice(), System.currentTimeMillis()));
+                        MarketItemData data = shopPrices.get(key);
+                        if (data == null) {
+                            data = new MarketItemData("SHOP", key, base, base, System.currentTimeMillis());
+                            shopPrices.put(key, data);
+                            modifiedShopItems.add(data);
+                        } else if (Math.abs(data.getBasePrice() - base) > 0.0001) {
+                            double oldBase = data.getBasePrice();
+                            if (oldBase > 0) {
+                                double ratio = base / oldBase;
+                                data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
+                            } else {
+                                data.setCurrentPrice(base);
+                            }
+                            data.setBasePrice(base);
+                            modifiedShopItems.add(data);
+                        }
                     }
                 }
             }
+            if (!modifiedShopItems.isEmpty() && plugin.getDatabaseManager() != null) {
+                plugin.getDatabaseManager().saveAllDynamicMarketItems(modifiedShopItems);
+            }
         }
 
-        // 3. Pre-populate all configured buyer items into the market if not present
+        // 3. Pre-populate and synchronize all configured buyer items into the market
         if (plugin.getDatabaseManager() != null) {
+            List<MarketItemData> modifiedBuyerItems = new ArrayList<>();
             for (Map.Entry<Material, Double> entry : plugin.getDatabaseManager().getAllBuyerPrices().entrySet()) {
-                if (entry.getValue() > 0) {
-                    buyerPrices.putIfAbsent(entry.getKey(), new MarketItemData("BUYER", entry.getKey().name(), entry.getValue(), entry.getValue(), System.currentTimeMillis()));
+                double base = entry.getValue();
+                if (base > 0) {
+                    MarketItemData data = buyerPrices.get(entry.getKey());
+                    if (data == null) {
+                        data = new MarketItemData("BUYER", entry.getKey().name(), base, base, System.currentTimeMillis());
+                        buyerPrices.put(entry.getKey(), data);
+                        modifiedBuyerItems.add(data);
+                    } else if (Math.abs(data.getBasePrice() - base) > 0.0001) {
+                        double oldBase = data.getBasePrice();
+                        if (oldBase > 0) {
+                            double ratio = base / oldBase;
+                            data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
+                        } else {
+                            data.setCurrentPrice(base);
+                        }
+                        data.setBasePrice(base);
+                        modifiedBuyerItems.add(data);
+                    }
                 }
+            }
+            if (!modifiedBuyerItems.isEmpty()) {
+                plugin.getDatabaseManager().saveAllDynamicMarketItems(modifiedBuyerItems);
             }
         }
 
