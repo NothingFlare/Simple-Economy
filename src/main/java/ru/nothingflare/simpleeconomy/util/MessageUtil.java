@@ -38,6 +38,7 @@ public final class MessageUtil {
 
     private static final Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
     private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("#,##0.##");
+    private static final DecimalFormat SUB_CENT_FORMAT = new DecimalFormat("#,##0.####");
 
     private static String currencySymbol = "$";
     private static String currencyFormat = "%amount%%symbol%";
@@ -120,7 +121,8 @@ public final class MessageUtil {
     }
 
     public static String formatCurrency(double amount) {
-        String numStr = CURRENCY_FORMAT.format(amount);
+        boolean hasSubCent = Math.abs(amount * 100.0 - Math.round(amount * 100.0)) > 0.0001;
+        String numStr = (hasSubCent && Math.abs(amount) < 1.0) ? SUB_CENT_FORMAT.format(amount) : CURRENCY_FORMAT.format(amount);
         return currencyFormat
                 .replace("%amount%", numStr)
                 .replace("%symbol%", currencySymbol);

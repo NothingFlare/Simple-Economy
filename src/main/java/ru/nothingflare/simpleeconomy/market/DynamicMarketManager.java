@@ -42,7 +42,7 @@ public class DynamicMarketManager {
     private boolean enabled = true;
     private boolean hardcoreMode = true;
     private double absoluteMinPrice = 0.01;
-    private double changePercentPerItem = 0.03125;
+    private double percentPerStack = 2.0;
     private int impactDurationHours = 24;
     private double minPriceMultiplier = 0.5;
     private double maxPriceMultiplier = 3.0;
@@ -74,7 +74,9 @@ public class DynamicMarketManager {
         this.hardcoreMode = config.getBoolean("dynamic_market.hardcore_mode",
                 config.getBoolean("dynamic_market.unlimited_limits", true));
         this.absoluteMinPrice = Math.max(0.001, config.getDouble("dynamic_market.absolute_min_price", 0.01));
-        this.changePercentPerItem = config.getDouble("dynamic_market.change_percent_per_item", 0.03125);
+        this.percentPerStack = config.getDouble("dynamic_market.percent_per_stack",
+                config.getDouble("dynamic_market.change_percent_per_stack",
+                        config.getDouble("dynamic_market.change_percent_per_item", 0.03125) * 64.0));
         this.impactDurationHours = Math.max(1, config.getInt("dynamic_market.impact_duration_hours", 24));
         this.minPriceMultiplier = config.getDouble("dynamic_market.min_price_multiplier", 0.5);
         this.maxPriceMultiplier = config.getDouble("dynamic_market.max_price_multiplier", 3.0);
@@ -192,7 +194,7 @@ public class DynamicMarketManager {
         }
 
         int totalBought = getActiveShopVolume(key);
-        double deltaPercent = totalBought * changePercentPerItem;
+        double deltaPercent = (totalBought / 64.0) * percentPerStack;
         double multiplier = 1.0 + (deltaPercent / 100.0);
 
         if (!hardcoreMode) {
@@ -205,7 +207,7 @@ public class DynamicMarketManager {
         if (price < absoluteMinPrice) {
             price = absoluteMinPrice;
         }
-        return Math.round(price * 100.0) / 100.0;
+        return Math.round(price * 10000.0) / 10000.0;
     }
 
     private double calculateBuyerSellPrice(Material material, double basePrice) {
@@ -214,7 +216,7 @@ public class DynamicMarketManager {
         }
 
         int totalSold = getActiveBuyerVolume(material);
-        double deltaPercent = totalSold * changePercentPerItem;
+        double deltaPercent = (totalSold / 64.0) * percentPerStack;
         double price;
 
         if (hardcoreMode) {
@@ -231,7 +233,7 @@ public class DynamicMarketManager {
         // Anti-Arbitrage Protection: Buyer payout can NEVER exceed shop buy price for the same item!
         double shopPrice = getLowestShopBuyPrice(material);
         if (shopPrice > 0) {
-            double maxAllowed = Math.round(shopPrice * maxBuyerPayoutRatio * 100.0) / 100.0;
+            double maxAllowed = Math.round(shopPrice * maxBuyerPayoutRatio * 10000.0) / 10000.0;
             if (maxAllowed < absoluteMinPrice) {
                 maxAllowed = absoluteMinPrice;
             }
@@ -240,7 +242,7 @@ public class DynamicMarketManager {
             }
         }
 
-        return Math.round(price * 100.0) / 100.0;
+        return Math.round(price * 10000.0) / 10000.0;
     }
 
     // --- Public Shop API ---
@@ -512,6 +514,10 @@ public class DynamicMarketManager {
 
     public int getImpactDurationHours() {
         return impactDurationHours;
+    }
+
+    public double getPercentPerStack() {
+        return percentPerStack;
     }
 
     // --- Data Model ---
