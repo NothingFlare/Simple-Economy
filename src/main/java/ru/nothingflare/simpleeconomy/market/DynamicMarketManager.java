@@ -42,14 +42,19 @@ public class DynamicMarketManager {
     private boolean enabled = true;
     private boolean hardcoreMode = true;
     private double absoluteMinPrice = 0.01;
-    private double changePercentPerItem = 0.2;
+    private double changePercentPerItem = 0.03125;
+    private int impactDurationHours = 24;
     private double minPriceMultiplier = 0.5;
     private double maxPriceMultiplier = 3.0;
-    private int decayIntervalSeconds = 300;
-    private double decayPercent = 1.5;
     private boolean showTrends = true;
     private double maxBuyerPayoutRatio = 0.75;
 
+    // Rolling window hourly buckets:
+    // Key: itemKey / material -> Map<HourEpoch, TotalAmountInThatHour>
+    private final Map<String, Map<Long, Integer>> shopBuckets = new ConcurrentHashMap<>();
+    private final Map<Material, Map<Long, Integer>> buyerBuckets = new ConcurrentHashMap<>();
+
+    // Cached market item records for database synchronization
     private final Map<String, MarketItemData> shopPrices = new ConcurrentHashMap<>();
     private final Map<Material, MarketItemData> buyerPrices = new ConcurrentHashMap<>();
 
@@ -59,26 +64,34 @@ public class DynamicMarketManager {
         this.plugin = plugin;
     }
 
+    public static long getEpochHour() {
+        return System.currentTimeMillis() / 3600000L;
+    }
+
     public void load() {
         FileConfiguration config = plugin.getConfig();
         this.enabled = config.getBoolean("dynamic_market.enabled", true);
         this.hardcoreMode = config.getBoolean("dynamic_market.hardcore_mode",
                 config.getBoolean("dynamic_market.unlimited_limits", true));
         this.absoluteMinPrice = Math.max(0.001, config.getDouble("dynamic_market.absolute_min_price", 0.01));
-        this.changePercentPerItem = config.getDouble("dynamic_market.change_percent_per_item", 0.2);
+        this.changePercentPerItem = config.getDouble("dynamic_market.change_percent_per_item", 0.03125);
+        this.impactDurationHours = Math.max(1, config.getInt("dynamic_market.impact_duration_hours", 24));
         this.minPriceMultiplier = config.getDouble("dynamic_market.min_price_multiplier", 0.5);
         this.maxPriceMultiplier = config.getDouble("dynamic_market.max_price_multiplier", 3.0);
-        this.decayIntervalSeconds = Math.max(10, config.getInt("dynamic_market.decay_interval_seconds", 300));
-        this.decayPercent = config.getDouble("dynamic_market.decay_percent", 1.5);
         this.showTrends = config.getBoolean("dynamic_market.show_trends", true);
         this.maxBuyerPayoutRatio = Math.max(0.01, Math.min(1.0, config.getDouble("dynamic_market.max_buyer_payout_ratio", 0.75)));
 
-        // 1. Load prices from database
+        long currentHour = getEpochHour();
+        long minValidHour = currentHour - impactDurationHours + 1;
+
+        // 1. Cleanup expired buckets and load active hourly buckets from database
         if (plugin.getDatabaseManager() != null) {
+            plugin.getDatabaseManager().cleanupExpiredMarketBuckets(minValidHour);
+            plugin.getDatabaseManager().loadActiveMarketBuckets(minValidHour, shopBuckets, buyerBuckets);
             plugin.getDatabaseManager().loadDynamicMarket(shopPrices, buyerPrices);
         }
 
-        // 2. Pre-populate and synchronize all configured shop items into the market
+        // 2. Pre-populate all configured shop items into the market cache
         if (plugin.getConfigManager() != null) {
             List<MarketItemData> modifiedShopItems = new ArrayList<>();
             for (ShopSection sec : plugin.getConfigManager().getSections().values()) {
@@ -87,20 +100,16 @@ public class DynamicMarketManager {
                     double base = it.getBuyPrice();
                     if (base > 0) {
                         String key = sec.getId() + ":" + it.getId();
+                        double livePrice = calculateShopBuyPrice(key, base);
                         MarketItemData data = shopPrices.get(key);
                         if (data == null) {
-                            data = new MarketItemData("SHOP", key, base, base, System.currentTimeMillis());
+                            data = new MarketItemData("SHOP", key, livePrice, base, System.currentTimeMillis());
                             shopPrices.put(key, data);
                             modifiedShopItems.add(data);
-                        } else if (Math.abs(data.getBasePrice() - base) > 0.0001) {
-                            double oldBase = data.getBasePrice();
-                            if (oldBase > 0) {
-                                double ratio = base / oldBase;
-                                data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
-                            } else {
-                                data.setCurrentPrice(base);
-                            }
+                        } else {
                             data.setBasePrice(base);
+                            data.setCurrentPrice(livePrice);
+                            data.setLastUpdate(System.currentTimeMillis());
                             modifiedShopItems.add(data);
                         }
                     }
@@ -111,26 +120,22 @@ public class DynamicMarketManager {
             }
         }
 
-        // 3. Pre-populate and synchronize all configured buyer items into the market
+        // 3. Pre-populate all configured buyer items into the market cache
         if (plugin.getDatabaseManager() != null) {
             List<MarketItemData> modifiedBuyerItems = new ArrayList<>();
             for (Map.Entry<Material, Double> entry : plugin.getDatabaseManager().getAllBuyerPrices().entrySet()) {
                 double base = entry.getValue();
                 if (base > 0) {
+                    double livePrice = calculateBuyerSellPrice(entry.getKey(), base);
                     MarketItemData data = buyerPrices.get(entry.getKey());
                     if (data == null) {
-                        data = new MarketItemData("BUYER", entry.getKey().name(), base, base, System.currentTimeMillis());
+                        data = new MarketItemData("BUYER", entry.getKey().name(), livePrice, base, System.currentTimeMillis());
                         buyerPrices.put(entry.getKey(), data);
                         modifiedBuyerItems.add(data);
-                    } else if (Math.abs(data.getBasePrice() - base) > 0.0001) {
-                        double oldBase = data.getBasePrice();
-                        if (oldBase > 0) {
-                            double ratio = base / oldBase;
-                            data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
-                        } else {
-                            data.setCurrentPrice(base);
-                        }
+                    } else {
                         data.setBasePrice(base);
+                        data.setCurrentPrice(livePrice);
+                        data.setLastUpdate(System.currentTimeMillis());
                         modifiedBuyerItems.add(data);
                     }
                 }
@@ -140,84 +145,112 @@ public class DynamicMarketManager {
             }
         }
 
-        // 4. Start periodic market decay timer if not already running
-        // Runs every 10 seconds (200 ticks); dynamically evaluates decayIntervalSeconds on the fly!
+        // 4. Start periodic rolling expiration task (runs every 10 seconds / 200 ticks)
         if (!taskStarted) {
             taskStarted = true;
-            TaskScheduler.runTimerAsync(plugin, this::processDecay, 200L, 200L);
+            TaskScheduler.runTimerAsync(plugin, this::processRollingExpiration, 200L, 200L);
         }
     }
 
-    // --- Arbitrage Protection ---
+    // --- Price Calculations based on Hourly Buckets ---
 
-    /**
-     * Finds the lowest dynamic buy price for a material across all shop sections.
-     * Returns -1 if the material cannot be bought in the shop.
-     */
-    public double getLowestShopBuyPrice(Material material) {
-        if (material == null || material == Material.AIR) {
-            return -1.0;
+    private int getActiveShopVolume(String key) {
+        Map<Long, Integer> buckets = shopBuckets.get(key);
+        if (buckets == null || buckets.isEmpty()) {
+            return 0;
         }
-        if (plugin.getConfigManager() == null) {
-            return -1.0;
-        }
-
-        double lowest = -1.0;
-        for (ShopSection section : plugin.getConfigManager().getSections().values()) {
-            if (!section.isEnabled()) continue;
-            for (ShopItem item : section.getItems()) {
-                if (item.getMaterial() == material && item.isBuyable() && item.getBuyPrice() > 0) {
-                    double currentPrice = getRawShopBuyPrice(section, item);
-                    if (lowest < 0 || currentPrice < lowest) {
-                        lowest = currentPrice;
-                    }
-                }
+        long currentHour = getEpochHour();
+        long minValidHour = currentHour - impactDurationHours + 1;
+        int sum = 0;
+        for (Map.Entry<Long, Integer> entry : buckets.entrySet()) {
+            if (entry.getKey() >= minValidHour) {
+                sum += entry.getValue();
             }
         }
-        return lowest;
+        return sum;
     }
 
-    // --- Shop Dynamic Pricing ---
-
-    private double getRawShopBuyPrice(ShopSection section, ShopItem item) {
-        if (!enabled || item.getBuyPrice() <= 0) {
-            return item.getBuyPrice();
+    private int getActiveBuyerVolume(Material material) {
+        Map<Long, Integer> buckets = buyerBuckets.get(material);
+        if (buckets == null || buckets.isEmpty()) {
+            return 0;
         }
-
-        String key = (section != null ? section.getId() : "shop") + ":" + item.getId();
-        double base = item.getBuyPrice();
-
-        MarketItemData data = shopPrices.computeIfAbsent(key, k ->
-                new MarketItemData("SHOP", k, base, base, System.currentTimeMillis())
-        );
-
-        if (Math.abs(data.getBasePrice() - base) > 0.0001) {
-            double oldBase = data.getBasePrice();
-            if (oldBase > 0) {
-                double ratio = base / oldBase;
-                data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
-            } else {
-                data.setCurrentPrice(base);
+        long currentHour = getEpochHour();
+        long minValidHour = currentHour - impactDurationHours + 1;
+        int sum = 0;
+        for (Map.Entry<Long, Integer> entry : buckets.entrySet()) {
+            if (entry.getKey() >= minValidHour) {
+                sum += entry.getValue();
             }
-            data.setBasePrice(base);
-            saveAsync(data);
+        }
+        return sum;
+    }
+
+    private double calculateShopBuyPrice(String key, double basePrice) {
+        if (!enabled || basePrice <= 0) {
+            return basePrice;
         }
 
-        double price = data.getCurrentPrice();
+        int totalBought = getActiveShopVolume(key);
+        double deltaPercent = totalBought * changePercentPerItem;
+        double multiplier = 1.0 + (deltaPercent / 100.0);
+
         if (!hardcoreMode) {
-            double minCap = base * minPriceMultiplier;
-            double maxCap = base * maxPriceMultiplier;
-            if (price < minCap) price = minCap;
-            if (price > maxCap) price = maxCap;
+            if (multiplier > maxPriceMultiplier) {
+                multiplier = maxPriceMultiplier;
+            }
+        }
+
+        double price = basePrice * multiplier;
+        if (price < absoluteMinPrice) {
+            price = absoluteMinPrice;
+        }
+        return Math.round(price * 100.0) / 100.0;
+    }
+
+    private double calculateBuyerSellPrice(Material material, double basePrice) {
+        if (!enabled || basePrice <= 0) {
+            return basePrice;
+        }
+
+        int totalSold = getActiveBuyerVolume(material);
+        double deltaPercent = totalSold * changePercentPerItem;
+        double price;
+
+        if (hardcoreMode) {
+            double multiplier = Math.max(0.0, 1.0 - (deltaPercent / 100.0));
+            price = basePrice * multiplier;
+            if (price < absoluteMinPrice) {
+                price = absoluteMinPrice;
+            }
         } else {
-            if (price < absoluteMinPrice) price = absoluteMinPrice;
+            double multiplier = Math.max(minPriceMultiplier, 1.0 - (deltaPercent / 100.0));
+            price = basePrice * multiplier;
+        }
+
+        // Anti-Arbitrage Protection: Buyer payout can NEVER exceed shop buy price for the same item!
+        double shopPrice = getLowestShopBuyPrice(material);
+        if (shopPrice > 0) {
+            double maxAllowed = Math.round(shopPrice * maxBuyerPayoutRatio * 100.0) / 100.0;
+            if (maxAllowed < absoluteMinPrice) {
+                maxAllowed = absoluteMinPrice;
+            }
+            if (price > maxAllowed) {
+                price = maxAllowed;
+            }
         }
 
         return Math.round(price * 100.0) / 100.0;
     }
 
+    // --- Public Shop API ---
+
     public double getShopBuyPrice(ShopSection section, ShopItem item) {
-        return getRawShopBuyPrice(section, item);
+        if (!enabled || item.getBuyPrice() <= 0) {
+            return item.getBuyPrice();
+        }
+        String key = (section != null ? section.getId() : "shop") + ":" + item.getId();
+        return calculateShopBuyPrice(key, item.getBuyPrice());
     }
 
     public void recordShopPurchase(ShopSection section, ShopItem item, int amount) {
@@ -225,28 +258,22 @@ public class DynamicMarketManager {
             return;
         }
 
+        long currentHour = getEpochHour();
         String key = (section != null ? section.getId() : "shop") + ":" + item.getId();
-        double base = item.getBuyPrice();
 
-        MarketItemData data = shopPrices.computeIfAbsent(key, k ->
-                new MarketItemData("SHOP", k, base, base, System.currentTimeMillis())
-        );
+        shopBuckets.computeIfAbsent(key, k -> new ConcurrentHashMap<>()).merge(currentHour, amount, Integer::sum);
 
-        double current = data.getCurrentPrice();
-        double multiplier = 1.0 + ((changePercentPerItem * amount) / 100.0);
-        double newPrice = current * multiplier;
-
-        if (!hardcoreMode) {
-            double maxCap = base * maxPriceMultiplier;
-            if (newPrice > maxCap) {
-                newPrice = maxCap;
-            }
+        if (plugin.getDatabaseManager() != null) {
+            plugin.getDatabaseManager().recordMarketBucket("SHOP", key, currentHour, amount);
         }
 
-        newPrice = Math.round(newPrice * 100.0) / 100.0;
+        // Update cached price and persist
+        double newPrice = calculateShopBuyPrice(key, item.getBuyPrice());
+        MarketItemData data = shopPrices.computeIfAbsent(key, k ->
+                new MarketItemData("SHOP", k, newPrice, item.getBuyPrice(), System.currentTimeMillis())
+        );
         data.setCurrentPrice(newPrice);
         data.setLastUpdate(System.currentTimeMillis());
-
         saveAsync(data);
     }
 
@@ -268,9 +295,9 @@ public class DynamicMarketManager {
         ph.put("percent", String.format(Locale.US, "%.1f", Math.abs(diffPct)));
 
         String trendStr;
-        if (diffPct > 0.5) {
+        if (diffPct > 0.05) {
             trendStr = lm.getMessage("shop.dynamic_trend_up", ph);
-        } else if (diffPct < -0.5) {
+        } else if (diffPct < -0.05) {
             trendStr = lm.getMessage("shop.dynamic_trend_down", ph);
         } else {
             trendStr = lm.getMessage("shop.dynamic_trend_stable");
@@ -281,7 +308,7 @@ public class DynamicMarketManager {
         return lm.getMessage("shop.dynamic_market_info", trendPh);
     }
 
-    // --- Buyer Dynamic Pricing ---
+    // --- Public Buyer API ---
 
     public double getBuyerSellPrice(Material material) {
         if (material == null || material == Material.AIR) {
@@ -293,46 +320,7 @@ public class DynamicMarketManager {
             return base;
         }
 
-        MarketItemData data = buyerPrices.computeIfAbsent(material, m ->
-                new MarketItemData("BUYER", m.name(), base, base, System.currentTimeMillis())
-        );
-
-        if (Math.abs(data.getBasePrice() - base) > 0.0001) {
-            double oldBase = data.getBasePrice();
-            if (oldBase > 0) {
-                double ratio = base / oldBase;
-                data.setCurrentPrice(Math.round(data.getCurrentPrice() * ratio * 100.0) / 100.0);
-            } else {
-                data.setCurrentPrice(base);
-            }
-            data.setBasePrice(base);
-            saveAsync(data);
-        }
-
-        double price = data.getCurrentPrice();
-        if (!hardcoreMode) {
-            double minFloor = base * minPriceMultiplier;
-            double maxCap = base * maxPriceMultiplier;
-            if (price < minFloor) price = minFloor;
-            if (price > maxCap) price = maxCap;
-        } else {
-            if (price < absoluteMinPrice) price = absoluteMinPrice;
-        }
-
-        // Anti-Arbitrage Protection: Buyer payout can NEVER exceed shop buy price for the same item!
-        // Guarantees at least a (1.0 - maxBuyerPayoutRatio) spread margin so players can never loop money
-        double shopPrice = getLowestShopBuyPrice(material);
-        if (shopPrice > 0) {
-            double maxAllowed = Math.round(shopPrice * maxBuyerPayoutRatio * 100.0) / 100.0;
-            if (maxAllowed < absoluteMinPrice) {
-                maxAllowed = absoluteMinPrice;
-            }
-            if (price > maxAllowed) {
-                price = maxAllowed;
-            }
-        }
-
-        return Math.round(price * 100.0) / 100.0;
+        return calculateBuyerSellPrice(material, base);
     }
 
     public void recordBuyerSale(Material material, int amount) {
@@ -345,30 +333,20 @@ public class DynamicMarketManager {
             return;
         }
 
-        MarketItemData data = buyerPrices.computeIfAbsent(material, m ->
-                new MarketItemData("BUYER", m.name(), base, base, System.currentTimeMillis())
-        );
+        long currentHour = getEpochHour();
+        buyerBuckets.computeIfAbsent(material, m -> new ConcurrentHashMap<>()).merge(currentHour, amount, Integer::sum);
 
-        double current = data.getCurrentPrice();
-        // Hyperbolic AMM curve: supply saturation smoothly reduces price without risk of negative or zero multiplier
-        double multiplier = 1.0 / (1.0 + ((changePercentPerItem * amount) / 100.0));
-        double newPrice = current * multiplier;
-
-        if (!hardcoreMode) {
-            double minFloor = base * minPriceMultiplier;
-            if (newPrice < minFloor) {
-                newPrice = minFloor;
-            }
-        } else {
-            if (newPrice < absoluteMinPrice) {
-                newPrice = absoluteMinPrice;
-            }
+        if (plugin.getDatabaseManager() != null) {
+            plugin.getDatabaseManager().recordMarketBucket("BUYER", material.name(), currentHour, amount);
         }
 
-        newPrice = Math.round(newPrice * 100.0) / 100.0;
+        // Update cached price and persist
+        double newPrice = calculateBuyerSellPrice(material, base);
+        MarketItemData data = buyerPrices.computeIfAbsent(material, m ->
+                new MarketItemData("BUYER", m.name(), newPrice, base, System.currentTimeMillis())
+        );
         data.setCurrentPrice(newPrice);
         data.setLastUpdate(System.currentTimeMillis());
-
         saveAsync(data);
     }
 
@@ -390,9 +368,9 @@ public class DynamicMarketManager {
         ph.put("percent", String.format(Locale.US, "%.1f", Math.abs(diffPct)));
 
         String trendStr;
-        if (diffPct > 0.5) {
+        if (diffPct > 0.05) {
             trendStr = lm.getMessage("buyer.dynamic_trend_up", ph);
-        } else if (diffPct < -0.5) {
+        } else if (diffPct < -0.05) {
             trendStr = lm.getMessage("buyer.dynamic_trend_down", ph);
         } else {
             trendStr = lm.getMessage("buyer.dynamic_trend_stable");
@@ -403,79 +381,96 @@ public class DynamicMarketManager {
         return lm.getMessage("buyer.dynamic_market_info", trendPh);
     }
 
-    // --- Market Decay & Balancing ---
+    // --- Arbitrage Protection ---
 
-    public void processDecay() {
+    /**
+     * Finds the lowest dynamic buy price for a material across all shop sections.
+     * Returns -1 if the material cannot be bought in the shop.
+     */
+    public double getLowestShopBuyPrice(Material material) {
+        if (material == null || material == Material.AIR) {
+            return -1.0;
+        }
+        if (plugin.getConfigManager() == null) {
+            return -1.0;
+        }
+
+        double lowest = -1.0;
+        for (ShopSection section : plugin.getConfigManager().getSections().values()) {
+            if (!section.isEnabled()) continue;
+            for (ShopItem item : section.getItems()) {
+                if (item.getMaterial() == material && item.isBuyable() && item.getBuyPrice() > 0) {
+                    double currentPrice = getShopBuyPrice(section, item);
+                    if (lowest < 0 || currentPrice < lowest) {
+                        lowest = currentPrice;
+                    }
+                }
+            }
+        }
+        return lowest;
+    }
+
+    // --- Rolling Window Expiration Task ---
+
+    /**
+     * Periodically checks and purges expired hourly buckets (older than impactDurationHours).
+     * When an hourly bucket expires, its price impact is rolled back automatically!
+     */
+    public void processRollingExpiration() {
         if (!enabled) {
             return;
         }
 
-        long now = System.currentTimeMillis();
-        long thresholdMillis = (long) decayIntervalSeconds * 1000L;
-        List<MarketItemData> toSave = new ArrayList<>();
+        long currentHour = getEpochHour();
+        long minValidHour = currentHour - impactDurationHours + 1;
+        boolean removedAny = false;
 
-        // 1. Process Shop Prices:
-        // Stale stock: prices cool down toward baseline or clearance floor
-        for (MarketItemData data : shopPrices.values()) {
-            if ((now - data.getLastUpdate()) >= thresholdMillis) {
-                double current = data.getCurrentPrice();
-                double base = data.getBasePrice();
-                if (base <= 0) continue;
-
-                double targetFloor = hardcoreMode ? absoluteMinPrice : (base * minPriceMultiplier);
-                if (current <= targetFloor) {
-                    continue;
-                }
-
-                // Minimum step 0.01 prevents sub-cent rounding freeze
-                double step = Math.max(0.01, current * (decayPercent / 100.0));
-                double newPrice = current - step;
-                if (newPrice < targetFloor) {
-                    newPrice = targetFloor;
-                }
-                newPrice = Math.round(newPrice * 100.0) / 100.0;
-
-                if (Math.abs(newPrice - current) >= 0.001) {
-                    data.setCurrentPrice(newPrice);
-                    data.setLastUpdate(now);
-                    toSave.add(data);
+        // 1. Purge expired shop buckets
+        for (Map.Entry<String, Map<Long, Integer>> entry : shopBuckets.entrySet()) {
+            Map<Long, Integer> buckets = entry.getValue();
+            if (buckets != null) {
+                if (buckets.keySet().removeIf(hour -> hour < minValidHour)) {
+                    removedAny = true;
                 }
             }
         }
 
-        // 2. Process Buyer Prices:
-        // Idle buyer items: market surplus clears, prices recover toward base price (equilibrium)
-        for (MarketItemData data : buyerPrices.values()) {
-            if ((now - data.getLastUpdate()) >= thresholdMillis) {
-                double current = data.getCurrentPrice();
-                double base = data.getBasePrice();
-                if (base <= 0) continue;
-
-                double newPrice;
-                if (current < base) {
-                    // Recovering from saturation up toward base equilibrium price
-                    double step = Math.max(0.01, current * (decayPercent / 100.0));
-                    newPrice = Math.min(base, current + step);
-                } else if (current > base) {
-                    // Cooling down toward base equilibrium price
-                    double step = Math.max(0.01, current * (decayPercent / 100.0));
-                    newPrice = Math.max(base, current - step);
-                } else {
-                    continue;
-                }
-
-                newPrice = Math.round(newPrice * 100.0) / 100.0;
-                if (Math.abs(newPrice - current) >= 0.001) {
-                    data.setCurrentPrice(newPrice);
-                    data.setLastUpdate(now);
-                    toSave.add(data);
+        // 2. Purge expired buyer buckets
+        for (Map.Entry<Material, Map<Long, Integer>> entry : buyerBuckets.entrySet()) {
+            Map<Long, Integer> buckets = entry.getValue();
+            if (buckets != null) {
+                if (buckets.keySet().removeIf(hour -> hour < minValidHour)) {
+                    removedAny = true;
                 }
             }
         }
 
-        // Batch save all updated items to prevent HikariCP connection pool exhaustion
-        if (!toSave.isEmpty() && plugin.getDatabaseManager() != null) {
-            TaskScheduler.runAsync(plugin, () -> plugin.getDatabaseManager().saveAllDynamicMarketItems(toSave));
+        // 3. Purge from database if any bucket expired
+        if (removedAny && plugin.getDatabaseManager() != null) {
+            plugin.getDatabaseManager().cleanupExpiredMarketBuckets(minValidHour);
+
+            // Re-sync cached prices
+            List<MarketItemData> toSave = new ArrayList<>();
+            for (MarketItemData data : shopPrices.values()) {
+                double newPrice = calculateShopBuyPrice(data.getItemKey(), data.getBasePrice());
+                if (Math.abs(newPrice - data.getCurrentPrice()) >= 0.001) {
+                    data.setCurrentPrice(newPrice);
+                    data.setLastUpdate(System.currentTimeMillis());
+                    toSave.add(data);
+                }
+            }
+            for (Map.Entry<Material, MarketItemData> entry : buyerPrices.entrySet()) {
+                MarketItemData data = entry.getValue();
+                double newPrice = calculateBuyerSellPrice(entry.getKey(), data.getBasePrice());
+                if (Math.abs(newPrice - data.getCurrentPrice()) >= 0.001) {
+                    data.setCurrentPrice(newPrice);
+                    data.setLastUpdate(System.currentTimeMillis());
+                    toSave.add(data);
+                }
+            }
+            if (!toSave.isEmpty()) {
+                plugin.getDatabaseManager().saveAllDynamicMarketItems(toSave);
+            }
         }
     }
 
@@ -513,6 +508,10 @@ public class DynamicMarketManager {
 
     public double getMaxBuyerPayoutRatio() {
         return maxBuyerPayoutRatio;
+    }
+
+    public int getImpactDurationHours() {
+        return impactDurationHours;
     }
 
     // --- Data Model ---

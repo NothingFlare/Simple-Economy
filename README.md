@@ -47,15 +47,15 @@ SimpleEconomy consolidates these services into a single, cohesive architecture. 
   - Periodic Item Rotation & Lock mechanism: restricts scrap liquidation to a configurable percentage of items (e.g. 10%) with automated periodic rotation and permission bypass.
   - Safe return fallback: unaccepted items are returned to player inventories or dropped safely at their feet if full.
 
-- **Real-Time Dynamic Market Engine**
+- **Real-Time Dynamic Market Engine (Rolling Window Model)**
   - Autonomous supply and demand mechanics active across both `/shop` and `/buyer`.
-  - Shop buy prices increase with continuous player purchases and gradually decay downward toward baseline discounts during prolonged inactivity.
-  - Buyer scrap payouts decrease during heavy market saturation and recover toward premium payouts during resource scarcity.
+  - **Rolling 24-Hour Time-Bucketed Window (`impact_duration_hours: 24`)**: Transactions are grouped into hourly buckets. Exactly 24 hours later, each specific hour's price impact expires and rolls back automatically, while subsequent hours remain untouched.
+  - Shop buy prices increase with player demand and roll back to baseline as hourly demand buckets expire.
+  - Buyer scrap payouts decrease under supply saturation and recover back to baseline as saturation buckets expire.
   - **Anti-Arbitrage Corridor (`max_buyer_payout_ratio`)**: mathematically guarantees that `/buyer` payout prices can never exceed `/shop` purchase prices for the same item, entirely eliminating infinite money arbitrage loops.
-  - **Hyperbolic AMM Curve**: volume-weighted pricing curve preventing price collapse on large scrap deposits while remaining symmetric with demand spikes.
   - **Hardcore Unbounded Mode (`hardcore_mode: true`)**: eliminates arbitrary price ceiling and floor multipliers, enabling infinite price spikes under extreme demand and unrestricted price drops down to an absolute floor ($0.01) under market saturation.
   - Standard mode with configurable minimum floor and maximum ceiling multipliers to maintain traditional bounded economic corridors.
-  - Scheduled background decay task with database persistence (`se_dynamic_market`) across server restarts.
+  - Database persistence (`se_market_buckets` and `se_dynamic_market`) guaranteeing zero loss of transaction history across server restarts.
   - Real-time visual market trend indicators rendered directly in item tooltips (`▲ +%`, `▼ -%`, `● Base Price`).
 
 - **Comprehensive Transaction & Purchase Logging**
@@ -189,16 +189,15 @@ shop:
     rotation_interval_hours: 0
     bypass_permission: "simpleeconomy.shop.bypass"
 
-# Dynamic Market Engine (Real Market Mechanics)
+# Dynamic Market Engine (Rolling 24-Hour Window)
 dynamic_market:
   enabled: true
   hardcore_mode: true
   absolute_min_price: 0.01
-  change_percent_per_item: 0.2
+  change_percent_per_item: 0.03125
+  impact_duration_hours: 24
   min_price_multiplier: 0.5
   max_price_multiplier: 3.0
-  decay_interval_seconds: 300
-  decay_percent: 1.5
   show_trends: true
   max_buyer_payout_ratio: 0.75
 

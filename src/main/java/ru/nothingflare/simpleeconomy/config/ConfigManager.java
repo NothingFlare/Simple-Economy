@@ -85,6 +85,7 @@ public class ConfigManager {
     private double dynamicMarketMaxMultiplier = 3.0;
     private int dynamicMarketDecayInterval = 300;
     private double dynamicMarketDecayPercent = 1.5;
+    private int dynamicMarketImpactDurationHours = 24;
     private boolean dynamicMarketShowTrends = true;
     private double dynamicMarketMaxBuyerPayoutRatio = 0.75;
 
@@ -145,9 +146,10 @@ public class ConfigManager {
         this.dynamicMarketHardcoreMode = config.getBoolean("dynamic_market.hardcore_mode",
                 config.getBoolean("dynamic_market.unlimited_limits", true));
         this.dynamicMarketAbsoluteMinPrice = Math.max(0.001, config.getDouble("dynamic_market.absolute_min_price", 0.01));
-        this.dynamicMarketChangePercent = config.getDouble("dynamic_market.change_percent_per_item", 0.2);
+        this.dynamicMarketChangePercent = config.getDouble("dynamic_market.change_percent_per_item", 0.03125);
         this.dynamicMarketMinMultiplier = config.getDouble("dynamic_market.min_price_multiplier", 0.5);
         this.dynamicMarketMaxMultiplier = config.getDouble("dynamic_market.max_price_multiplier", 3.0);
+        this.dynamicMarketImpactDurationHours = Math.max(1, config.getInt("dynamic_market.impact_duration_hours", 24));
         this.dynamicMarketDecayInterval = config.getInt("dynamic_market.decay_interval_seconds", 300);
         this.dynamicMarketDecayPercent = config.getDouble("dynamic_market.decay_percent", 1.5);
         this.dynamicMarketShowTrends = config.getBoolean("dynamic_market.show_trends", true);
@@ -520,6 +522,10 @@ public class ConfigManager {
 
     public double getDynamicMarketDecayPercent() {
         return dynamicMarketDecayPercent;
+    }
+
+    public int getDynamicMarketImpactDurationHours() {
+        return dynamicMarketImpactDurationHours;
     }
 
     public boolean isDynamicMarketShowTrends() {

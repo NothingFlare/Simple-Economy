@@ -179,12 +179,21 @@ public class DatabaseManager {
                 "created_at BIGINT NOT NULL" +
                 ");";
 
+        String createMarketBuckets = "CREATE TABLE IF NOT EXISTS se_market_buckets (" +
+                "market_type VARCHAR(16) NOT NULL, " +
+                "item_key VARCHAR(64) NOT NULL, " +
+                "hour_epoch BIGINT NOT NULL, " +
+                "amount INT NOT NULL, " +
+                "PRIMARY KEY (market_type, item_key, hour_epoch)" +
+                ");";
+
         String idxListingsStatus = "CREATE INDEX IF NOT EXISTS idx_auction_status_created ON se_auction_listings (status, created_at);";
         String idxListingsSeller = "CREATE INDEX IF NOT EXISTS idx_auction_seller ON se_auction_listings (seller_uuid, status);";
         String idxClaimsPlayer = "CREATE INDEX IF NOT EXISTS idx_auction_claims_player ON se_auction_claims (player_uuid);";
         String idxAdminLogs = "CREATE INDEX IF NOT EXISTS idx_auction_admin_logs ON se_auction_admin_logs (deleted_at);";
         String idxPurchaseLogs = "CREATE INDEX IF NOT EXISTS idx_purchase_logs_created ON se_purchase_logs (created_at);";
         String idxPurchaseLogsPlayer = "CREATE INDEX IF NOT EXISTS idx_purchase_logs_player ON se_purchase_logs (player_uuid, purchase_type);";
+        String idxMarketBuckets = "CREATE INDEX IF NOT EXISTS idx_market_buckets_epoch ON se_market_buckets (hour_epoch);";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
@@ -194,6 +203,7 @@ public class DatabaseManager {
             stmt.execute(createMarket);
             stmt.execute(createAdminLogs);
             stmt.execute(createPurchaseLogs);
+            stmt.execute(createMarketBuckets);
             try {
                 stmt.execute(idxListingsStatus);
                 stmt.execute(idxListingsSeller);
@@ -201,6 +211,7 @@ public class DatabaseManager {
                 stmt.execute(idxAdminLogs);
                 stmt.execute(idxPurchaseLogs);
                 stmt.execute(idxPurchaseLogsPlayer);
+                stmt.execute(idxMarketBuckets);
             } catch (SQLException ignored) {}
 
             try {
@@ -663,6 +674,72 @@ public class DatabaseManager {
             conn.setAutoCommit(autoCommit);
         } catch (SQLException e) {
             plugin.getLogger().severe("Failed to batch save dynamic market items: " + e.getMessage());
+        }
+    }
+
+    // --- Rolling Window Market Buckets ---
+
+    public void recordMarketBucket(String marketType, String itemKey, long hourEpoch, int amount) {
+        String sql = databaseType == DatabaseType.MYSQL
+                ? "INSERT INTO se_market_buckets (market_type, item_key, hour_epoch, amount) VALUES (?, ?, ?, ?) " +
+                  "ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)"
+                : "INSERT INTO se_market_buckets (market_type, item_key, hour_epoch, amount) VALUES (?, ?, ?, ?) " +
+                  "ON CONFLICT(market_type, item_key, hour_epoch) DO UPDATE SET amount = amount + excluded.amount";
+        TaskScheduler.runAsync(plugin, () -> {
+            try (Connection conn = getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, marketType);
+                ps.setString(2, itemKey);
+                ps.setLong(3, hourEpoch);
+                ps.setInt(4, amount);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                plugin.getLogger().severe("Failed to record market bucket: " + e.getMessage());
+            }
+        });
+    }
+
+    public void cleanupExpiredMarketBuckets(long minValidHourEpoch) {
+        String sql = "DELETE FROM se_market_buckets WHERE hour_epoch < ?";
+        TaskScheduler.runAsync(plugin, () -> {
+            try (Connection conn = getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setLong(1, minValidHourEpoch);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                plugin.getLogger().severe("Failed to cleanup expired market buckets: " + e.getMessage());
+            }
+        });
+    }
+
+    public void loadActiveMarketBuckets(long minValidHourEpoch,
+                                        Map<String, Map<Long, Integer>> shopBuckets,
+                                        Map<Material, Map<Long, Integer>> buyerBuckets) {
+        shopBuckets.clear();
+        buyerBuckets.clear();
+        String sql = "SELECT market_type, item_key, hour_epoch, amount FROM se_market_buckets WHERE hour_epoch >= ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, minValidHourEpoch);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String marketType = rs.getString("market_type");
+                    String itemKey = rs.getString("item_key");
+                    long hourEpoch = rs.getLong("hour_epoch");
+                    int amount = rs.getInt("amount");
+
+                    if ("SHOP".equalsIgnoreCase(marketType)) {
+                        shopBuckets.computeIfAbsent(itemKey, k -> new ConcurrentHashMap<>()).put(hourEpoch, amount);
+                    } else if ("BUYER".equalsIgnoreCase(marketType)) {
+                        try {
+                            Material mat = Material.valueOf(itemKey.toUpperCase());
+                            buyerBuckets.computeIfAbsent(mat, m -> new ConcurrentHashMap<>()).put(hourEpoch, amount);
+                        } catch (IllegalArgumentException ignored) {}
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            plugin.getLogger().severe("Failed to load active market buckets from database: " + e.getMessage());
         }
     }
 
